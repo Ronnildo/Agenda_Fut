@@ -23,5 +23,10 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter:
+  # fonts:
+  #   - family: BrunoAce
+  #     fonts:
+  #       - asset: fonts/BrunoAceSC-Regular.ttf
 
   uses-material-design: true
+

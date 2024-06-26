@@ -1,4 +1,3 @@
-import 'package:app/src/features/screens/home.dart';
 import 'package:app/src/features/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
