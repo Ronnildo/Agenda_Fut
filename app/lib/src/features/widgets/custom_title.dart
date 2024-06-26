@@ -13,12 +13,13 @@ class _CustomTitleState extends State<CustomTitle> {
     return CustomPaint(
       painter: _MyPainter(),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height / 2.5,
+        height: MediaQuery.of(context).size.height / 2.8,
         width: MediaQuery.of(context).size.width, 
         child: const Center(
           child:  Text(
             "Fut Agenda",
             style: TextStyle(
+              fontFamily: "BrunoAce",
               fontSize: 36,
               fontWeight: FontWeight.w600,
               // shadows: [BoxShadow(blurRadius: 2, spreadRadius: 4, color: Colors.grey)]

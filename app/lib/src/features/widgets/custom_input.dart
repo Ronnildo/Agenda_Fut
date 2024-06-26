@@ -4,11 +4,13 @@ class CustomInput extends StatefulWidget {
   final TextEditingController controller;
   final String labeltext;
   final IconData icon;
+  final bool obscureText;
   const CustomInput({
     super.key,
     required this.labeltext,
     required this.controller,
     required this.icon,
+    required this.obscureText,
   });
 
   @override
@@ -20,16 +22,31 @@ class _CustomInputState extends State<CustomInput> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      decoration:  InputDecoration(
+      autofocus: true,
+      obscureText: widget.obscureText,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: const Color(0xFFFEFEFE),
+        enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
         labelText: widget.labeltext,
         labelStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          
+        ),
+        floatingLabelStyle: const TextStyle(
+          color: Colors.black87,
+          fontSize: 18,
         ),
         suffixIcon: Icon(widget.icon),
         border: const OutlineInputBorder(
-
+          borderSide: BorderSide(
+            color: Colors.white,
+            width: 1.5,
+          ),
+        ),
+        focusColor: Colors.white,
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.green),
         ),
       ),
     );
