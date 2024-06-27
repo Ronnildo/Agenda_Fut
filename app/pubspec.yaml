@@ -27,6 +27,9 @@ flutter:
     - family: BrunoAce
       fonts:
         - asset: assets/fonts/BrunoAceSC-Regular.ttf
+    - family: IrishGrover
+      fonts:
+        - asset: assets/fonts/IrishGrover-Regular.ttf
 
   uses-material-design: true
 

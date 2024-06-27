@@ -1,3 +1,6 @@
+import 'package:app/src/features/screens/home.dart';
+import 'package:app/src/features/screens/register.dart';
+import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,27 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+
+
+  // Implementar validação e autenticação
+  login() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Home(),
+      ),
+    );
+  }
+
+  register(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Register(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,71 +46,51 @@ class _LoginState extends State<Login> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const CustomTitle(),
+            CustomInput(
+              labeltext: "Digite seu E-mail",
+              controller: _emailController,
+              icon: Icons.mail,
+              obscureText: false,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomInput(
+              labeltext: "Digite seu Senha",
+              controller: _passController,
+              icon: Icons.visibility,
+              obscureText: true,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 16.0,
+              ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                  onTap: () {},
+                  hoverColor: Colors.green,
+                  hoverDuration: const Duration(
+                    seconds: 2,
+                  ),
+                  child: const Text(
+                    "Esqueceu a senha?",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 16,
+                vertical: 20,
+                horizontal: 16,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CustomInput(
-                    labeltext: "Digite seu E-mail",
-                    controller: _emailController,
-                    icon: Icons.mail,
-                    obscureText: false,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomInput(
-                    labeltext: "Digite seu Senha",
-                    controller: _passController,
-                    icon: Icons.visibility,
-                    obscureText: true,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      onTap: () {},
-                      hoverColor: Colors.green,
-                      hoverDuration: const Duration(
-                        seconds: 2,
-                      ),
-                      child: const Text(
-                        "Esqueceu a senha?",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 16,
-                      bottom: 20,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF3DB62A),
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width,
-                          50,
-                        ),
-                      ),
-                      child: const Text(
-                        "Entrar",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              child: CustomButtom(
+                onTap: login,
+                title: "Entrar",
               ),
             ),
             Padding(
@@ -110,7 +114,7 @@ class _LoginState extends State<Login> {
                     ),
                     //Criar custompaint para esse botão
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: register,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         fixedSize: Size(
