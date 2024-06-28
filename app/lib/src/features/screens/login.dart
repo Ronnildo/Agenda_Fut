@@ -4,7 +4,6 @@ import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
