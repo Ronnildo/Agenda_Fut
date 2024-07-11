@@ -19,7 +19,7 @@ class _CustomButtomState extends State<CustomButtom> {
     return ElevatedButton(
       onPressed: widget.onTap,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF3DB62A),
+        backgroundColor: const Color(0xFF03045E),
         fixedSize: Size(
           MediaQuery.of(context).size.width,
           50,
@@ -30,7 +30,7 @@ class _CustomButtomState extends State<CustomButtom> {
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w500,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );

@@ -19,6 +19,7 @@ class _CustomTitleState extends State<CustomTitle> {
           child:  Text(
             "Fut Agenda",
             style: TextStyle(
+              color: Colors.white,
               fontFamily: "BrunoAce",
               fontSize: 36,
               fontWeight: FontWeight.w600,
@@ -36,13 +37,13 @@ class _CustomTitleState extends State<CustomTitle> {
 class _MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final title = Paint()..color = const Color(0xFF3DB62A);
+    final title = Paint()..color = const Color(0xFF03045E);
 
     final path = Path()
       ..moveTo(0, 0)
       ..lineTo(size.width, 0)
       ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height / 1.5);
+      ..lineTo(0, size.height / 1.4);
 
     canvas.drawPath(path, title);
   }

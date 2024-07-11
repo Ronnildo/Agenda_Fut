@@ -1,4 +1,4 @@
-import 'package:app/src/features/screens/login.dart';
+import 'package:app/src/features/views/login.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';

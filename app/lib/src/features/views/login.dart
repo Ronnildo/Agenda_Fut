@@ -1,5 +1,5 @@
-import 'package:app/src/features/screens/home.dart';
-import 'package:app/src/features/screens/register.dart';
+import 'package:app/src/features/views/home.dart';
+import 'package:app/src/features/views/register.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
@@ -16,7 +16,6 @@ class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
 
-
   // Implementar validação e autenticação
   login() {
     Navigator.push(
@@ -27,7 +26,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  register(){
+  register() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -55,7 +54,7 @@ class _LoginState extends State<Login> {
               height: 10,
             ),
             CustomInput(
-              labeltext: "Digite seu Senha",
+              labeltext: "Digite sua Senha",
               controller: _passController,
               icon: Icons.visibility,
               obscureText: true,
@@ -76,6 +75,7 @@ class _LoginState extends State<Login> {
                     "Esqueceu a senha?",
                     style: TextStyle(
                       color: Colors.black,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -112,21 +112,34 @@ class _LoginState extends State<Login> {
                       bottom: 20,
                     ),
                     //Criar custompaint para esse botão
-                    child: ElevatedButton(
-                      onPressed: register,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width,
-                          50,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Register(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 60,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFDDDDD1),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "Cadastre-se Agora",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                        child: const Text(
+                          "Cadastre-se Agora",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
                     ),

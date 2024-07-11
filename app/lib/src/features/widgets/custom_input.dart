@@ -33,10 +33,12 @@ class _CustomInputState extends State<CustomInput> {
           labelText: widget.labeltext,
           labelStyle: const TextStyle(
             fontSize: 16,
+            color: Colors.grey,
             fontWeight: FontWeight.w500,
           ),
           floatingLabelStyle: const TextStyle(
-            color: Colors.black87,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
           suffixIcon: Icon(widget.icon),
