@@ -50,7 +50,7 @@ class _CustomInputState extends State<CustomInput> {
           ),
           focusColor: Colors.white,
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.green),
+            borderSide: BorderSide(color: Color(0xFF03045E)),
           ),
         ),
       ),

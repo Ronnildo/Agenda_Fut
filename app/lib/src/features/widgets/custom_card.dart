@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatefulWidget {
@@ -14,7 +15,7 @@ class _CustomCardState extends State<CustomCard> {
       width: MediaQuery.of(context).size.width,
       height: 180,
       decoration: BoxDecoration(
-        color: const Color(0xFF3DB62A),
+        color: const Color(0xFF0077B6),
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
           BoxShadow(
@@ -25,10 +26,10 @@ class _CustomCardState extends State<CustomCard> {
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width / 14,
+            width: MediaQuery.of(context).size.width / 16,
             height: 180,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -38,56 +39,147 @@ class _CustomCardState extends State<CustomCard> {
               color: Color(0xFFDF0606),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Competição",
+              Text(
+                "Campeonato Barrense",
                 style: TextStyle(
-                  fontFamily: "IrishGrover",
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
+                  color: Colors.white,
+                  // foreground: Paint()
+                  //   ..style = PaintingStyle.stroke
+                  //   ..strokeWidth = 3
+                  //   ..color = Colors.black,
+                  decorationColor: Colors.white,
+
+                  fontSize: 20,
                 ),
-                maxLines: 9,
-                softWrap: true,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text(
+                  Icon(Icons.shield),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
                     "Equipe",
                     style: TextStyle(
-                      fontFamily: "IrishGrover",
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.w700,
-                      fontSize: 18,
+                      fontSize: 20,
                     ),
                   ),
-                  Container(
-                    height: 24,
-                    width: 140,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 0.5,
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Fase",
-                      style: TextStyle(
-                        fontFamily: "IrishGrover",
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                    ),
+                  SizedBox(
+                    width: 2,
+                  ),
+                  Icon(
+                    Icons.edit,
+                    size: 16,
                   ),
                 ],
               ),
+              Divider(
+                thickness: 0,
+                color: Colors.green,
+                height: 10,
+              ),
+              Text(
+                "Local:",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                ),
+              ),
+              Text(
+                "Arena Mangueirão",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                ),
+              ),
+
+              // Container(
+              //   height: 24,
+              //   width: 140,
+              //   decoration: BoxDecoration(
+              //     border: Border.all(
+              //       width: 0.5,
+              //       color: Colors.white,
+              //     ),
+              //     borderRadius: BorderRadius.circular(20),
+              //   ),
+              //   alignment: Alignment.center,
+              //   child: const Text(
+              //     "Fase",
+              //     style: TextStyle(
+              //       fontFamily: "IrishGrover",
+              //       color: Colors.white,
+              //       fontWeight: FontWeight.w700,
+              //       fontSize: 16,
+              //     ),
+              //   ),
+              // ),
             ],
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            width: MediaQuery.of(context).size.width / 3,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+            ),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "16",
+                  style: TextStyle(
+                      fontSize: 55, fontWeight: FontWeight.bold, height: 0),
+                ),
+                Text(
+                  "Julho",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 5,
+                    height: 0,
+                  ),
+                ),
+                Text(
+                  "Segunda-Feira",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.alarm,
+                        size: 16,
+                      ),
+                      Text(
+                        "9:00 - 11:00 AM",
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                    ])
+              ],
+            ),
           ),
         ],
       ),

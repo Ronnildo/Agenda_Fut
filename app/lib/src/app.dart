@@ -1,6 +1,6 @@
-import 'package:app/src/features/views/login.dart';
+import 'package:app/src/features/pages/login.dart';
 import 'package:flutter/material.dart';
-import 'features/views/home.dart';
+import 'features/pages/home.dart';
 
 class AgendaApp extends StatelessWidget {
   const AgendaApp({super.key});

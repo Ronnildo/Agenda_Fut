@@ -1,5 +1,5 @@
-import 'package:app/src/features/views/home.dart';
-import 'package:app/src/features/views/register.dart';
+import 'package:app/src/features/pages/home.dart';
+import 'package:app/src/features/pages/register.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: 20,
+                vertical: 30,
                 horizontal: 16,
               ),
               child: CustomButtom(
@@ -107,13 +107,18 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8,
-                      bottom: 20,
-                    ),
-                    //Criar custompaint para esse botão
-                    child: InkWell(
-                      onTap: () {
+                    padding: const EdgeInsets.only(top: 0, bottom: 40.0),
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        fixedSize: Size(
+                          MediaQuery.of(context).size.width,
+                          56,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -121,25 +126,12 @@ class _LoginState extends State<Login> {
                           ),
                         );
                       },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 60,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFDDDDD1),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          ),
-                        ),
-                        child: const Text(
-                          "Cadastre-se Agora",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w800,
-                          ),
+                      child: const Text(
+                        "Cadastre-se Agora",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     ),

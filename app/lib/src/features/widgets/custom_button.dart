@@ -22,10 +22,13 @@ class _CustomButtomState extends State<CustomButtom> {
         backgroundColor: const Color(0xFF03045E),
         fixedSize: Size(
           MediaQuery.of(context).size.width,
-          50,
+          60,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
-      child:  Text(
+      child: Text(
         widget.title,
         style: const TextStyle(
           fontSize: 20,
