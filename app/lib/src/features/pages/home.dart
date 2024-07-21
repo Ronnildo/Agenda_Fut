@@ -1,10 +1,7 @@
-import 'package:app/src/features/tabs/competitions.dart';
-import 'package:app/src/features/tabs/games.dart';
+import 'package:app/src/features/pages/insert.dart';
 import 'package:app/src/features/widgets/calendar_card.dart';
 import 'package:app/src/features/widgets/custom_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -31,7 +28,7 @@ class _HomeState extends State<Home> {
     14,
     15,
     16,
-  ];
+  ]; // Procurar API de Calendário
   //  TabController _tabController;
   @override
   Widget build(BuildContext context) {
@@ -74,11 +71,8 @@ class _HomeState extends State<Home> {
                 itemCount: data.length,
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (context, index) {
-                  return const Divider(
-                    thickness: 2,
-                    height: 6,
-                    indent: 10,
-                    color: Colors.red,
+                  return const SizedBox(
+                    width: 10,
                   );
                 },
                 itemBuilder: (context, index) {
@@ -98,13 +92,30 @@ class _HomeState extends State<Home> {
                 color: Colors.greenAccent,
               ),
             ),
-            const CustomCard()
+            CustomCard(
+              colorBar: Colors.red,
+              competitionName: "Campeonato Barrense 2024",
+              teamName: "Atlético Madruga",
+              localeName: "Ginásio Poliesportivo o Duty",
+              date: DateTime.now(),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const InsertPage(),
+            ),
+          );
+        },
+        backgroundColor: const Color(0xFF03045E),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

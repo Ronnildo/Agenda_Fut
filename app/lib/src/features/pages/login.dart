@@ -118,14 +118,7 @@ class _LoginState extends State<Login> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Register(),
-                          ),
-                        );
-                      },
+                      onPressed: register,
                       child: const Text(
                         "Cadastre-se Agora",
                         style: TextStyle(
