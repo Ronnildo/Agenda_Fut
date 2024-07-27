@@ -41,11 +41,13 @@ class _LoginState extends State<Login> {
       backgroundColor: const Color(0xFFDDDDD1),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const CustomTitle(),
             CustomInput(
-              labeltext: "Digite seu E-mail",
+              label: "Digite seu E-mail",
+              hintText: "",
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
@@ -54,7 +56,8 @@ class _LoginState extends State<Login> {
               height: 10,
             ),
             CustomInput(
-              labeltext: "Digite sua Senha",
+              label: "Digite sua Senha",
+              hintText: "Digite sua Senha",
               controller: _passController,
               icon: Icons.visibility,
               obscureText: true,
@@ -132,13 +135,21 @@ class _LoginState extends State<Login> {
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Icon(
-                        Icons.mail_outlined,
-                        size: 60,
+                      Image(
+                        image: AssetImage(
+                          "assets/images/google.png",
+                        ),
+                        fit: BoxFit.contain,
+                        width: 50,
+                        height: 50,
                       ),
-                      Icon(
-                        Icons.facebook,
-                        size: 60,
+                      Image(
+                        image: AssetImage(
+                          "assets/images/facebook.png",
+                        ),
+                        fit: BoxFit.contain,
+                        width: 50,
+                        height: 50,
                       ),
                     ],
                   )

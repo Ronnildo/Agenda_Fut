@@ -1,7 +1,5 @@
 import 'package:app/src/features/pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
 
 class AgendaApp extends StatelessWidget {
   const AgendaApp({super.key});
@@ -13,7 +11,6 @@ class AgendaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         textTheme: const TextTheme(
           displayMedium: TextStyle(
             fontSize: 20,
@@ -21,7 +18,6 @@ class AgendaApp extends StatelessWidget {
             color: Colors.black87,
             overflow: TextOverflow.ellipsis,
           ),
-          
         ),
         shadowColor: Colors.black,
         useMaterial3: true,

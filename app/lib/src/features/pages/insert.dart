@@ -1,4 +1,7 @@
+import 'package:app/src/features/widgets/custom_Insert_game.dart';
+import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
+import 'package:app/src/features/widgets/date_or_hour.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +21,6 @@ class _InsertPageState extends State<InsertPage> {
   final TextEditingController _dateController = TextEditingController();
   late TextEditingController _timeController = TextEditingController();
 
-
   TimeOfDay? selectedTime;
   TimePickerEntryMode entryMode = TimePickerEntryMode.dial;
   Orientation? orientation;
@@ -28,114 +30,138 @@ class _InsertPageState extends State<InsertPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_timeController.text);
     return Scaffold(
       backgroundColor: const Color(0xFFDDDDD1),
       appBar: AppBar(
-        title: const Text("Inserir Jogo"),
+        title: const Text(
+          "Inserir Jogo",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         backgroundColor: const Color(0xFFDDDDD1),
       ),
-      body: Column(
-        children: [
-          Placeholder(
-            fallbackHeight: 92,
-            fallbackWidth: 85,
-            color: Colors.grey,
-            child: Container(),
-          ),
-          const Text("Foto da Equipe"),
-          CustomInput(
-              labeltext: "Nome da Competição",
-              controller: _competitionController,
-              icon: Icons.abc,
-              obscureText: false),
-          CustomInput(
-              labeltext: "Nome da Equipe",
-              controller: _competitionController,
-              icon: Icons.abc,
-              obscureText: false),
-          CustomInput(
-              labeltext: "Local da Competição",
-              controller: _competitionController,
-              icon: Icons.abc,
-              obscureText: false),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: 56,
-                  width: 170,
-                  child: TextField(
-                    controller: _dateController,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFFEFEFE),
-                      enabledBorder:
-                          const OutlineInputBorder(borderSide: BorderSide.none),
-                      labelText: "00/00/2000",
-                      labelStyle: const TextStyle(
-                        fontSize: 16,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
                         color: Colors.grey,
-                        fontWeight: FontWeight.w500,
+                        borderRadius: BorderRadius.circular(100),
                       ),
-                      suffixIcon: InkWell(
-                          onTap: () {},
-                          child: const Icon(Icons.keyboard_arrow_down_rounded)),
                     ),
+                    InkWell(
+                      onTap: () {},
+                      child: const Icon(
+                        Icons.add_a_photo,
+                        size: 40,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 40,
+                  ),
+                  child: Text(
+                    "Escudo da Equipe",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.underline),
                   ),
                 ),
-                SizedBox(
-                  height: 56,
-                  width: 170,
-                  child: TextField(
+              ),
+              CustomInsertGame(
+                controller: _competitionController,
+                label: "Nome da Competição",
+                hintText: "Ex: Copa América",
+              ),
+              CustomInsertGame(
+                controller: _teamController,
+                label: "Nome da Equipe",
+                hintText: "Ex: Juventus",
+              ),
+              CustomInsertGame(
+                controller: _locationController,
+                label: "Local da Competição",
+                hintText: "Ex: Arena Bets",
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DateOrHour(
                     controller: _dateController,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFFEFEFE),
-                      enabledBorder:
-                          const OutlineInputBorder(borderSide: BorderSide.none),
-                      labelText: "00:00 AM",
-                      labelStyle: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      suffixIcon: InkWell(
-                          onTap: () async {
-                            final TimeOfDay? time = await showTimePicker(
-                              context: context,
-                              initialTime: selectedTime ?? TimeOfDay.now(),
-                              initialEntryMode: entryMode,
-                              orientation: orientation,
-                              builder: (context, Widget? child) {
-                                return Directionality(
-                                  textDirection: textDirection,
-                                  child: MediaQuery(
-                                    data: MediaQuery.of(context).copyWith(
-                                      alwaysUse24HourFormat: use24Hours,
-                                    ),
-                                    child: child!,
-                                  ),
-                                );
-                              },
-                            );
-                            setState(() {
-                              selectedTime = time;
-                            });
-                            if(selectedTime != null){
-                              String hour = selectedTime.toString(); 
-                              _timeController.text = hour;
-                            }
-                          },
-                          child: const Icon(Icons.keyboard_arrow_down_rounded)),
-                    ),
+                    dayOrHour: "Data",
+                    hintText: "Ex: 20/06/2024",
+                    onTap: () {},
                   ),
+                  DateOrHour(
+                    controller: _timeController,
+                    dayOrHour: "Horário",
+                    hintText: "Ex: 15:30 PM",
+                    onTap: () async {
+                      final TimeOfDay? time = await showTimePicker(
+                        context: context,
+                        initialTime: selectedTime ?? TimeOfDay.now(),
+                        initialEntryMode: entryMode,
+                        orientation: orientation,
+                        builder: (context, Widget? child) {
+                          return Directionality(
+                            textDirection: textDirection,
+                            child: MediaQuery(
+                              data: MediaQuery.of(context).copyWith(
+                                alwaysUse24HourFormat: use24Hours,
+                              ),
+                              child: child!,
+                            ),
+                          );
+                        },
+                      );
+                      if (selectedTime != null) {
+                        String hour = selectedTime.toString();
+                        _timeController.text = hour;
+                      }
+                      setState(() {
+                        selectedTime = time;
+
+                        _timeController.text =
+                            "${time!.hour.toString()}:${time.minute.toString()}";
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 60,
+                  // horizontal: 16,
                 ),
-              ],
-            ),
+                child: CustomButtom(
+                  onTap: () {},
+                  title: "Adicionar",
+                ),
+              )
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

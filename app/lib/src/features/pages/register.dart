@@ -17,7 +17,6 @@ class _RegisterState extends State<Register> {
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-
   // Implementar lógica de cadastro
   register() {
     Navigator.push(
@@ -34,45 +33,43 @@ class _RegisterState extends State<Register> {
       backgroundColor: const Color(0xFFDDDDD1),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomTitle(),
             const SizedBox(
               height: 10,
             ),
             CustomInput(
-              labeltext: "Nome Completo",
+              hintText: "Nome",
+              label: "Nome Completo",
               controller: _nameController,
               icon: Icons.person,
               obscureText: false,
             ),
             CustomInput(
-              labeltext: "E-mail",
+              hintText: "exemplo@gmail.com",
+              label: "E-mail",
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
             ),
-            // Implementar DropDown
             CustomInput(
-              labeltext: "Tipo de Usuário",
-              controller: _userController,
-              icon: Icons.info,
-              obscureText: false,
-            ),
-            CustomInput(
-              labeltext: "Senha",
+              label: "Senha",
+              hintText: "******",
               controller: _passwordController,
               icon: Icons.visibility,
-              obscureText: false,
+              obscureText: true,
             ),
             CustomInput(
-              labeltext: "Repita a Senha",
+              label: "Repita a Senha",
+              hintText: "******",
               controller: _passwordController,
               icon: Icons.visibility,
-              obscureText: false,
+              obscureText: true,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: 16,
+                vertical: 40,
                 horizontal: 16,
               ),
               child: CustomButtom(

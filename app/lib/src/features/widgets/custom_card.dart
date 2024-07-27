@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class CustomCard extends StatefulWidget {
   final Color colorBar;
   final String competitionName;
@@ -80,11 +79,20 @@ class _CustomCardState extends State<CustomCard> {
                   children: [
                     InkWell(
                       onTap: () {},
-                      child: const Icon(
-                        Icons.shield,
-                        size: 50,
-                        color: Colors.white,
-                      ),
+                      child: widget.urlImage!.isEmpty
+                          ? const Icon(
+                              Icons.shield,
+                              size: 50,
+                              color: Colors.white,
+                            )
+                          : Image(
+                              image: AssetImage(
+                                widget.urlImage!,
+                              ),
+                              fit: BoxFit.contain,
+                              width: 50,
+                              height: 50,
+                            ),
                     ),
                     Container(
                       padding: EdgeInsets.zero,
@@ -121,7 +129,6 @@ class _CustomCardState extends State<CustomCard> {
                 Container(
                   padding: EdgeInsets.zero,
                   width: MediaQuery.of(context).size.width / 2,
-                  
                   child: Text(
                     widget.localeName,
                     maxLines: 1,
@@ -153,12 +160,17 @@ class _CustomCardState extends State<CustomCard> {
                 Text(
                   widget.date.day.toString(),
                   style: const TextStyle(
-                      fontSize: 55, fontWeight: FontWeight.bold, height: 0),
+                    fontSize: 55,
+                    fontWeight: FontWeight.bold,
+                    height: 0,
+                  ),
                 ),
                 Text(
                   DateFormat("MMMM", "pt_BR").format(widget.date),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 30,
+                    fontSize: 26,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 5,
                     height: 0,
