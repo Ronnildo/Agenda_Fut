@@ -1,6 +1,7 @@
+import 'package:app/src/features/pages/details.dart';
 import 'package:app/src/features/pages/insert.dart';
 import 'package:app/src/features/widgets/calendar_card.dart';
-import 'package:app/src/features/widgets/custom_card.dart';
+import 'package:app/src/features/widgets/custom_card_game.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -30,10 +31,15 @@ class _HomeState extends State<Home> {
     15,
     16,
   ]; // Procurar API de Calendário
-  
+
   DateTime time = DateTime.parse("2024-12-27 15:30:00.00");
   DateTime time2 = DateTime.parse("2024-12-27 15:30:00.00");
   //  TabController _tabController;
+
+  detalhes(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailsPage(),),);
+  }
+
   @override
   Widget build(BuildContext context) {
     // print(DateTime.now());
@@ -112,37 +118,15 @@ class _HomeState extends State<Home> {
                   color: Colors.greenAccent,
                 ),
               ),
-              CustomCard(
+              CustomCardGame(
                 colorBar: Colors.red,
                 competitionName: "Campeonato Barrense 2024",
                 teamName: "Atlético Madruga",
+                advTeamName: "Mangabeira FC",
                 localeName: "Ginásio Poliesportivo o Duty",
                 date: DateTime.now(),
+                onTap: detalhes,
                 urlImage: "assets/images/escudo.png",
-              ),
-              CustomCard(
-                colorBar: Colors.greenAccent,
-                competitionName: "Campeonato Barrense 2024",
-                teamName: "Atlético Madruga",
-                localeName: "Ginásio Poliesportivo o Duty",
-                date: time,
-                urlImage: "",
-              ),
-              CustomCard(
-                colorBar: Colors.amber,
-                competitionName: "Campeonato Barrense 2024",
-                teamName: "Atlético Madruga",
-                localeName: "Ginásio Poliesportivo o Duty",
-                date: DateTime.now(),
-                urlImage: "",
-              ),
-              CustomCard(
-                colorBar: Colors.grey,
-                competitionName: "Campeonato Barrense 2024",
-                teamName: "Atlético Madruga",
-                localeName: "Ginásio Poliesportivo o Duty",
-                date: time2,
-                urlImage: "",
               ),
             ],
           ),
