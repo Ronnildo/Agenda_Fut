@@ -2,6 +2,7 @@ import 'package:app/src/features/pages/details.dart';
 import 'package:app/src/features/pages/insert.dart';
 import 'package:app/src/features/widgets/calendar_card.dart';
 import 'package:app/src/features/widgets/custom_card_game.dart';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -12,6 +13,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final EasyInfiniteDateTimelineController _easyInfiniteDateTimelineController =
+      EasyInfiniteDateTimelineController();
   String pathImage = "";
   List<int> data = [
     1,
@@ -31,13 +34,18 @@ class _HomeState extends State<Home> {
     15,
     16,
   ]; // Procurar API de Calendário
-
+  DateTime _focusDate = DateTime.now();
   DateTime time = DateTime.parse("2024-12-27 15:30:00.00");
   DateTime time2 = DateTime.parse("2024-12-27 15:30:00.00");
   //  TabController _tabController;
 
-  detalhes(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailsPage(),),);
+  detalhes() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DetailsPage(),
+      ),
+    );
   }
 
   @override
@@ -84,28 +92,47 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2D2B1E),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.all(10),
-                child: ListView.separated(
-                  itemCount: data.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      width: 10,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    return CalendarCard(
-                      value: data[index],
-                    );
-                  },
+              EasyInfiniteDateTimeLine(
+                controller: _easyInfiniteDateTimelineController,
+                firstDate: DateTime.now(),
+                focusDate: _focusDate,
+                lastDate: DateTime(2102),
+                onDateChange: (selectDate) {
+                  setState(() {
+                    _focusDate = selectDate;
+                  });
+                },
+                locale: 'pt',
+                activeColor: Color(0xFF03045E),
+                dayProps: EasyDayProps(
+                  width: 60,
+                  height: 80,
+                  dayStructure: DayStructure.dayNumDayStr,
+                  todayHighlightColor: const Color(0xFF03045E).withOpacity(0.5),
+                  todayHighlightStyle: TodayHighlightStyle.withBackground,
+                  todayStyle: const DayStyle(
+                    dayNumStyle: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    dayStrStyle: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  inactiveDayStyle: const DayStyle(
+                    dayStrStyle: TextStyle(
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                  activeDayStyle: const DayStyle(
+                    dayStrStyle: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  borderColor: Colors.black,
                 ),
               ),
               const Padding(
