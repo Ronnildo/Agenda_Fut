@@ -1,3 +1,4 @@
+import 'package:app/src/core/theme.dart';
 import 'package:app/src/features/pages/login.dart';
 import 'package:flutter/material.dart';
 
@@ -10,18 +11,7 @@ class AgendaApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          displayMedium: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        shadowColor: Colors.black,
-        useMaterial3: true,
-      ),
+      theme: CustomTheme.lightThemeData(context),
       home: const Login(),
     );
   }

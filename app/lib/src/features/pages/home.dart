@@ -61,13 +61,9 @@ class _HomeState extends State<Home> {
           color: Colors.black,
         ),
         actions: [
-          const Text(
+          Text(
             "Jogador",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(
             width: 10,
@@ -142,7 +138,7 @@ class _HomeState extends State<Home> {
                 child: Divider(
                   height: 2,
                   thickness: 1,
-                  color: Colors.greenAccent,
+                  color: Colors.blue,
                 ),
               ),
               CustomCardGame(

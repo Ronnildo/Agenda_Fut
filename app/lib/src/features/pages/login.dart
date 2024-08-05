@@ -38,7 +38,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDDDDD1),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +46,7 @@ class _LoginState extends State<Login> {
             const CustomTitle(),
             CustomInput(
               label: "Digite seu E-mail",
-              hintText: "",
+              hintText: "atleta@agenda.com",
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
@@ -57,7 +56,7 @@ class _LoginState extends State<Login> {
             ),
             CustomInput(
               label: "Digite sua Senha",
-              hintText: "Digite sua Senha",
+              hintText: "atleta@123",
               controller: _passController,
               icon: Icons.visibility,
               obscureText: true,
@@ -99,14 +98,11 @@ class _LoginState extends State<Login> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Não tem uma Conta?",
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ),
                   Padding(

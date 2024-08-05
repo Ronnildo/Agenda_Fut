@@ -20,7 +20,6 @@ class CustomCardGame extends StatefulWidget {
     required this.date,
     required this.onTap,
     this.urlImage,
-    
   });
 
   @override
@@ -72,17 +71,10 @@ class _CustomCardGameState extends State<CustomCardGame> {
                   Text(
                     widget.competitionName,
                     maxLines: 2,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      overflow: TextOverflow.ellipsis,
-                      wordSpacing: 0,
-                      letterSpacing: 0,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: () {},
@@ -93,7 +85,6 @@ class _CustomCardGameState extends State<CustomCardGame> {
                                 color: Colors.white,
                               )
                             : ClipOval(
-                                
                                 child: Image(
                                   image: AssetImage(
                                     widget.urlImage!,
@@ -105,39 +96,37 @@ class _CustomCardGameState extends State<CustomCardGame> {
                               ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            padding: const EdgeInsets.only(left: 10,),
-                            width: MediaQuery.of(context).size.width / 6,
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                            ),
+                            // width: MediaQuery.of(context).size.width / 6,
                             child: Text(
                               widget.teamName,
                               maxLines: 2,
                               softWrap: true,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Colors.greenAccent,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 14,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ),
-                          const Text("x "),
-                          Container(
-                            padding: EdgeInsets.zero,
-                            width: MediaQuery.of(context).size.width / 6,
-                            child: Text(
-                              widget.advTeamName,
-                              maxLines: 2,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Colors.greenAccent,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
+                          // const Text("x"),
+                          // Container(
+                          //   padding: EdgeInsets.zero,
+                          //   width: MediaQuery.of(context).size.width / 6,
+                          //   child: Text(
+                          //     widget.advTeamName,
+                          //     maxLines: 2,
+                          //     softWrap: true,
+                          //     overflow: TextOverflow.ellipsis,
+                          //     style: const TextStyle(
+                          //       color: Colors.greenAccent,
+                          //       fontWeight: FontWeight.w800,
+                          //       fontSize: 14,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],

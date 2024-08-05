@@ -36,6 +36,11 @@ flutter:
     - family: IrishGrover
       fonts:
         - asset: assets/fonts/IrishGrover-Regular.ttf
+    - family: Play
+      fonts: 
+        - asset: assets/fonts/Play-Regular.ttf
+        - asset: assets/fonts/Play-Bold.ttf
+          weight: 700
 
   uses-material-design: true
 

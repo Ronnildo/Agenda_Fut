@@ -27,7 +27,7 @@ class _CustomInputState extends State<CustomInput> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.label),
+          Text(widget.label, style: Theme.of(context).textTheme.labelSmall,),
           TextField(
             controller: widget.controller,
             autofocus: true,
