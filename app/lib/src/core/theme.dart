@@ -32,6 +32,11 @@ class CustomTheme {
       fontFamily: "Play",
       textTheme: const TextTheme(
         displayLarge: TextStyle(
+          color: Colors.black,
+          fontSize: 55,
+          fontWeight: FontWeight.bold,
+        ),
+        displayMedium: TextStyle(
           color: Colors.white,
           fontFamily: "BrunoAce",
           fontSize: 36,
@@ -49,14 +54,24 @@ class CustomTheme {
           wordSpacing: 0,
           letterSpacing: 0,
         ),
+        labelLarge: TextStyle(
+          fontSize: 26,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 5,
+          height: 0,
+        ),
         labelMedium: TextStyle(
           color: Colors.greenAccent,
           fontWeight: FontWeight.w800,
-          fontSize: 14,
+          fontSize: 16,
         ),
         labelSmall: TextStyle(
           fontSize: 13,
           color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
       ),

@@ -73,13 +73,9 @@ class _LoginState extends State<Login> {
                   hoverDuration: const Duration(
                     seconds: 2,
                   ),
-                  child: const Text(
+                  child: Text(
                     "Esqueceu a senha?",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
               ),
@@ -118,13 +114,9 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       onPressed: register,
-                      child: const Text(
+                      child: Text(
                         "Cadastre-se Agora",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
                   ),
@@ -136,16 +128,16 @@ class _LoginState extends State<Login> {
                           "assets/images/google.png",
                         ),
                         fit: BoxFit.contain,
-                        width: 50,
-                        height: 50,
+                        width: 36,
+                        height: 36,
                       ),
                       Image(
                         image: AssetImage(
                           "assets/images/facebook.png",
                         ),
                         fit: BoxFit.contain,
-                        width: 50,
-                        height: 50,
+                        width: 36,
+                        height: 36,
                       ),
                     ],
                   )

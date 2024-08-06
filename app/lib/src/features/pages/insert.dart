@@ -20,7 +20,6 @@ class _InsertPageState extends State<InsertPage> {
   final TextEditingController _inforsController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-  
 
   TimeOfDay? selectedTime;
   TimePickerEntryMode entryMode = TimePickerEntryMode.dial;
@@ -34,13 +33,9 @@ class _InsertPageState extends State<InsertPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFDDDDD1),
       appBar: AppBar(
-        title: const Text(
+        title:  Text(
           "Inserir Jogo",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         backgroundColor: const Color(0xFFDDDDD1),
       ),
@@ -62,6 +57,7 @@ class _InsertPageState extends State<InsertPage> {
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(100),
                       ),
+                      child: const Icon(Icons.photo, size: 36,),
                     ),
                     InkWell(
                       onTap: () {},
@@ -79,13 +75,16 @@ class _InsertPageState extends State<InsertPage> {
                     bottom: 20,
                   ),
                   child: Text(
-                    "Escudo da Equipe",
+                    "Escudo da Equipe ou Banner do Jogo/Competição",
                     textAlign: TextAlign.center,
+                    maxLines: 2,
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline),
+                      color: Colors.black,
+                      
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
               ),

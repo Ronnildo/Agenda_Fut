@@ -18,7 +18,7 @@ class _CustomTitleState extends State<CustomTitle> {
         child: Center(
           child:  Text(
             "Fut Agenda",
-            style: Theme.of(context).textTheme.displayLarge,
+            style: Theme.of(context).textTheme.displayMedium,
           ),
         ),
       ),
