@@ -41,7 +41,7 @@ class _CustomInputState extends State<CustomInput> {
             obscureText: widget.obscureText,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFFEFEFE),
+              fillColor: const Color(0xFFFEFEFE),            
               enabledBorder:
                   const OutlineInputBorder(borderSide: BorderSide.none),
               hintText: widget.hintText,
@@ -63,6 +63,7 @@ class _CustomInputState extends State<CustomInput> {
                 borderSide: BorderSide(color: Color(0xFF03045E)),
               ),
             ),
+
           ),
         ],
       ),

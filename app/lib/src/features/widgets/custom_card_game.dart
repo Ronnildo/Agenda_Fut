@@ -143,6 +143,7 @@ class _CustomCardGameState extends State<CustomCardGame> {
                   Text(
                     widget.date.day.toString(),
                     style: Theme.of(context).textTheme.displayLarge,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     DateFormat("MMMM", "pt_BR").format(widget.date),
@@ -152,6 +153,8 @@ class _CustomCardGameState extends State<CustomCardGame> {
                   ),
                   Text(
                     DateFormat("EEEE", "pt_BR").format(widget.date),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(

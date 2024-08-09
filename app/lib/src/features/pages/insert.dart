@@ -1,3 +1,4 @@
+import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_Insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/date_or_hour.dart';
@@ -33,7 +34,7 @@ class _InsertPageState extends State<InsertPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFDDDDD1),
       appBar: AppBar(
-        title:  Text(
+        title: Text(
           "Inserir Jogo",
           style: Theme.of(context).textTheme.titleMedium,
         ),
@@ -47,44 +48,18 @@ class _InsertPageState extends State<InsertPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: const Icon(Icons.photo, size: 36,),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.add_a_photo,
-                        size: 40,
-                      ),
-                    ),
-                  ],
-                ),
+                child: ContainerImage(onTap: (){},),
               ),
-              const Center(
+               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     bottom: 20,
                   ),
                   child: Text(
                     "Escudo da Equipe ou Banner do Jogo/Competição",
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    style: TextStyle(
-                      color: Colors.black,
-                      
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      decoration: TextDecoration.underline,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
               ),

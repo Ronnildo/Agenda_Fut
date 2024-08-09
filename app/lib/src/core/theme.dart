@@ -30,23 +30,31 @@ class CustomTheme {
         ),
       ),
       fontFamily: "Play",
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
+      textTheme:  TextTheme(
+        //Mudar para title
+        displayLarge: const TextStyle(
           color: Colors.black,
           fontSize: 55,
           fontWeight: FontWeight.bold,
         ),
-        displayMedium: TextStyle(
+        //Mudar Para Title
+        displayMedium: const TextStyle(
           color: Colors.white,
           fontFamily: "BrunoAce",
           fontSize: 36,
           fontWeight: FontWeight.w600,
         ),
-        titleLarge: TextStyle(
+        //
+        displaySmall: TextStyle(
+          fontSize: 12,
+          color: Colors.grey.withOpacity(0.8),
+          fontWeight: FontWeight.w600,
+        ),
+        titleLarge: const TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.bold,
         ),
-        titleMedium: TextStyle(
+        titleMedium: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: Colors.black,
@@ -54,23 +62,27 @@ class CustomTheme {
           wordSpacing: 0,
           letterSpacing: 0,
         ),
-        labelLarge: TextStyle(
+        labelLarge: const TextStyle(
           fontSize: 26,
           fontWeight: FontWeight.w500,
           letterSpacing: 5,
           height: 0,
         ),
-        labelMedium: TextStyle(
+        labelMedium: const TextStyle(
           color: Colors.greenAccent,
           fontWeight: FontWeight.w800,
           fontSize: 16,
         ),
-        labelSmall: TextStyle(
+        labelSmall: const TextStyle(
           fontSize: 13,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
-        bodySmall: TextStyle(
+        bodySmall: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        bodyMedium: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),

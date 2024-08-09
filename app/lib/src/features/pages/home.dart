@@ -1,6 +1,7 @@
 import 'package:app/src/features/pages/details.dart';
 import 'package:app/src/features/pages/insert.dart';
-import 'package:app/src/features/widgets/calendar_card.dart';
+import 'package:app/src/features/pages/perfil.dart';
+import 'package:app/src/features/widgets/calendar_scroll.dart';
 import 'package:app/src/features/widgets/custom_card_game.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,13 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  DateTime selectDate = DateTime.now();
+
+  focusChange(DateTime selectDate) {
+    setState(() {
+      _focusDate = selectDate;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +70,26 @@ class _HomeState extends State<Home> {
         ),
         actions: [
           Text(
-            "Jogador",
+            "Atleta",
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(
             width: 10,
           ),
           pathImage.isEmpty
-              ? const Icon(
-                  Icons.account_circle,
-                  size: 50,
+              ? InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PerfilPage(),
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.account_circle,
+                    size: 50,
+                  ),
                 )
               : Image(
                   image: AssetImage(pathImage),
@@ -88,48 +106,10 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              EasyInfiniteDateTimeLine(
-                controller: _easyInfiniteDateTimelineController,
-                firstDate: DateTime.now(),
+              ScrollCalendar(
+                timelineController: _easyInfiniteDateTimelineController,
                 focusDate: _focusDate,
-                lastDate: DateTime(2102),
-                onDateChange: (selectDate) {
-                  setState(() {
-                    _focusDate = selectDate;
-                  });
-                },
-                locale: 'pt',
-                activeColor: Color(0xFF03045E),
-                dayProps: EasyDayProps(
-                  width: 60,
-                  height: 80,
-                  dayStructure: DayStructure.dayNumDayStr,
-                  todayHighlightColor: const Color(0xFF03045E).withOpacity(0.5),
-                  todayHighlightStyle: TodayHighlightStyle.withBackground,
-                  todayStyle: const DayStyle(
-                    dayNumStyle: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    dayStrStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  inactiveDayStyle: const DayStyle(
-                    dayStrStyle: TextStyle(
-                      color: Colors.blueAccent,
-                    ),
-                  ),
-                  activeDayStyle: const DayStyle(
-                    dayStrStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  borderColor: Colors.black,
-                ),
+                focusChange: () => focusChange(selectDate),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(

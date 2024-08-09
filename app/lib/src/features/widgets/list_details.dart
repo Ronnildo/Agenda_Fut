@@ -22,17 +22,9 @@ class _ListInforDetailsState extends State<ListInforDetails> {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(widget.title),
-      titleTextStyle: TextStyle(
-        fontSize: 12,
-        color: Colors.grey.withOpacity(0.8),
-        fontWeight: FontWeight.w600,
-      ),
+      titleTextStyle: Theme.of(context).textTheme.displaySmall,
       subtitle: Text(widget.subTitle),
-      subtitleTextStyle: const TextStyle(
-        fontSize: 18,
-        color: Colors.black,
-        fontWeight: FontWeight.w600,
-      ),
+      subtitleTextStyle: Theme.of(context).textTheme.bodyMedium,
       trailing: InkWell(
         onTap: widget.onTap,
         child: const Icon(Icons.edit),
