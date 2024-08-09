@@ -1,10 +1,10 @@
+import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_Insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
-import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/date_or_hour.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
+import 'package:intl/intl.dart' as Date;
 
 class InsertPage extends StatefulWidget {
   const InsertPage({super.key});
@@ -16,15 +16,15 @@ class InsertPage extends StatefulWidget {
 class _InsertPageState extends State<InsertPage> {
   final TextEditingController _competitionController = TextEditingController();
   final TextEditingController _teamController = TextEditingController();
+  final TextEditingController _advControlelr = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _inforsController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
-  late TextEditingController _timeController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
 
   TimeOfDay? selectedTime;
   TimePickerEntryMode entryMode = TimePickerEntryMode.dial;
   Orientation? orientation;
-  TextDirection textDirection = TextDirection.ltr;
   MaterialTapTargetSize tapTargetSize = MaterialTapTargetSize.padded;
   bool use24Hours = false;
 
@@ -34,13 +34,9 @@ class _InsertPageState extends State<InsertPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFDDDDD1),
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Inserir Jogo",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         backgroundColor: const Color(0xFFDDDDD1),
       ),
@@ -52,40 +48,18 @@ class _InsertPageState extends State<InsertPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.add_a_photo,
-                        size: 40,
-                      ),
-                    ),
-                  ],
-                ),
+                child: ContainerImage(onTap: (){},),
               ),
-              const Center(
+               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 40,
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
                   ),
                   child: Text(
-                    "Escudo da Equipe",
+                    "Escudo da Equipe ou Banner do Jogo/Competição",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline),
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
               ),
@@ -100,6 +74,11 @@ class _InsertPageState extends State<InsertPage> {
                 hintText: "Ex: Juventus",
               ),
               CustomInsertGame(
+                controller: _advControlelr,
+                label: "Nome da Equipe Adversária",
+                hintText: "Ex: Boca Juniros",
+              ),
+              CustomInsertGame(
                 controller: _locationController,
                 label: "Local da Competição",
                 hintText: "Ex: Arena Bets",
@@ -111,7 +90,29 @@ class _InsertPageState extends State<InsertPage> {
                     controller: _dateController,
                     dayOrHour: "Data",
                     hintText: "Ex: 20/06/2024",
-                    onTap: () {},
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(), //get today's date
+                        firstDate: DateTime(2024), lastDate: DateTime(2101),
+                      );
+                      if (pickedDate != null) {
+                        print(
+                            pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                        String formattedDate = Date.DateFormat('dd/MM/yyyy').format(
+                            pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                        print(
+                            formattedDate); //formatted date output using intl package =>  2022-07-04
+                        //You can format date as per your need
+
+                        setState(() {
+                          _dateController.text =
+                              formattedDate; //set foratted date to TextField value.
+                        });
+                      } else {
+                        print("Date is not selected");
+                      }
+                    },
                   ),
                   DateOrHour(
                     controller: _timeController,
@@ -125,7 +126,7 @@ class _InsertPageState extends State<InsertPage> {
                         orientation: orientation,
                         builder: (context, Widget? child) {
                           return Directionality(
-                            textDirection: textDirection,
+                            textDirection: TextDirection.ltr,
                             child: MediaQuery(
                               data: MediaQuery.of(context).copyWith(
                                 alwaysUse24HourFormat: use24Hours,
@@ -151,11 +152,13 @@ class _InsertPageState extends State<InsertPage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 60,
+                  vertical: 20,
                   // horizontal: 16,
                 ),
                 child: CustomButtom(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   title: "Adicionar",
                 ),
               )

@@ -23,14 +23,18 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.label),
+          Text(
+            widget.label,
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
           TextField(
             controller: widget.controller,
             autofocus: true,
             decoration: InputDecoration(
               filled: true,
               fillColor: const Color(0xFFFEFEFE),
-              enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
+              enabledBorder:
+                  const OutlineInputBorder(borderSide: BorderSide.none),
               hintText: widget.hintText,
               hintStyle: const TextStyle(
                 fontSize: 16,

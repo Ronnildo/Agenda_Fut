@@ -1,6 +1,9 @@
+import 'package:app/src/features/pages/details.dart';
 import 'package:app/src/features/pages/insert.dart';
-import 'package:app/src/features/widgets/calendar_card.dart';
-import 'package:app/src/features/widgets/custom_card.dart';
+import 'package:app/src/features/pages/perfil.dart';
+import 'package:app/src/features/widgets/calendar_scroll.dart';
+import 'package:app/src/features/widgets/custom_card_game.dart';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -11,6 +14,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final EasyInfiniteDateTimelineController _easyInfiniteDateTimelineController =
+      EasyInfiniteDateTimelineController();
   String pathImage = "";
   List<int> data = [
     1,
@@ -30,10 +35,27 @@ class _HomeState extends State<Home> {
     15,
     16,
   ]; // Procurar API de Calendário
-  
+  DateTime _focusDate = DateTime.now();
   DateTime time = DateTime.parse("2024-12-27 15:30:00.00");
   DateTime time2 = DateTime.parse("2024-12-27 15:30:00.00");
   //  TabController _tabController;
+
+  detalhes() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DetailsPage(),
+      ),
+    );
+  }
+  DateTime selectDate = DateTime.now();
+
+  focusChange(DateTime selectDate) {
+    setState(() {
+      _focusDate = selectDate;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // print(DateTime.now());
@@ -47,21 +69,27 @@ class _HomeState extends State<Home> {
           color: Colors.black,
         ),
         actions: [
-          const Text(
-            "Jogador",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+          Text(
+            "Atleta",
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(
             width: 10,
           ),
           pathImage.isEmpty
-              ? const Icon(
-                  Icons.account_circle,
-                  size: 50,
+              ? InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PerfilPage(),
+                      ),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.account_circle,
+                    size: 50,
+                  ),
                 )
               : Image(
                   image: AssetImage(pathImage),
@@ -78,29 +106,10 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF2D2B1E),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.all(10),
-                child: ListView.separated(
-                  itemCount: data.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      width: 10,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    return CalendarCard(
-                      value: data[index],
-                    );
-                  },
-                ),
+              ScrollCalendar(
+                timelineController: _easyInfiniteDateTimelineController,
+                focusDate: _focusDate,
+                focusChange: () => focusChange(selectDate),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(
@@ -109,40 +118,28 @@ class _HomeState extends State<Home> {
                 child: Divider(
                   height: 2,
                   thickness: 1,
-                  color: Colors.greenAccent,
+                  color: Colors.blue,
                 ),
               ),
-              CustomCard(
+              CustomCardGame(
                 colorBar: Colors.red,
                 competitionName: "Campeonato Barrense 2024",
                 teamName: "Atlético Madruga",
+                advTeamName: "Mangabeira FC",
                 localeName: "Ginásio Poliesportivo o Duty",
                 date: DateTime.now(),
+                onTap: detalhes,
                 urlImage: "assets/images/escudo.png",
               ),
-              CustomCard(
-                colorBar: Colors.greenAccent,
-                competitionName: "Campeonato Barrense 2024",
-                teamName: "Atlético Madruga",
-                localeName: "Ginásio Poliesportivo o Duty",
-                date: time,
-                urlImage: "",
-              ),
-              CustomCard(
+              CustomCardGame(
                 colorBar: Colors.amber,
                 competitionName: "Campeonato Barrense 2024",
-                teamName: "Atlético Madruga",
+                teamName: "Real Madrid FC",
+                advTeamName: "Vasco FC",
                 localeName: "Ginásio Poliesportivo o Duty",
                 date: DateTime.now(),
-                urlImage: "",
-              ),
-              CustomCard(
-                colorBar: Colors.grey,
-                competitionName: "Campeonato Barrense 2024",
-                teamName: "Atlético Madruga",
-                localeName: "Ginásio Poliesportivo o Duty",
-                date: time2,
-                urlImage: "",
+                onTap: detalhes,
+                urlImage: "assets/images/escudo.png",
               ),
             ],
           ),

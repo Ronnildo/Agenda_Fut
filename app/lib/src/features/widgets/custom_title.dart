@@ -15,18 +15,10 @@ class _CustomTitleState extends State<CustomTitle> {
       child: SizedBox(
         height: MediaQuery.of(context).size.height / 2.8,
         width: MediaQuery.of(context).size.width, 
-        child: const Center(
+        child: Center(
           child:  Text(
             "Fut Agenda",
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: "BrunoAce",
-              fontSize: 36,
-              fontWeight: FontWeight.w600,
-              // shadows: [BoxShadow(blurRadius: 2, spreadRadius: 4, color: Colors.grey)]
-              
-            ),
-            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.displayMedium,
           ),
         ),
       ),

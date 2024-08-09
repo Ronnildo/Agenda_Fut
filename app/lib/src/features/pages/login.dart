@@ -38,7 +38,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDDDDD1),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +46,7 @@ class _LoginState extends State<Login> {
             const CustomTitle(),
             CustomInput(
               label: "Digite seu E-mail",
-              hintText: "",
+              hintText: "atleta@agenda.com",
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
@@ -57,7 +56,7 @@ class _LoginState extends State<Login> {
             ),
             CustomInput(
               label: "Digite sua Senha",
-              hintText: "Digite sua Senha",
+              hintText: "atleta@123",
               controller: _passController,
               icon: Icons.visibility,
               obscureText: true,
@@ -74,13 +73,9 @@ class _LoginState extends State<Login> {
                   hoverDuration: const Duration(
                     seconds: 2,
                   ),
-                  child: const Text(
+                  child: Text(
                     "Esqueceu a senha?",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                 ),
               ),
@@ -99,14 +94,11 @@ class _LoginState extends State<Login> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Não tem uma Conta?",
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ),
                   Padding(
@@ -122,13 +114,9 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       onPressed: register,
-                      child: const Text(
+                      child: Text(
                         "Cadastre-se Agora",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w800,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
                   ),
@@ -140,16 +128,16 @@ class _LoginState extends State<Login> {
                           "assets/images/google.png",
                         ),
                         fit: BoxFit.contain,
-                        width: 50,
-                        height: 50,
+                        width: 36,
+                        height: 36,
                       ),
                       Image(
                         image: AssetImage(
                           "assets/images/facebook.png",
                         ),
                         fit: BoxFit.contain,
-                        width: 50,
-                        height: 50,
+                        width: 36,
+                        height: 36,
                       ),
                     ],
                   )

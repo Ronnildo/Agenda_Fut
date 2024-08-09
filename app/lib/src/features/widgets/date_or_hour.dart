@@ -18,7 +18,6 @@ class DateOrHour extends StatefulWidget {
 }
 
 class _DateOrHourState extends State<DateOrHour> {
-  
   @override
   Widget build(BuildContext context) {
     // print(widget.controller.text);
@@ -31,10 +30,12 @@ class _DateOrHourState extends State<DateOrHour> {
           width: 170,
           child: TextField(
             controller: widget.controller,
+            keyboardType: TextInputType.datetime,
             decoration: InputDecoration(
               filled: true,
               fillColor: const Color(0xFFFEFEFE),
-              enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
+              enabledBorder:
+                  const OutlineInputBorder(borderSide: BorderSide.none),
               hintText: widget.hintText,
               hintStyle: const TextStyle(
                 fontSize: 16,
