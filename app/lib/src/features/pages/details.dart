@@ -1,6 +1,7 @@
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
+import 'package:app/src/features/widgets/mini_card_game.dart';
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _DetailsPageState extends State<DetailsPage> {
         leadingWidth: 20,
         title: Text(
           "Competição",
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
       body: SingleChildScrollView(
@@ -36,7 +37,7 @@ class _DetailsPageState extends State<DetailsPage> {
             Center(
               child: Text(
                 "Escudo da Equipe ou Banner do jogo",
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
             Padding(
@@ -46,7 +47,7 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               child: Text(
                 "Detalhes da Partida:",
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             ListInforDetails(
@@ -87,18 +88,25 @@ class _DetailsPageState extends State<DetailsPage> {
                 color: Colors.grey.withOpacity(0.4),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
               child: Text(
                 textAlign: TextAlign.left,
-                "Outros Informações da Competição:",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+                "Outros Informações",
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Text("Jogos:", style: Theme.of(context).textTheme.bodyMedium,),
+            ),
+            MiniCardGame(
+                colorBar: Colors.red,
+                teamName: "Atlético",
+                advTeamName: "Real FC",
+                localeName: "Ginásio Poliesportivo",
+                date: DateTime(2024, 10, 21),
+                onTap: () {}),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: CustomButtom(onTap: () {}, title: "Salvar Alterações"),

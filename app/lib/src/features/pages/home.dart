@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
         actions: [
           Text(
             "Atleta",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(
             width: 10,

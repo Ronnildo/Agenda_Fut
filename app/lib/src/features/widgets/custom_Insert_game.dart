@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 
 class CustomInsertGame extends StatefulWidget {
@@ -25,7 +26,7 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
         children: [
           Text(
             widget.label,
-            style: Theme.of(context).textTheme.labelSmall,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
           TextField(
             controller: widget.controller,
@@ -36,16 +37,8 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
               enabledBorder:
                   const OutlineInputBorder(borderSide: BorderSide.none),
               hintText: widget.hintText,
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-              floatingLabelStyle: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+              hintStyle: Theme.of(context).textTheme.labelSmall,
+              floatingLabelStyle: Theme.of(context).textTheme.labelSmall,
               border: const OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.white,

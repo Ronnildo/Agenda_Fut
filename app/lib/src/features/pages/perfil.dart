@@ -17,7 +17,7 @@ class _PerfilPageState extends State<PerfilPage> {
         backgroundColor: Theme.of(context).colorScheme.background,
         title: Text(
           "Perfil",
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         leadingWidth: 20,
         actions: const [
@@ -42,7 +42,7 @@ class _PerfilPageState extends State<PerfilPage> {
           )),
           Text(
             "Foto do Perfil",
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.labelSmall,
           ),
           ListInforDetails(
               title: "Nome",

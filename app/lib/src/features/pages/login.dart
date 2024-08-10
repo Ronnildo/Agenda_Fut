@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
                   ),
                   child: Text(
                     "Esqueceu a senha?",
-                    style: Theme.of(context).textTheme.labelSmall,
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
               ),
@@ -98,11 +98,11 @@ class _LoginState extends State<Login> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Não tem uma Conta?",
-                      style: Theme.of(context).textTheme.labelSmall,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 0, bottom: 40.0),
+                    padding: const EdgeInsets.only(top: 0, bottom: 20.0),
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         fixedSize: Size(
@@ -116,7 +116,7 @@ class _LoginState extends State<Login> {
                       onPressed: register,
                       child: Text(
                         "Cadastre-se Agora",
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ),

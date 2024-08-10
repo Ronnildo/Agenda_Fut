@@ -33,7 +33,7 @@ class _CustomInputState extends State<CustomInput> {
         children: [
           Text(
             widget.label,
-            style: Theme.of(context).textTheme.labelSmall,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
           TextField(
             controller: widget.controller,
@@ -41,15 +41,11 @@ class _CustomInputState extends State<CustomInput> {
             obscureText: widget.obscureText,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFFEFEFE),            
+              fillColor: const Color(0xFFFEFEFE),
               enabledBorder:
                   const OutlineInputBorder(borderSide: BorderSide.none),
               hintText: widget.hintText,
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
+              hintStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelStyle: Theme.of(context).textTheme.bodySmall,
               suffixIcon: Icon(widget.icon),
               border: const OutlineInputBorder(
@@ -63,7 +59,6 @@ class _CustomInputState extends State<CustomInput> {
                 borderSide: BorderSide(color: Color(0xFF03045E)),
               ),
             ),
-
           ),
         ],
       ),
