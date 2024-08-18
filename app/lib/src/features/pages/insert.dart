@@ -32,58 +32,64 @@ class _InsertPageState extends State<InsertPage> {
   Widget build(BuildContext context) {
     print(_timeController.text);
     return Scaffold(
-      backgroundColor: const Color(0xFFDDDDD1),
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: Text(
           "Inserir Jogo",
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        backgroundColor: const Color(0xFFDDDDD1),
+        backgroundColor: Theme.of(context).colorScheme.background,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: ContainerImage(onTap: (){},),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: ContainerImage(
+                onTap: () {},
               ),
-               Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 20,
-                  ),
-                  child: Text(
-                    "Escudo da Equipe ou Banner do Jogo/Competição",
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 20,
+                ),
+                child: Text(
+                  "Escudo da Equipe ou Banner do Jogo/Competição",
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
-              CustomInsertGame(
-                controller: _competitionController,
-                label: "Nome da Competição",
-                hintText: "Ex: Copa América",
+            ),
+            CustomInsertGame(
+              controller: _competitionController,
+              label: "Nome da Competição",
+              hintText: "Ex: Copa América",
+            ),
+            CustomInsertGame(
+              controller: _teamController,
+              label: "Nome da Equipe",
+              hintText: "Ex: Juventus",
+            ),
+            CustomInsertGame(
+              controller: _advControlelr,
+              label: "Nome da Equipe Adversária",
+              hintText: "Ex: Boca Juniros",
+            ),
+            CustomInsertGame(
+              controller: _locationController,
+              label: "Local da Competição",
+              hintText: "Ex: Arena Bets",
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: 16,
               ),
-              CustomInsertGame(
-                controller: _teamController,
-                label: "Nome da Equipe",
-                hintText: "Ex: Juventus",
-              ),
-              CustomInsertGame(
-                controller: _advControlelr,
-                label: "Nome da Equipe Adversária",
-                hintText: "Ex: Boca Juniros",
-              ),
-              CustomInsertGame(
-                controller: _locationController,
-                label: "Local da Competição",
-                hintText: "Ex: Arena Bets",
-              ),
-              Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   DateOrHour(
@@ -150,20 +156,14 @@ class _InsertPageState extends State<InsertPage> {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  // horizontal: 16,
-                ),
-                child: CustomButtom(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  title: "Adicionar",
-                ),
-              )
-            ],
-          ),
+            ),
+            CustomButtom(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              title: "Adicionar",
+            )
+          ],
         ),
       ),
     );

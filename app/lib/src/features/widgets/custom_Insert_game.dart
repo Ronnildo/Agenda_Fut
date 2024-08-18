@@ -20,7 +20,12 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, bottom: 10),
+      padding: const EdgeInsets.only(
+        top: 5,
+        bottom: 10,
+        left: 16,
+        right: 16,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,16 +38,16 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
             autofocus: true,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFFEFEFE),
-              enabledBorder:
-                  const OutlineInputBorder(borderSide: BorderSide.none),
+              fillColor: const Color(0xFF03045E).withOpacity(0.2),
+              contentPadding: const EdgeInsets.all(16),
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelStyle: Theme.of(context).textTheme.labelSmall,
-              border: const OutlineInputBorder(
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              border: const UnderlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.white,
-                  width: 1.5,
+                  color: Color(0xFF03045E),
+                  width: 100,
                 ),
               ),
               focusColor: Colors.white,

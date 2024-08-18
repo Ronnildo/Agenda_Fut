@@ -30,15 +30,12 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFDDDDD1),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomTitle(),
-            const SizedBox(
-              height: 10,
-            ),
             CustomInput(
               hintText: "Nome",
               label: "Nome Completo",
@@ -67,15 +64,12 @@ class _RegisterState extends State<Register> {
               icon: Icons.visibility,
               obscureText: true,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 40,
-                horizontal: 16,
-              ),
-              child: CustomButtom(
-                onTap: register,
-                title: "Cadastrar",
-              ),
+            const SizedBox(
+              height: 16,
+            ),
+            CustomButtom(
+              onTap: register,
+              title: "Cadastrar",
             ),
           ],
         ),

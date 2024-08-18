@@ -17,7 +17,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        leadingWidth: 20,
+        leadingWidth: 22,
         title: Text(
           "Competição",
           style: Theme.of(context).textTheme.titleMedium,

@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // print(DateTime.now());
     return Scaffold(
-      backgroundColor: const Color(0xFFDDDDD1),
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         // Implementar lógica de troca por foto
         leading: const Icon(
@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
                   height: 50,
                 ),
         ],
-        backgroundColor: const Color(0xFFDDDDD1),
+        backgroundColor: Theme.of(context).colorScheme.background,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

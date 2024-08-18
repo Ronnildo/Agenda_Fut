@@ -8,7 +8,7 @@ class CustomTheme {
       primaryColor: const Color(0xFF03045E),
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF03045E),
-        background: const Color(0xFFDDDDD1),
+        background: Colors.white,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -92,10 +92,10 @@ class CustomTheme {
           fontWeight: FontWeight.w800,
           fontSize: 14,
         ),
-        labelSmall: const TextStyle(
+        labelSmall:  TextStyle(
           fontSize: 16,
-          color: Colors.grey,
-          fontWeight: FontWeight.w500,
+          color: Colors.grey.shade800,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

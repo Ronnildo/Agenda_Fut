@@ -3,6 +3,7 @@ import 'package:app/src/features/pages/register.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
+
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -50,10 +51,7 @@ class _LoginState extends State<Login> {
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            ),      
             CustomInput(
               label: "Digite sua Senha",
               hintText: "atleta@123",
@@ -64,6 +62,7 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.only(
                 left: 16.0,
+                bottom: 30,
               ),
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -80,18 +79,12 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 30,
-                horizontal: 16,
-              ),
-              child: CustomButtom(
-                onTap: login,
-                title: "Entrar",
-              ),
+            CustomButtom(
+              onTap: login,
+              title: "Entrar",
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16,),
               child: Column(
                 children: [
                   Align(

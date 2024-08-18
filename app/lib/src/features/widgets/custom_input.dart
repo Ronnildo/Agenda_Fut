@@ -27,6 +27,7 @@ class _CustomInputState extends State<CustomInput> {
         right: 16,
         left: 16,
         top: 10,
+        bottom: 10,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,21 +43,22 @@ class _CustomInputState extends State<CustomInput> {
             decoration: InputDecoration(
               filled: true,
               fillColor: const Color(0xFFFEFEFE),
-              enabledBorder:
-                  const OutlineInputBorder(borderSide: BorderSide.none),
+              contentPadding: const EdgeInsets.all(16),
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelStyle: Theme.of(context).textTheme.bodySmall,
               suffixIcon: Icon(widget.icon),
               border: const OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.white,
+                  color: Colors.black,
                   width: 1.5,
                 ),
               ),
               focusColor: Colors.white,
               focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF03045E)),
+                borderSide: BorderSide(
+                  color: Color(0xFF03045E),
+                ),
               ),
             ),
           ),
