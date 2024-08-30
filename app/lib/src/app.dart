@@ -1,5 +1,5 @@
 import 'package:app/src/core/theme.dart';
-import 'package:app/src/features/pages/login.dart';
+import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:flutter/material.dart';
 
 class AgendaApp extends StatelessWidget {

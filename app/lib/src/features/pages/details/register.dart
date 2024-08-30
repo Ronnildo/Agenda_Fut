@@ -1,4 +1,4 @@
-import 'package:app/src/features/pages/login.dart';
+import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
@@ -34,14 +34,20 @@ class _RegisterState extends State<Register> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const CustomTitle(),
+            const ListTile(
+              title: Text("Começe Agora"),
+              subtitle: Text("Crie sua conta super rápido"),
+            ),
             CustomInput(
               hintText: "Nome",
               label: "Nome Completo",
               controller: _nameController,
               icon: Icons.person,
               obscureText: false,
+              error: "",
             ),
             CustomInput(
               hintText: "exemplo@gmail.com",
@@ -49,20 +55,15 @@ class _RegisterState extends State<Register> {
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
+              error: "",
             ),
             CustomInput(
               label: "Senha",
-              hintText: "******",
+              hintText: "Crie sua Senha",
               controller: _passwordController,
               icon: Icons.visibility,
               obscureText: true,
-            ),
-            CustomInput(
-              label: "Repita a Senha",
-              hintText: "******",
-              controller: _passwordController,
-              icon: Icons.visibility,
-              obscureText: true,
+              error: "",
             ),
             const SizedBox(
               height: 16,
@@ -71,6 +72,30 @@ class _RegisterState extends State<Register> {
               onTap: register,
               title: "Cadastrar",
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Tem uma conta?",
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Login",
+                    style: TextStyle(
+                      color: Color(0xFF03045E),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

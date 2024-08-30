@@ -8,7 +8,7 @@ class CustomTheme {
       primaryColor: const Color(0xFF03045E),
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF03045E),
-        background: Colors.white,
+        background: const Color(0xFFDDDDD1),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -77,7 +77,7 @@ class CustomTheme {
           letterSpacing: 0,
         ),
         titleSmall: const TextStyle(
-          fontSize: 13,
+          fontSize: 14,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),

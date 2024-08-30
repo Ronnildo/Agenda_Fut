@@ -1,5 +1,5 @@
-import 'package:app/src/features/pages/home.dart';
-import 'package:app/src/features/pages/register.dart';
+import 'package:app/src/features/pages/home/home.dart';
+import 'package:app/src/features/pages/details/register.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
@@ -41,8 +41,8 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const CustomTitle(),
             CustomInput(
@@ -51,6 +51,7 @@ class _LoginState extends State<Login> {
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
+              error: "",
             ),      
             CustomInput(
               label: "Digite sua Senha",
@@ -58,11 +59,13 @@ class _LoginState extends State<Login> {
               controller: _passController,
               icon: Icons.visibility,
               obscureText: true,
+              error: "",
             ),
             Padding(
               padding: const EdgeInsets.only(
                 left: 16.0,
                 bottom: 30,
+                top: 0,
               ),
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -75,6 +78,7 @@ class _LoginState extends State<Login> {
                   child: Text(
                     "Esqueceu a senha?",
                     style: Theme.of(context).textTheme.titleSmall,
+                    selectionColor: Colors.blue,
                   ),
                 ),
               ),

@@ -1,6 +1,6 @@
-import 'package:app/src/features/pages/details.dart';
-import 'package:app/src/features/pages/insert.dart';
-import 'package:app/src/features/pages/perfil.dart';
+import 'package:app/src/features/pages/details/details.dart';
+import 'package:app/src/features/pages/home/insert.dart';
+import 'package:app/src/features/pages/auth/perfil_page.dart';
 import 'package:app/src/features/widgets/calendar_scroll.dart';
 import 'package:app/src/features/widgets/custom_card_game.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
@@ -17,28 +17,8 @@ class _HomeState extends State<Home> {
   final EasyInfiniteDateTimelineController _easyInfiniteDateTimelineController =
       EasyInfiniteDateTimelineController();
   String pathImage = "";
-  List<int> data = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-  ]; // Procurar API de Calendário
+// Procurar API de Calendário
   DateTime _focusDate = DateTime.now();
-  DateTime time = DateTime.parse("2024-12-27 15:30:00.00");
-  DateTime time2 = DateTime.parse("2024-12-27 15:30:00.00");
-  //  TabController _tabController;
 
   detalhes() {
     Navigator.push(
@@ -48,6 +28,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   DateTime selectDate = DateTime.now();
 
   focusChange(DateTime selectDate) {
@@ -63,16 +44,13 @@ class _HomeState extends State<Home> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         // Implementar lógica de troca por foto
-        leading: const Icon(
-          Icons.menu,
-          size: 36,
-          color: Colors.black,
-        ),
-        actions: [
-          Text(
+        title: Text(
             "Atleta",
             style: Theme.of(context).textTheme.titleMedium,
           ),
+          leadingWidth: 20,
+        actions: [
+          
           const SizedBox(
             width: 10,
           ),

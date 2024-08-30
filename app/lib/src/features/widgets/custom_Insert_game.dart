@@ -38,13 +38,13 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
             autofocus: true,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFF03045E).withOpacity(0.2),
+              fillColor:  Colors.white,
               contentPadding: const EdgeInsets.all(16),
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: const UnderlineInputBorder(
+              border: const OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Color(0xFF03045E),
                   width: 100,

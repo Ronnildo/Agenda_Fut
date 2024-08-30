@@ -30,7 +30,6 @@ class _InsertPageState extends State<InsertPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_timeController.text);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -38,6 +37,7 @@ class _InsertPageState extends State<InsertPage> {
           "Inserir Jogo",
           style: Theme.of(context).textTheme.titleMedium,
         ),
+        leadingWidth: 20,
         backgroundColor: Theme.of(context).colorScheme.background,
       ),
       body: SingleChildScrollView(
@@ -70,12 +70,12 @@ class _InsertPageState extends State<InsertPage> {
             ),
             CustomInsertGame(
               controller: _teamController,
-              label: "Nome da Equipe",
+              label: "Casa",
               hintText: "Ex: Juventus",
             ),
             CustomInsertGame(
               controller: _advControlelr,
-              label: "Nome da Equipe Adversária",
+              label: "Fora",
               hintText: "Ex: Boca Juniros",
             ),
             CustomInsertGame(

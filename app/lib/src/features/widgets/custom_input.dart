@@ -6,6 +6,7 @@ class CustomInput extends StatefulWidget {
   final String label;
   final IconData icon;
   final bool obscureText;
+  final String error;
   const CustomInput({
     super.key,
     required this.hintText,
@@ -13,6 +14,7 @@ class CustomInput extends StatefulWidget {
     required this.controller,
     required this.icon,
     required this.obscureText,
+    required this.error,
   });
 
   @override
@@ -23,14 +25,13 @@ class _CustomInputState extends State<CustomInput> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        right: 16,
-        left: 16,
-        top: 10,
-        bottom: 10,
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 16,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             widget.label,
@@ -43,11 +44,12 @@ class _CustomInputState extends State<CustomInput> {
             decoration: InputDecoration(
               filled: true,
               fillColor: const Color(0xFFFEFEFE),
-              contentPadding: const EdgeInsets.all(16),
+              contentPadding: const EdgeInsets.all(18),
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelStyle: Theme.of(context).textTheme.bodySmall,
               suffixIcon: Icon(widget.icon),
+              // errorStyle: const TextStyle(fontSize: 14, color: Colors.green),
               border: const OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.black,
