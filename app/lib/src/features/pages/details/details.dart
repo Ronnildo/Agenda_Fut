@@ -19,7 +19,7 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Theme.of(context).colorScheme.background,
         leadingWidth: 22,
         title: Text(
-          "Competição",
+          "Detalhes da Partida",
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
@@ -46,7 +46,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 vertical: 10,
               ),
               child: Text(
-                "Detalhes da Partida:",
+                "Descrição:",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
@@ -88,17 +88,17 @@ class _DetailsPageState extends State<DetailsPage> {
                 color: Colors.grey.withOpacity(0.4),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              child: Text(
-                textAlign: TextAlign.left,
-                "Outros Informações",
+            ListTile(
+              title: Text(
+                "Outras Jogos",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Text("Jogos:", style: Theme.of(context).textTheme.bodyMedium,),
+              // Criar função de ocultar
+              trailing: const Icon(
+                Icons.arrow_drop_down,
+                size: 30,
+                color: Colors.black,
+              ), 
             ),
             MiniCardGame(
                 colorBar: Colors.red,
@@ -108,7 +108,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 date: DateTime(2024, 10, 21),
                 onTap: () {}),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: CustomButtom(onTap: () {}, title: "Salvar Alterações"),
             ),
           ],

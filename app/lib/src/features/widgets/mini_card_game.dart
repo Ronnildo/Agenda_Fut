@@ -72,25 +72,41 @@ class _MiniCardGameState extends State<MiniCardGame> {
                     left: 20,
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Text(widget.teamName),
-                          const Text(" x "),
-                          Text(widget.advTeamName),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text("Local: "),
-                          Container(
-                            width: MediaQuery.of(context).size.width / 3,
-                            child: Text(
-                              widget.localeName,
-                              overflow: TextOverflow.ellipsis,
+                          Text(
+                            widget.teamName,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 10),
+                            child:  Text("X"),
+                          ),
+                          Text(
+                            widget.advTeamName,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
                             ),
                           ),
                         ],
+                      ),
+                       Text(
+                        "Local: ${widget.localeName}",
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        ),
                       ),
                     ],
                   ),
@@ -121,13 +137,16 @@ class _MiniCardGameState extends State<MiniCardGame> {
                           alignment: Alignment.topLeft,
                           children: [
                             Align(
-                              alignment: Alignment.lerp(Alignment.center,
-                                  Alignment.topLeft, 1)!,
+                              alignment: Alignment.lerp(
+                                  Alignment.center, Alignment.topLeft, 1)!,
                               child: Text(
                                 widget.date.day.toString(),
                                 style: widget.date.day.toString().length < 2
                                     ? Theme.of(context).textTheme.displayLarge
-                                    : const TextStyle(fontSize: 36, fontWeight: FontWeight.bold, ),
+                                    : const TextStyle(
+                                        fontSize: 36,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                               ),
                             ),
                             Column(
@@ -146,15 +165,17 @@ class _MiniCardGameState extends State<MiniCardGame> {
                                         .format(widget.date),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: widget.date.day.toString().length < 2 ? const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
-                                      overflow: TextOverflow.ellipsis,
-                                    ) : const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w300,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                    style: widget.date.day.toString().length < 2
+                                        ? const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        : const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                   ),
                                 ),
                                 Align(

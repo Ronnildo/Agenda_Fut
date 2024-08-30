@@ -45,15 +45,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         // Implementar lógica de troca por foto
         title: Text(
-            "Atleta",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          leadingWidth: 20,
-        actions: [
-          
-          const SizedBox(
-            width: 10,
-          ),
+          "Atleta",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        leadingWidth: 20,
+        automaticallyImplyLeading: false,
+        actions: [     
           pathImage.isEmpty
               ? InkWell(
                   onTap: () {
