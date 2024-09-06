@@ -1,10 +1,13 @@
-import 'package:app/src/features/pages/details/details.dart';
-import 'package:app/src/features/pages/home/insert.dart';
+
+import 'package:app/src/features/pages/details/details_page.dart';
+import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/auth/perfil_page.dart';
 import 'package:app/src/features/widgets/calendar_scroll.dart';
 import 'package:app/src/features/widgets/custom_card_game.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+
+import '../../widgets/new_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -106,15 +109,16 @@ class _HomeState extends State<Home> {
                 onTap: detalhes,
                 urlImage: "assets/images/escudo.png",
               ),
-              CustomCardGame(
-                colorBar: Colors.amber,
-                competitionName: "Campeonato Barrense 2024",
-                teamName: "Real Madrid FC",
-                advTeamName: "Vasco FC",
-                localeName: "Ginásio Poliesportivo o Duty",
+              NewCard(
+                // colorBar: Colors.amber,
+                title: "Campeonato Barrense 2024",
+                home: "Real Madrid FC ",
+                alway: "Vasco FC Teste",
+                locale: "Ginásio Poliesportivo o Duty",
                 date: DateTime.now(),
-                onTap: detalhes,
-                urlImage: "assets/images/escudo.png",
+                fase: "Fase de Grupos",
+                // onTap: detalhes,
+                // urlImage: "assets/images/escudo.png",
               ),
             ],
           ),

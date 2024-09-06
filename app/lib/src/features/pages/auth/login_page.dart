@@ -1,5 +1,5 @@
-import 'package:app/src/features/pages/home/home.dart';
-import 'package:app/src/features/pages/details/register.dart';
+import 'package:app/src/features/pages/home/home_page.dart';
+import 'package:app/src/features/pages/details/register_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
@@ -44,7 +44,7 @@ class _LoginState extends State<Login> {
           // crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const CustomTitle(),
+            const CustomTitle(heightdiv: 2.8,),
             CustomInput(
               label: "Digite seu E-mail",
               hintText: "atleta@agenda.com",

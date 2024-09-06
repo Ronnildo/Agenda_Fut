@@ -3,8 +3,8 @@ import 'package:app/src/features/widgets/custom_Insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/date_or_hour.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_date_timeline/easy_date_timeline.dart';
-import 'package:intl/intl.dart' as Date;
+// ignore: library_prefixes
+import 'package:intl/intl.dart' as Data;
 
 class InsertPage extends StatefulWidget {
   const InsertPage({super.key});
@@ -18,7 +18,7 @@ class _InsertPageState extends State<InsertPage> {
   final TextEditingController _teamController = TextEditingController();
   final TextEditingController _advControlelr = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _inforsController = TextEditingController();
+  // final TextEditingController _inforsController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
 
@@ -103,12 +103,12 @@ class _InsertPageState extends State<InsertPage> {
                         firstDate: DateTime(2024), lastDate: DateTime(2101),
                       );
                       if (pickedDate != null) {
-                        print(
-                            pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                        String formattedDate = Date.DateFormat('dd/MM/yyyy').format(
+                        // print(
+                        //     pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                        String formattedDate = Data.DateFormat('dd/MM/yyyy').format(
                             pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                        print(
-                            formattedDate); //formatted date output using intl package =>  2022-07-04
+                        // print(
+                        //     formattedDate); //formatted date output using intl package =>  2022-07-04
                         //You can format date as per your need
 
                         setState(() {
@@ -116,7 +116,7 @@ class _InsertPageState extends State<InsertPage> {
                               formattedDate; //set foratted date to TextField value.
                         });
                       } else {
-                        print("Date is not selected");
+                        // print("Date is not selected");
                       }
                     },
                   ),
