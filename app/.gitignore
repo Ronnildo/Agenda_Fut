@@ -41,3 +41,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase security
+firebase_options.dart
+database.rules.json
+firebase.json
+firebase.indexes.json
+firestore.rules
+rules.json
+remoteconfig.template.json
+storage.rules
+firestore.indexes.json

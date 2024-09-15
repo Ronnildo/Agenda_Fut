@@ -32,7 +32,7 @@ class _NewCardState extends State<NewCard> {
     return Container(
       padding: const EdgeInsets.all(10),
       width: MediaQuery.of(context).size.width,
-      height: 180,
+      height: 190,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -40,7 +40,10 @@ class _NewCardState extends State<NewCard> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(widget.title),
+          Text(
+            widget.title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           Container(
             padding: EdgeInsets.zero,
             width: MediaQuery.of(context).size.width - 20,
@@ -55,6 +58,9 @@ class _NewCardState extends State<NewCard> {
                   maxLines: 1,
                   style: const TextStyle(
                     overflow: TextOverflow.ellipsis,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Play",
                   ),
                 ),
                 const Icon(
@@ -84,6 +90,9 @@ class _NewCardState extends State<NewCard> {
                   maxLines: 1,
                   style: const TextStyle(
                     overflow: TextOverflow.ellipsis,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Play",
                   ),
                 ),
               ],
@@ -120,16 +129,19 @@ class _NewCardState extends State<NewCard> {
                 size: 20,
                 color: Colors.black,
               ),
+              SizedBox( width: widget.date.day < 10 ? 5 : 2,),
               Text(
-                "${DateFormat("MMMM", "pt_BR").format(widget.date).substring(0, 3)} | ${DateFormat("EEEE", "pt_BR").format(widget.date)}",
+                "${widget.date.day} ${DateFormat("MMMM", "pt_BR").format(widget.date).substring(0, 3)} | ${DateFormat("EEEE", "pt_BR").format(widget.date)}".toUpperCase(),
+                style: Theme.of(context).textTheme.labelMedium,
               ),
-              const SizedBox(
-                width: 80,
+              SizedBox(
+                width: widget.date.day < 10 ? 20 : 10,
               ),
               Text(
                 widget.date.hour < 12
                     ? DateFormat.jm().format(widget.date)
                     : DateFormat.jm().format(widget.date),
+                style: Theme.of(context).textTheme.labelMedium,
               ),
               const Icon(
                 Icons.alarm,
@@ -139,15 +151,20 @@ class _NewCardState extends State<NewCard> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 3.0),
+            padding: const EdgeInsets.only(left: 2.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Icon(
                   Icons.location_on,
                   size: 20,
+                  color: Colors.black,
                 ),
-                Text(widget.locale),
+                const SizedBox(width: 5,),
+                Text(
+                  widget.locale,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               ],
             ),
           )

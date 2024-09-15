@@ -88,13 +88,13 @@ class CustomTheme {
           height: 0,
         ),
         labelMedium: const TextStyle(
-          color: Colors.greenAccent,
-          fontWeight: FontWeight.w800,
-          fontSize: 14,
+          color: Colors.black,
+          fontWeight: FontWeight.w300,
+          fontSize: 18,
         ),
-        labelSmall:  TextStyle(
+        labelSmall: const TextStyle(
           fontSize: 16,
-          color: Colors.grey.shade800,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
       ),

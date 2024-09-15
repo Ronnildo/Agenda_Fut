@@ -2,6 +2,7 @@ import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
+import 'package:app/src/features/widgets/dropdown_type.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -16,9 +17,6 @@ class _RegisterState extends State<Register> {
   final TextEditingController _emailController = TextEditingController();
   // final TextEditingController _userController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  final List<String> _typeUsers = ["Atleta", "Treinador", "Organizador"];
-  String dropDownValue = "";
   // Implementar lógica de cadastro
 
   register() {
@@ -33,7 +31,6 @@ class _RegisterState extends State<Register> {
   @override
   void initState() {
     super.initState();
-    dropDownValue = _typeUsers.first;
   }
 
   @override
@@ -67,34 +64,7 @@ class _RegisterState extends State<Register> {
               obscureText: false,
               error: "",
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: DropdownMenu(
-                  initialSelection: dropDownValue,
-                  width: MediaQuery.of(context).size.width - 32,
-                  inputDecorationTheme: const InputDecorationTheme(
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(),
-                    filled: true,
-                  ),
-                  menuStyle: const MenuStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.white),
-                  ),
-                  dropdownMenuEntries:
-                      _typeUsers.map<DropdownMenuEntry<String>>(
-                    (String value) {
-                      return DropdownMenuEntry(
-                        value: value,
-                        label: value,
-                      );
-                    },
-                  ).toList(),
-                  onSelected: (String? value) {
-                    setState(() {
-                      dropDownValue = value!;
-                    });
-                  }),
-            ),
+            const DropDownTypeUser(),
             CustomInput(
               label: "Senha",
               hintText: "Crie sua Senha",
