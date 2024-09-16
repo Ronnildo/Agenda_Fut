@@ -46,16 +46,16 @@ class _LoginState extends State<Login> {
           children: [
             const CustomTitle(heightdiv: 2.8,),
             CustomInput(
-              label: "Digite seu E-mail",
-              hintText: "atleta@agenda.com",
+              label: "E-mail",
+              hintText: "Digite seu E-mail",
               controller: _emailController,
               icon: Icons.mail,
               obscureText: false,
               error: "",
             ),      
             CustomInput(
-              label: "Digite sua Senha",
-              hintText: "atleta@123",
+              label: "Senha",
+              hintText: "Digite sua Senha",
               controller: _passController,
               icon: Icons.visibility,
               obscureText: true,
@@ -77,7 +77,7 @@ class _LoginState extends State<Login> {
                   ),
                   child: Text(
                     "Esqueceu a senha?",
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.bodySmall,
                     selectionColor: Colors.blue,
                   ),
                 ),
@@ -95,7 +95,7 @@ class _LoginState extends State<Login> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Não tem uma Conta?",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                   Padding(
@@ -107,13 +107,13 @@ class _LoginState extends State<Login> {
                           56,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                       onPressed: register,
                       child: Text(
                         "Cadastre-se Agora",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
                   ),

@@ -30,7 +30,7 @@ class _CustomTitleState extends State<CustomTitle> {
 class _MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final title = Paint()..color = const Color(0xFF03045E);
+    final title = Paint()..color = const Color(0xFF17A909);
 
     final path = Path()
       ..moveTo(0, 0)

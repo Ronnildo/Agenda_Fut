@@ -1,4 +1,3 @@
-
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/auth/perfil_page.dart';
@@ -53,7 +52,7 @@ class _HomeState extends State<Home> {
         ),
         leadingWidth: 20,
         automaticallyImplyLeading: false,
-        actions: [     
+        actions: [
           pathImage.isEmpty
               ? InkWell(
                   onTap: () {
@@ -84,10 +83,67 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ScrollCalendar(
-                timelineController: _easyInfiniteDateTimelineController,
+              EasyInfiniteDateTimeLine(
+                controller: _easyInfiniteDateTimelineController,
+                firstDate: DateTime.now(),
                 focusDate: _focusDate,
-                focusChange: () => focusChange(selectDate),
+                lastDate: DateTime(2102),
+                onDateChange: focusChange,
+                locale: 'pt',
+                activeColor: Colors.white,
+                dayProps: EasyDayProps(
+                  width: 60,
+                  height: 80,
+                  dayStructure: DayStructure.dayNumDayStr,
+                  todayHighlightColor: Theme.of(context).colorScheme.primary,
+                  todayHighlightStyle: TodayHighlightStyle.withBackground,
+                  todayStyle: DayStyle(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(39),
+                    ),
+                    dayNumStyle: Theme.of(context).textTheme.displayMedium,
+                    dayStrStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  inactiveDayStyle: DayStyle(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(39),
+                    ),
+                    dayStrStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    dayNumStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  activeDayStyle: DayStyle(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(39),
+                      border: Border.all(width: 1),
+                    ),
+                    dayStrStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    dayNumStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  borderColor: Colors.black,
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(
@@ -98,16 +154,6 @@ class _HomeState extends State<Home> {
                   thickness: 1,
                   color: Colors.blue,
                 ),
-              ),
-              CustomCardGame(
-                colorBar: Colors.red,
-                competitionName: "Campeonato Barrense 2024",
-                teamName: "Atlético Madruga",
-                advTeamName: "Mangabeira FC",
-                localeName: "Ginásio Poliesportivo o Duty",
-                date: DateTime.now(),
-                onTap: detalhes,
-                urlImage: "assets/images/escudo.png",
               ),
               NewCard(
                 // colorBar: Colors.amber,

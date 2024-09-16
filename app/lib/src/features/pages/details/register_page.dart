@@ -42,11 +42,20 @@ class _RegisterState extends State<Register> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const CustomTitle(heightdiv: 3.4,),
-            const ListTile(
-              title: Text("Começe Agora"),
-              subtitle: Text("Crie sua conta super rápido"),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            const CustomTitle(
+              heightdiv: 3,
+            ),
+            ListTile(
+              title: Text(
+                "Começe Agora",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              subtitle: Text(
+                "Crie sua conta super rápido",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             ),
             CustomInput(
               hintText: "Nome",
@@ -64,7 +73,7 @@ class _RegisterState extends State<Register> {
               obscureText: false,
               error: "",
             ),
-            const DropDownTypeUser(),
+            // const DropDownTypeUser(),
             CustomInput(
               label: "Senha",
               hintText: "Crie sua Senha",
@@ -82,7 +91,7 @@ class _RegisterState extends State<Register> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                bottom: 20,
+                bottom: 24,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -34,9 +34,16 @@ class _NewCardState extends State<NewCard> {
       width: MediaQuery.of(context).size.width,
       height: 190,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 4,
+              color: Colors.black54,
+              spreadRadius: 0,
+              offset: Offset(0, 4),
+            ),
+          ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -129,9 +136,12 @@ class _NewCardState extends State<NewCard> {
                 size: 20,
                 color: Colors.black,
               ),
-              SizedBox( width: widget.date.day < 10 ? 5 : 2,),
+              SizedBox(
+                width: widget.date.day < 10 ? 5 : 2,
+              ),
               Text(
-                "${widget.date.day} ${DateFormat("MMMM", "pt_BR").format(widget.date).substring(0, 3)} | ${DateFormat("EEEE", "pt_BR").format(widget.date)}".toUpperCase(),
+                "${widget.date.day} ${DateFormat("MMMM", "pt_BR").format(widget.date).substring(0, 3)} | ${DateFormat("EEEE", "pt_BR").format(widget.date)}"
+                    .toUpperCase(),
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               SizedBox(
@@ -160,7 +170,9 @@ class _NewCardState extends State<NewCard> {
                   size: 20,
                   color: Colors.black,
                 ),
-                const SizedBox(width: 5,),
+                const SizedBox(
+                  width: 5,
+                ),
                 Text(
                   widget.locale,
                   style: Theme.of(context).textTheme.labelMedium,

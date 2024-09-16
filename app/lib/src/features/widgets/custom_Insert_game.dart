@@ -30,7 +30,7 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
         children: [
           Text(
             widget.label,
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           TextField(
             controller: widget.controller,
@@ -38,21 +38,29 @@ class _CustomInsertGameState extends State<CustomInsertGame> {
             decoration: InputDecoration(
               filled: true,
               fillColor:  Colors.white,
-              contentPadding: const EdgeInsets.all(16),
+              contentPadding: const EdgeInsets.all(20),
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall,
-              floatingLabelStyle: Theme.of(context).textTheme.labelSmall,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: const OutlineInputBorder(
+              labelStyle: Theme.of(context).textTheme.labelMedium,
+              floatingLabelStyle: Theme.of(context).textTheme.titleLarge,
+              hoverColor: Theme.of(context).colorScheme.primary,
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
+              border:  OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Color(0xFF03045E),
-                  width: 100,
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1.5,
                 ),
               ),
               focusColor: Colors.white,
-              focusedBorder: const OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Color(0xFF03045E),
+                  color: Colors.black,
+                  width: 1.5,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),

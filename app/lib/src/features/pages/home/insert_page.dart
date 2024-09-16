@@ -59,7 +59,7 @@ class _InsertPageState extends State<InsertPage> {
                   "Escudo da Equipe ou Banner do Jogo/Competição",
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
               ),
             ),

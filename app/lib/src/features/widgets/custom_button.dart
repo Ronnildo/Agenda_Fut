@@ -20,9 +20,17 @@ class _CustomButtomState extends State<CustomButtom> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ElevatedButton(
         onPressed: widget.onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
         child: Text(
           widget.title,
+          style: Theme.of(context).textTheme.displayMedium,
         ),
+        
       ),
     );
   }

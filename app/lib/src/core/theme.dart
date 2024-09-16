@@ -5,10 +5,11 @@ class CustomTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      primaryColor: const Color(0xFF03045E),
+      primaryColor: const Color(0xFF17A909),
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF03045E),
-        background: const Color(0xFFDDDDD1),
+        seedColor: const Color(0xFF17A909),
+        background: const Color(0xFFFFFFFF),
+        primary: const Color(0xFF17A909),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -30,45 +31,17 @@ class CustomTheme {
         ),
       ),
       fontFamily: "Play",
-      textTheme: TextTheme(
-        // Textos comuns do código
-        bodySmall: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w300,
-        ),
-        bodyMedium: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-        bodyLarge: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-        //Display textos que precisam de um tom mais forte ou diferente
-        displaySmall: TextStyle(
-          fontSize: 12,
-          color: Colors.grey.withOpacity(0.8),
-          fontWeight: FontWeight.w600,
-        ),
-        displayLarge: const TextStyle(
-          color: Colors.black,
-          fontSize: 55,
-          fontWeight: FontWeight.bold,
-        ),
-        displayMedium: const TextStyle(
+      textTheme: const TextTheme(
+        /*
+         * Títulos Fonts que excedem 24 de tamanho
+         */
+        titleLarge: TextStyle(
           color: Colors.white,
           fontFamily: "BrunoAce",
           fontSize: 36,
           fontWeight: FontWeight.w600,
         ),
-        // Títulos Agenda, Card, Inputs
-        titleLarge: const TextStyle(
-          color: Colors.white,
-          fontFamily: "BrunoAce",
-          fontSize: 36,
-          fontWeight: FontWeight.w600,
-        ),
-        titleMedium: const TextStyle(
+        titleMedium: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: Colors.black,
@@ -76,26 +49,66 @@ class CustomTheme {
           wordSpacing: 0,
           letterSpacing: 0,
         ),
-        titleSmall: const TextStyle(
-          fontSize: 14,
+        titleSmall: TextStyle(
+          fontSize: 18,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
-        labelLarge: const TextStyle(
-          fontSize: 26,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 5,
+        /**
+         * Textos pequenos entre 15 e 20 de tamanho
+         */
+        bodyLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF17A909),
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF000000),
+        ),
+        bodySmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+        ),
+        /**
+         * Textos que precisam de uam formatação diferente
+        */
+        displayLarge: TextStyle(
+          color: Colors.black,
+          fontSize: 55,
+          fontWeight: FontWeight.bold,
+        ),
+        displayMedium: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+        ),
+        displaySmall: TextStyle(
+          fontSize: 12,
+          color: Color(0xFF484646),
+          fontWeight: FontWeight.w600,
+        ),
+        /**
+         * Textos de uso em caixas de textos ou interações com usuário
+         */
+        labelLarge: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+          letterSpacing: 3,
           height: 0,
         ),
-        labelMedium: const TextStyle(
+        labelMedium: TextStyle(
           color: Colors.black,
-          fontWeight: FontWeight.w300,
+          fontWeight: FontWeight.w600,
           fontSize: 18,
         ),
-        labelSmall: const TextStyle(
-          fontSize: 16,
+        labelSmall: TextStyle(
+          fontSize: 14,
           color: Colors.black,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w300,
         ),
       ),
     );

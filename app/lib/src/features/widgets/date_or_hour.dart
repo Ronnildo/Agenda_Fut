@@ -26,7 +26,7 @@ class _DateOrHourState extends State<DateOrHour> {
       children: [
         Text(
           widget.dayOrHour,
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         SizedBox(
           height: 56,
@@ -38,16 +38,27 @@ class _DateOrHourState extends State<DateOrHour> {
               filled: true,
               fillColor: Colors.white,
               floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: const OutlineInputBorder(
+              border: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Color(0xFF03045E),
+                  color: Theme.of(context).colorScheme.primary,
                   width: 100,
                 ),
               ),
-              contentPadding: const EdgeInsets.all(10),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.black,
+                  width: 1.5,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              contentPadding: const EdgeInsets.all(20),
               hintText: widget.hintText,
-              labelStyle: Theme.of(context).textTheme.titleSmall,
-              hintStyle: Theme.of(context).textTheme.titleSmall,
+              labelStyle: Theme.of(context).textTheme.labelSmall,
+              hintStyle: Theme.of(context).textTheme.labelSmall,
               suffixIcon: InkWell(
                 onTap: widget.onTap,
                 child: const Icon(

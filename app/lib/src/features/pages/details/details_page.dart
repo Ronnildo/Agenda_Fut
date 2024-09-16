@@ -37,7 +37,7 @@ class _DetailsPageState extends State<DetailsPage> {
             Center(
               child: Text(
                 "Escudo da Equipe ou Banner do jogo",
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
             Padding(
@@ -46,8 +46,8 @@ class _DetailsPageState extends State<DetailsPage> {
                 vertical: 10,
               ),
               child: Text(
-                "Descrição:",
-                style: Theme.of(context).textTheme.bodyLarge,
+                "Descrição da Partida:",
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
             ListInforDetails(
@@ -91,7 +91,7 @@ class _DetailsPageState extends State<DetailsPage> {
             ListTile(
               title: Text(
                 "Outras Jogos",
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
               // Criar função de ocultar
               trailing: const Icon(
