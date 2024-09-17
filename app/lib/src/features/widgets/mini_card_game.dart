@@ -1,3 +1,5 @@
+import 'package:app/src/features/pages/details/details_page.dart';
+import 'package:app/src/features/widgets/container_fase.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -25,6 +27,11 @@ class MiniCardGame extends StatefulWidget {
 }
 
 class _MiniCardGameState extends State<MiniCardGame> {
+
+  void details(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailsPage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     // print(MediaQuery.of(context).size.width);
@@ -39,7 +46,7 @@ class _MiniCardGameState extends State<MiniCardGame> {
           width: MediaQuery.of(context).size.width,
           height: 80,
           decoration: BoxDecoration(
-            color: const Color(0xFF0077B6),
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(10),
             boxShadow: const [
               BoxShadow(
@@ -49,161 +56,120 @@ class _MiniCardGameState extends State<MiniCardGame> {
               ),
             ],
           ),
-          child: Stack(
+          child: Row(
             children: [
               Container(
-                width: 16,
-                decoration: BoxDecoration(
-                  color: widget.colorBar,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
+                width: MediaQuery.of(context).size.width / 2,
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.teamName.substring(0, 4),
+                      style: Theme.of(context).textTheme.displayMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const Icon(
+                      Icons.shield,
+                      size: 40,
+                    ),
+                    Text(
+                      "X",
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                    const Icon(
+                      Icons.shield,
+                      size: 40,
+                    ),
+                    Text(
+                      widget.advTeamName.substring(0, 4),
+                      style: Theme.of(context).textTheme.displayMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                widthFactor: 10,
-                child: Container(
-                  // width: MediaQuery.of(context).size.width / 3,
+              Container(
+                width: MediaQuery.of(context).size.width / 2.4,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+                child: Padding(
                   padding: const EdgeInsets.only(
-                    left: 20,
+                    top: 5,
+                    right: 5,
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            widget.teamName,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                            ),
-                          ),
-                          const Padding(
-                            padding:  EdgeInsets.symmetric(horizontal: 10),
-                            child:  Text("X"),
+                            widget.date.day.toString(),
+                            style: widget.date.day.toString().length < 2
+                                ? Theme.of(context).textTheme.displayLarge
+                                : const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                           ),
                           Text(
-                            widget.advTeamName,
+                            DateFormat("MMMM", "pt_BR")
+                                .format(widget.date)
+                                .substring(0, 3)
+                                .toUpperCase(),
                             style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
                               fontSize: 20,
                             ),
                           ),
                         ],
                       ),
-                       Text(
-                        "Local: ${widget.localeName}",
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
-                        ),
+                      Text(
+                        DateFormat("EEEE", "pt_BR").format(widget.date),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: widget.date.day.toString().length < 2
+                            ? const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            : const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const ContainerFase(
+                            fase: "Fasa de Grupos",
+                            heigth: 15,
+                            width: 80,
+                          ),
+                          const Icon(
+                            Icons.alarm,
+                            size: 10,
+                          ),
+                          Text(
+                            widget.date.hour < 12
+                                ? DateFormat.jm().format(widget.date)
+                                : DateFormat.jm().format(widget.date),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 3,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                      right: 5,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Stack(
-                          fit: StackFit.loose,
-                          alignment: Alignment.topLeft,
-                          children: [
-                            Align(
-                              alignment: Alignment.lerp(
-                                  Alignment.center, Alignment.topLeft, 1)!,
-                              child: Text(
-                                widget.date.day.toString(),
-                                style: widget.date.day.toString().length < 2
-                                    ? Theme.of(context).textTheme.displayLarge
-                                    : const TextStyle(
-                                        fontSize: 36,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    DateFormat("MMMM", "pt_BR")
-                                        .format(widget.date),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    DateFormat("EEEE", "pt_BR")
-                                        .format(widget.date),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: widget.date.day.toString().length < 2
-                                        ? const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300,
-                                            overflow: TextOverflow.ellipsis,
-                                          )
-                                        : const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      const Icon(
-                                        Icons.alarm,
-                                        size: 16,
-                                      ),
-                                      Text(
-                                        widget.date.hour < 12
-                                            ? DateFormat.jm()
-                                                .format(widget.date)
-                                            : DateFormat.jm()
-                                                .format(widget.date),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ),

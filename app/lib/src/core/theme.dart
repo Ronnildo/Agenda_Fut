@@ -13,7 +13,7 @@ class CustomTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF03045E),
+          backgroundColor: const Color(0xFF17A909),
           shadowColor: Colors.black,
           foregroundColor: Colors.white,
           fixedSize: Size(
@@ -58,9 +58,9 @@ class CustomTheme {
          * Textos pequenos entre 15 e 20 de tamanho
          */
         bodyLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Color(0xFF17A909),
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
         ),
         bodyMedium: TextStyle(
           fontSize: 16,

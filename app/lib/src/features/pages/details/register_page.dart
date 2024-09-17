@@ -43,7 +43,7 @@ class _RegisterState extends State<Register> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const CustomTitle(
-              heightdiv: 3,
+              heightdiv: 2.8,
             ),
             ListTile(
               title: Text(
@@ -98,7 +98,7 @@ class _RegisterState extends State<Register> {
                 children: [
                   Text(
                     "Tem uma conta?",
-                    style: Theme.of(context).textTheme.labelSmall,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(
                     width: 5,
@@ -107,10 +107,10 @@ class _RegisterState extends State<Register> {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: const Text(
+                    child: Text(
                       "Login",
                       style: TextStyle(
-                        color: Color(0xFF03045E),
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),

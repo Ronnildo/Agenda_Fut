@@ -83,6 +83,7 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+
               EasyInfiniteDateTimeLine(
                 controller: _easyInfiniteDateTimelineController,
                 firstDate: DateTime.now(),
@@ -95,18 +96,26 @@ class _HomeState extends State<Home> {
                   width: 60,
                   height: 80,
                   dayStructure: DayStructure.dayNumDayStr,
-                  todayHighlightColor: Theme.of(context).colorScheme.primary,
+                  todayHighlightColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.4),
                   todayHighlightStyle: TodayHighlightStyle.withBackground,
                   todayStyle: DayStyle(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.3),
                       borderRadius: BorderRadius.circular(39),
                     ),
-                    dayNumStyle: Theme.of(context).textTheme.displayMedium,
-                    dayStrStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                    dayNumStyle: const TextStyle(
+                      color: Color(0xFF17A909),
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
+                    ),
+                    dayStrStyle: const TextStyle(
+                      color: Color(0xFF17A909),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                   inactiveDayStyle: DayStyle(
@@ -116,12 +125,12 @@ class _HomeState extends State<Home> {
                     ),
                     dayStrStyle: const TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
                     ),
                     dayNumStyle: const TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -132,12 +141,12 @@ class _HomeState extends State<Home> {
                       border: Border.all(width: 1),
                     ),
                     dayStrStyle: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w300,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     dayNumStyle: const TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFF17A909),
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
@@ -145,16 +154,7 @@ class _HomeState extends State<Home> {
                   borderColor: Colors.black,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10,
-                ),
-                child: Divider(
-                  height: 2,
-                  thickness: 1,
-                  color: Colors.blue,
-                ),
-              ),
+              const Divider(endIndent: 8, height: 24),
               NewCard(
                 // colorBar: Colors.amber,
                 title: "Campeonato Barrense 2024",
@@ -163,7 +163,7 @@ class _HomeState extends State<Home> {
                 locale: "Ginásio Poliesportivo o Duty",
                 date: DateTime.now(),
                 fase: "Fase de Grupos",
-                // onTap: detalhes,
+                onTap: detalhes,
                 // urlImage: "assets/images/escudo.png",
               ),
             ],
@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
             ),
           );
         },
-        backgroundColor: const Color(0xFF03045E),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         child: const Icon(
           Icons.add,
           color: Colors.white,
