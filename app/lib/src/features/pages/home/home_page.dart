@@ -1,6 +1,6 @@
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
-import 'package:app/src/features/pages/auth/perfil_page.dart';
+import 'package:app/src/features/pages/details/perfil_page.dart';
 import 'package:app/src/features/widgets/calendar_scroll.dart';
 import 'package:app/src/features/widgets/custom_card_game.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';

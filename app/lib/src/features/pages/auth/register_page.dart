@@ -1,9 +1,11 @@
+import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
-import 'package:app/src/features/widgets/dropdown_type.dart';
+import 'package:app/src/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -15,7 +17,6 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  // final TextEditingController _userController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   // Implementar lógica de cadastro
 
@@ -25,6 +26,17 @@ class _RegisterState extends State<Register> {
       MaterialPageRoute(
         builder: (context) => const Login(),
       ),
+    );
+  }
+
+  Future<void> registerUser(
+    String name,
+    String email,
+    String password,
+  ) async {
+    print(name);
+    Provider.of<UserProvider>(context, listen: false).create(
+      UserModel(name: name, email: email, password: password), 
     );
   }
 
@@ -86,7 +98,11 @@ class _RegisterState extends State<Register> {
               height: 16,
             ),
             CustomButtom(
-              onTap: register,
+              onTap: () => registerUser(
+                _nameController.text,
+                _emailController.text,
+                _passwordController.text,
+              ),
               title: "Cadastrar",
             ),
             Padding(
@@ -117,7 +133,15 @@ class _RegisterState extends State<Register> {
                   ),
                 ],
               ),
-            )
+            ),
+            Text(
+              Provider.of<UserProvider>(context).error,
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         ),
       ),

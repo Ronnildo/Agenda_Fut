@@ -1,5 +1,5 @@
 import 'package:app/src/features/pages/home/home_page.dart';
-import 'package:app/src/features/pages/details/register_page.dart';
+import 'package:app/src/features/pages/auth/register_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
