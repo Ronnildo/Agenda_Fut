@@ -34,10 +34,17 @@ class _RegisterState extends State<Register> {
     String email,
     String password,
   ) async {
-    print(name);
     Provider.of<UserProvider>(context, listen: false).create(
-      UserModel(name: name, email: email, password: password), 
+      UserModel(name: name, email: email, password: password),
     );
+  }
+
+  clear(){
+    setState(() {
+      _nameController.clear();
+      _emailController.clear();
+      _passwordController.clear();
+    });
   }
 
   @override
@@ -97,6 +104,32 @@ class _RegisterState extends State<Register> {
             const SizedBox(
               height: 16,
             ),
+            Consumer<UserProvider>(
+              builder: (context, value, child) {
+                if (!value.isLoading) {
+                  clear();
+                  return Center(
+                    child: Text(
+                     value.status == "SingIn" ? "" : value.status,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  );
+                } else {
+                  return Text(
+                    value.error,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                }
+              },
+            ),
             CustomButtom(
               onTap: () => registerUser(
                 _nameController.text,
@@ -132,14 +165,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ],
-              ),
-            ),
-            Text(
-              Provider.of<UserProvider>(context).error,
-              style: const TextStyle(
-                color: Colors.red,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ],

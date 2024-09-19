@@ -1,6 +1,8 @@
+import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -10,6 +12,13 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
+
+  @override
+  void initState() {
+    Provider.of<UserProvider>(context, listen: false).getUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +53,15 @@ class _PerfilPageState extends State<PerfilPage> {
             "Foto do Perfil",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          ListInforDetails(
-            title: "Nome",
-            subTitle: "Atleta",
-            icon: Icons.person,
-            onTap: () {},
+          Consumer<UserProvider>(
+            builder: (context, value, child) {
+              return ListInforDetails(
+                title: "Nome",
+                subTitle: value.name,
+                icon: Icons.person,
+                onTap: () {},
+              );
+            },
           ),
           ListInforDetails(
             title: "Posição",

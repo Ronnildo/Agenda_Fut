@@ -1,4 +1,5 @@
 import 'package:app/src/core/theme.dart';
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,11 @@ class AgendaApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => GameProvider()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

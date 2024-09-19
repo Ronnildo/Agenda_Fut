@@ -1,10 +1,13 @@
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_Insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/date_or_hour.dart';
+import 'package:app/src/models/game_model.dart';
 import 'package:flutter/material.dart';
 // ignore: library_prefixes
 import 'package:intl/intl.dart' as Data;
+import 'package:provider/provider.dart';
 
 class InsertPage extends StatefulWidget {
   const InsertPage({super.key});
@@ -14,12 +17,11 @@ class InsertPage extends StatefulWidget {
 }
 
 class _InsertPageState extends State<InsertPage> {
-  final TextEditingController _competitionController = TextEditingController();
-  final TextEditingController _teamController = TextEditingController();
-  final TextEditingController _advControlelr = TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  // final TextEditingController _inforsController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _competitionController = TextEditingController(text: "Barrense");
+  final TextEditingController _homeController = TextEditingController(text: "Cobras");
+  final TextEditingController _awayControlelr = TextEditingController(text: "Golden");
+  final TextEditingController _localeController = TextEditingController(text: "Ginasio o Duty");
+  final TextEditingController _dateController = TextEditingController(text: "20/09/2024:");
   final TextEditingController _timeController = TextEditingController();
 
   TimeOfDay? selectedTime;
@@ -27,6 +29,32 @@ class _InsertPageState extends State<InsertPage> {
   Orientation? orientation;
   MaterialTapTargetSize tapTargetSize = MaterialTapTargetSize.padded;
   bool use24Hours = false;
+
+  insertGame() {
+    String name = _competitionController.text;
+    String home = _homeController.text;
+    String away = _awayControlelr.text;
+    String locale = _localeController.text;
+    DateTime date = DateTime.now();
+
+    Provider.of<GameProvider>(context, listen: false).addGame(
+      GameModel(
+        nameCompetition: name,
+        home: home,
+        away: away,
+        locale: locale,
+        date: date,
+      ),
+    );
+  }
+
+  clear(){
+    _competitionController.clear();
+    _homeController.clear();
+    _awayControlelr.clear();
+    _localeController.clear();
+    _dateController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,17 +97,17 @@ class _InsertPageState extends State<InsertPage> {
               hintText: "Ex: Copa América",
             ),
             CustomInsertGame(
-              controller: _teamController,
+              controller: _homeController,
               label: "Casa",
               hintText: "Ex: Juventus",
             ),
             CustomInsertGame(
-              controller: _advControlelr,
+              controller: _awayControlelr,
               label: "Fora",
               hintText: "Ex: Boca Juniros",
             ),
             CustomInsertGame(
-              controller: _locationController,
+              controller: _localeController,
               label: "Local da Competição",
               hintText: "Ex: Arena Bets",
             ),
@@ -158,11 +186,16 @@ class _InsertPageState extends State<InsertPage> {
               ),
             ),
             CustomButtom(
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: insertGame,
               title: "Adicionar",
-            )
+            ),
+            Consumer<GameProvider>(builder: (context, value, child) {
+              if(value.isLoading){
+                return Text(value.error);
+              }
+              clear();
+              return Text(value.status);
+            },),
           ],
         ),
       ),

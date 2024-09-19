@@ -1,10 +1,13 @@
+import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/home/home_page.dart';
 import 'package:app/src/features/pages/auth/register_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
+import 'package:app/src/models/user_model.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -18,7 +21,18 @@ class _LoginState extends State<Login> {
   final TextEditingController _passController = TextEditingController();
 
   // Implementar validação e autenticação
-  login() {
+  login(String email, String password, void Function() function) {
+    Provider.of<UserProvider>(context, listen: false).auth(
+      UserModel(
+        email: email,
+        password: password,
+      ),
+      function,
+    );
+    print(Provider.of<UserProvider>(context, listen: false).status);
+  }
+
+  home() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -44,7 +58,9 @@ class _LoginState extends State<Login> {
           // crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const CustomTitle(heightdiv: 2.8,),
+            const CustomTitle(
+              heightdiv: 2.8,
+            ),
             CustomInput(
               label: "E-mail",
               hintText: "Digite seu E-mail",
@@ -52,7 +68,7 @@ class _LoginState extends State<Login> {
               icon: Icons.mail,
               obscureText: false,
               error: "",
-            ),      
+            ),
             CustomInput(
               label: "Senha",
               hintText: "Digite sua Senha",
@@ -83,12 +99,40 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
+            Consumer<UserProvider>(
+              builder: (context, value, child) {
+                if (!value.isLoading) {
+                  return Center(
+                    child: Text(
+                      value.status == "SingIn" ? "" : value.status,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  );
+                } else {
+                  return Text(
+                    value.error,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  );
+                }
+              },
+            ),
             CustomButtom(
-              onTap: login,
+              onTap: () => login(_emailController.text, _passController.text, home),
               title: "Entrar",
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16,),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 16,
+              ),
               child: Column(
                 children: [
                   Align(

@@ -1,3 +1,4 @@
+import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/details/perfil_page.dart';
@@ -5,6 +6,7 @@ import 'package:app/src/features/widgets/calendar_scroll.dart';
 import 'package:app/src/features/widgets/custom_card_game.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/new_card.dart';
 
@@ -31,6 +33,20 @@ class _HomeState extends State<Home> {
     );
   }
 
+  @override
+  void initState() {
+    Provider.of<UserProvider>(context, listen: false).getUser();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Provider.of<UserProvider>(context, listen: false).singOut(() {
+      Navigator.pop(context);
+    });
+  }
+
   DateTime selectDate = DateTime.now();
 
   focusChange(DateTime selectDate) {
@@ -41,14 +57,17 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // print(DateTime.now());
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         // Implementar lógica de troca por foto
-        title: Text(
-          "Atleta",
-          style: Theme.of(context).textTheme.titleMedium,
+        title: Consumer<UserProvider>(
+          builder: (context, value, child) {
+            return Text(
+              value.name,
+              style: Theme.of(context).textTheme.titleMedium,
+            );
+          },
         ),
         leadingWidth: 20,
         automaticallyImplyLeading: false,
@@ -83,7 +102,6 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-
               EasyInfiniteDateTimeLine(
                 controller: _easyInfiniteDateTimelineController,
                 firstDate: DateTime.now(),
