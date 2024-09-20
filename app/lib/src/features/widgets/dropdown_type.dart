@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class DropDownTypeUser extends StatefulWidget {
-  const DropDownTypeUser({super.key});
+class DropDownPriority extends StatefulWidget {
+  final TextEditingController controller;
+  const DropDownPriority({super.key, required this.controller});
 
   @override
-  State<DropDownTypeUser> createState() => _DropDownTypeUserState();
+  State<DropDownPriority> createState() => _DropDownPriorityState();
 }
 
-class _DropDownTypeUserState extends State<DropDownTypeUser> {
-  final TextEditingController _typeController = TextEditingController();
-  final List<String> _typeUsers = ["Atleta", "Treinador", "Organizador"];
+class _DropDownPriorityState extends State<DropDownPriority> {
+  final TextEditingController _priority = TextEditingController();
+  final List<String> _typeUsers = ["Fase de Grupos", "Oitavas", "Quartas", "Semifinal", "Final", "Outro"];
   String dropDownValue = "";
   @override
   void initState() {
@@ -26,11 +27,11 @@ class _DropDownTypeUserState extends State<DropDownTypeUser> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Tipo de Usuário",
-            style: Theme.of(context).textTheme.titleSmall,
+            "Fase",
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           DropdownMenu(
-              controller: _typeController,
+              controller: widget.controller,
               initialSelection: dropDownValue,
               width: MediaQuery.of(context).size.width - 32,
               inputDecorationTheme: const InputDecorationTheme(
@@ -55,6 +56,9 @@ class _DropDownTypeUserState extends State<DropDownTypeUser> {
               onSelected: (String? value) {
                 setState(() {
                   dropDownValue = value!;
+                });
+                setState(() {
+                  widget.controller.text = dropDownValue; 
                 });
               }),
         ],

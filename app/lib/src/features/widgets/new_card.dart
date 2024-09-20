@@ -9,7 +9,8 @@ class NewCard extends StatefulWidget {
   final String alway;
   final String? urlImageAlway;
   final String fase;
-  final DateTime date;
+  final String date;
+  final String hour;
   final String locale;
   final void Function() onTap;
   const NewCard({
@@ -19,6 +20,7 @@ class NewCard extends StatefulWidget {
     required this.alway,
     required this.fase,
     required this.date,
+    required this.hour,
     required this.locale,
     required this.onTap,
     this.urlImageAlway,
@@ -128,21 +130,19 @@ class _NewCardState extends State<NewCard> {
                   size: 20,
                   color: Colors.black,
                 ),
-                SizedBox(
-                  width: widget.date.day < 10 ? 5 : 2,
+                const SizedBox(
+                  width: 80,
                 ),
                 Text(
-                  "${widget.date.day} ${DateFormat("MMMM", "pt_BR").format(widget.date).substring(0, 3)} | ${DateFormat("EEEE", "pt_BR").format(widget.date)}"
+                  "${widget.date.substring(0,1)} | "
                       .toUpperCase(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(
-                  width: widget.date.day < 10 ? 70 : 65,
+                  width: 70,
                 ),
                 Text(
-                  widget.date.hour < 12
-                      ? DateFormat.jm().format(widget.date)
-                      : DateFormat.jm().format(widget.date),
+                  widget.hour,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(width: 5,),

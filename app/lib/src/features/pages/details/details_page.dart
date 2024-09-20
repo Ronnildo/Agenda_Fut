@@ -3,6 +3,7 @@ import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/widgets/mini_card_game.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage({super.key});
@@ -12,6 +13,7 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  XFile? file;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,7 @@ class _DetailsPageState extends State<DetailsPage> {
           children: [
             Center(
               child: ContainerImage(
-                onTap: () {},
+               
               ),
             ),
             Center(

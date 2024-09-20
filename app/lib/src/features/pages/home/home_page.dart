@@ -1,9 +1,9 @@
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/details/perfil_page.dart';
-import 'package:app/src/features/widgets/calendar_scroll.dart';
-import 'package:app/src/features/widgets/custom_card_game.dart';
+import 'package:app/src/models/game_model.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,19 +23,12 @@ class _HomeState extends State<Home> {
   String pathImage = "";
 // Procurar API de Calendário
   DateTime _focusDate = DateTime.now();
-
-  detalhes() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const DetailsPage(),
-      ),
-    );
-  }
+  DateTime selectDate = DateTime.now();
 
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getUser();
+    Provider.of<GameProvider>(context, listen: false).getGame();
     super.initState();
   }
 
@@ -44,14 +37,6 @@ class _HomeState extends State<Home> {
     super.dispose();
     Provider.of<UserProvider>(context, listen: false).singOut(() {
       Navigator.pop(context);
-    });
-  }
-
-  DateTime selectDate = DateTime.now();
-
-  focusChange(DateTime selectDate) {
-    setState(() {
-      _focusDate = selectDate;
     });
   }
 
@@ -173,17 +158,13 @@ class _HomeState extends State<Home> {
                 ),
               ),
               const Divider(endIndent: 8, height: 24),
-              NewCard(
-                // colorBar: Colors.amber,
-                title: "Campeonato Barrense 2024",
-                home: "Real Madrid FC ",
-                alway: "Vasco FC Teste",
-                locale: "Ginásio Poliesportivo o Duty",
-                date: DateTime.now(),
-                fase: "Fase de Grupos",
-                onTap: detalhes,
-                // urlImage: "assets/images/escudo.png",
-              ),
+              StreamBuilder(stream: Provider.of<GameProvider>(context).getGame().asStream(), builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  
+                  return NewCard(title: "title", home: "home", alway: "alway", fase: "fase", date: "date", hour: "hour", locale: "locale", onTap: (){});
+                }
+                return const CircularProgressIndicator();
+              },)
             ],
           ),
         ),
@@ -204,5 +185,20 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  detalhes() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DetailsPage(),
+      ),
+    );
+  }
+
+  focusChange(DateTime selectDate) {
+    setState(() {
+      _focusDate = selectDate;
+    });
   }
 }
