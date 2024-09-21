@@ -3,12 +3,12 @@ import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/details/perfil_page.dart';
+import 'package:app/src/features/widgets/new_card.dart';
 import 'package:app/src/models/game_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../widgets/new_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -158,13 +158,29 @@ class _HomeState extends State<Home> {
                 ),
               ),
               const Divider(endIndent: 8, height: 24),
-              StreamBuilder(stream: Provider.of<GameProvider>(context).getGame().asStream(), builder: (context, snapshot) {
-                if(snapshot.hasData){
-                  
-                  return NewCard(title: "title", home: "home", alway: "alway", fase: "fase", date: "date", hour: "hour", locale: "locale", onTap: (){});
-                }
-                return const CircularProgressIndicator();
-              },)
+              StreamBuilder<QuerySnapshot>(
+                stream: Provider.of<GameProvider>(context).games,
+                builder: (context, snapshot) {
+                  return ListView(
+                    shrinkWrap: true,
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      GameModel game = GameModel.fromJson(data);
+                      print(game);
+                      return NewCard(
+                          title: game.nameCompetition!,
+                          home: game.home!,
+                          alway: game.away!,
+                          fase: game.fase!,
+                          date: DateTime.now(),
+                          locale: game.locale!,
+                          onTap: () {});
+                    }).toList(),
+                  );
+                },
+              )
             ],
           ),
         ),

@@ -9,8 +9,7 @@ class NewCard extends StatefulWidget {
   final String alway;
   final String? urlImageAlway;
   final String fase;
-  final String date;
-  final String hour;
+  final DateTime date;
   final String locale;
   final void Function() onTap;
   const NewCard({
@@ -20,7 +19,6 @@ class NewCard extends StatefulWidget {
     required this.alway,
     required this.fase,
     required this.date,
-    required this.hour,
     required this.locale,
     required this.onTap,
     this.urlImageAlway,
@@ -67,7 +65,8 @@ class _NewCardState extends State<NewCard> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    widget.home.substring(0, 4),
+                    widget.home.split(" ")[0].length > 6 ?
+                    widget.home.substring(0, 7) : widget.home,
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -99,7 +98,8 @@ class _NewCardState extends State<NewCard> {
                     size: 40,
                   ),
                   Text(
-                    widget.alway.substring(0, 4),
+                    widget.alway.split(" ")[0].length > 6 ?
+                    widget.alway.substring(0, 7) : widget.alway,
                     softWrap: true,
                     maxLines: 1,
                     style: const TextStyle(
@@ -130,19 +130,18 @@ class _NewCardState extends State<NewCard> {
                   size: 20,
                   color: Colors.black,
                 ),
-                const SizedBox(
-                  width: 80,
-                ),
+                const SizedBox(width: 5,),
                 Text(
-                  "${widget.date.substring(0,1)} | "
-                      .toUpperCase(),
+                  "${widget.date.day} ${DateFormat("MMMM", "pt_BR").format(widget.date).substring(0, 3).toUpperCase()} | ${DateFormat("EEEE", "pt_BR").format(widget.date).toUpperCase()}",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(
-                  width: 70,
+                  width: widget.date.hour < 12 ? 200 : 130,
                 ),
                 Text(
-                  widget.hour,
+                  widget.date.hour < 12
+                      ? DateFormat.jm().format(widget.date)
+                      : DateFormat.jm().format(widget.date),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(width: 5,),

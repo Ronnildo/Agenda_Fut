@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+
 class GameModel {
   String? nameCompetition;
   String? home;
@@ -22,8 +25,8 @@ class GameModel {
     home = json["casa"];
     away = json["fora"];
     locale = json["local"];
-    date = json["fase"];
-    date = json["data"];
+    fase = json["fase"];
+    date = (json["data"] as Timestamp).toDate();
   }
 
   Map<String, dynamic> toJson(){

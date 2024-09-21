@@ -16,14 +16,14 @@ class GameController {
     }
   }
 
-  Future<Stream> getGames() async {
+  Future getGames() async {
     String userId = _firebaseAuth.currentUser!.uid;
+    print(userId);
     try {
-      Stream games = _firestore.collection(userId).snapshots();
+      Stream<QuerySnapshot> games = _firestore.collection(userId).snapshots();
       return games;
     } catch (e) {
       print(e);
-      return const Stream.empty();
     }
    
   }

@@ -33,7 +33,7 @@ class _ContainerFaseState extends State<ContainerFase> {
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 7,
+          fontSize: 10,
           fontWeight: FontWeight.w700,
           
         ),
