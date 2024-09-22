@@ -29,7 +29,6 @@ class _LoginState extends State<Login> {
       ),
       function,
     );
-    print(Provider.of<UserProvider>(context, listen: false).status);
   }
 
   home() {

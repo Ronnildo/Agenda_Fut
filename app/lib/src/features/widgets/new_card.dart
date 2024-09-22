@@ -37,6 +37,7 @@ class _NewCardState extends State<NewCard> {
       onTap: widget.onTap,
       child: Container(
         padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(bottom: 10),
         width: MediaQuery.of(context).size.width,
         height: 190,
         decoration: BoxDecoration(
@@ -61,12 +62,15 @@ class _NewCardState extends State<NewCard> {
               padding: EdgeInsets.zero,
               width: MediaQuery.of(context).size.width - 20,
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  // Nome time casa
                   Text(
-                    widget.home.split(" ")[0].length > 6 ?
-                    widget.home.substring(0, 7) : widget.home,
+                    widget.home.split(" ")[0].length >= 3
+                        ? widget.home.substring(0, 3).toUpperCase()
+                        : widget.home.toUpperCase(),
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -78,11 +82,11 @@ class _NewCardState extends State<NewCard> {
                   ),
                   const Icon(
                     Icons.shield,
-                    size: 40,
+                    size: 50,
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 40,
+                      horizontal: 20,
                     ),
                     child: Text(
                       "X",
@@ -95,18 +99,19 @@ class _NewCardState extends State<NewCard> {
                   ),
                   const Icon(
                     Icons.shield,
-                    size: 40,
+                    size: 50,
                   ),
+                  // Nome time fora
                   Text(
-                    widget.alway.split(" ")[0].length > 6 ?
-                    widget.alway.substring(0, 7) : widget.alway,
+                    widget.alway.split(" ")[0].length >= 3
+                        ? widget.alway.substring(0, 3).toUpperCase()
+                        : widget.alway.toUpperCase(),
                     softWrap: true,
                     maxLines: 1,
                     style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontSize: 25,
                       fontWeight: FontWeight.w700,
-                      fontFamily: "Play",
                     ),
                   ),
                 ],
@@ -119,32 +124,27 @@ class _NewCardState extends State<NewCard> {
             ),
             const Divider(
               color: Colors.grey,
-              // endIndent: 1,
-              // indent: 8,
             ),
+            // Data e Horário
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Icon(
                   Icons.calendar_month,
                   size: 20,
                   color: Colors.black,
                 ),
-                const SizedBox(width: 5,),
                 Text(
                   "${widget.date.day} ${DateFormat("MMMM", "pt_BR").format(widget.date).substring(0, 3).toUpperCase()} | ${DateFormat("EEEE", "pt_BR").format(widget.date).toUpperCase()}",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                SizedBox(
-                  width: widget.date.hour < 12 ? 200 : 130,
+                const SizedBox(
+                  width: 115,
                 ),
                 Text(
-                  widget.date.hour < 12
-                      ? DateFormat.jm().format(widget.date)
-                      : DateFormat.jm().format(widget.date),
+                  DateFormat("HH:mm").format(widget.date),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-                const SizedBox(width: 5,),
                 const Icon(
                   Icons.alarm,
                   size: 20,
@@ -152,25 +152,24 @@ class _NewCardState extends State<NewCard> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 2.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.location_on,
-                    size: 20,
-                    color: Colors.black,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    widget.locale,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
+            // Localização do Jogo
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.location_on,
+                  size: 20,
+                  color: Colors.black,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  widget.locale,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
             )
           ],
         ),

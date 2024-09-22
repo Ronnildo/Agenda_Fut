@@ -9,7 +9,6 @@ class DropDownPriority extends StatefulWidget {
 }
 
 class _DropDownPriorityState extends State<DropDownPriority> {
-  final TextEditingController _priority = TextEditingController();
   final List<String> _typeUsers = ["Fase de Grupos", "Oitavas", "Quartas", "Semifinal", "Final", "Outro"];
   String dropDownValue = "";
   @override

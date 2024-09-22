@@ -61,9 +61,8 @@ class _ContainerImageState extends State<ContainerImage> {
           fileUpload = file;
         });
       }
-      print(fileUpload!.name);
     } catch (e) {
-      print(e);
+      e;
     }
   }
 }

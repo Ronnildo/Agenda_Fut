@@ -48,7 +48,7 @@ class UserController extends Repository {
   }
 
   Future<String> getUser() async{
-    String? name = await _firebaseAuth.currentUser?.displayName;
+    String? name =  _firebaseAuth.currentUser?.displayName;
     return name!;
   }
 }

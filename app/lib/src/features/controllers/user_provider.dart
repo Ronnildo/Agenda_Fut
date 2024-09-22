@@ -9,7 +9,7 @@ class UserProvider extends ChangeNotifier{
   String _error = ""; 
   String _status = "";
   String _name = "";
-  String _uuid = "";
+  String? _uuid;
 
   get isLoading => _isLoading;
   get error => _error;

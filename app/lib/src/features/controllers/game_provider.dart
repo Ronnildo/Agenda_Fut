@@ -1,7 +1,6 @@
 import 'package:app/src/features/controllers/game_controller.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class GameProvider extends ChangeNotifier {
@@ -16,7 +15,7 @@ class GameProvider extends ChangeNotifier {
   get error => _error;
   Stream<QuerySnapshot> get games => _games;
 
-  Future<void> getGame() async {
+  Future<void> getGames() async {
     try {
       _games = await _gameController.getGames();
       _isLoading = false;

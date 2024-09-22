@@ -1,4 +1,3 @@
-import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/widgets/container_fase.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,9 +27,9 @@ class MiniCardGame extends StatefulWidget {
 
 class _MiniCardGameState extends State<MiniCardGame> {
 
-  void details(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailsPage()));
-  }
+  // void details(){
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailsPage()));
+  // }
 
   @override
   Widget build(BuildContext context) {

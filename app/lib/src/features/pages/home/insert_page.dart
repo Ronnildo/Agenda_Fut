@@ -6,7 +6,6 @@ import 'package:app/src/features/widgets/date_or_hour.dart';
 import 'package:app/src/features/widgets/dropdown_type.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 // ignore: library_prefixes
 import 'package:intl/intl.dart' as Data;
 import 'package:provider/provider.dart';
@@ -19,18 +18,12 @@ class InsertPage extends StatefulWidget {
 }
 
 class _InsertPageState extends State<InsertPage> {
-  final TextEditingController _competitionController =
-      TextEditingController(text: "Barrense");
-  final TextEditingController _homeController =
-      TextEditingController(text: "Cobras");
-  final TextEditingController _awayControlelr =
-      TextEditingController(text: "Golden");
-  final TextEditingController _localeController =
-      TextEditingController(text: "Ginasio o Duty");
-  final TextEditingController _faseController =
-      TextEditingController(text: "Barrense");
-  final TextEditingController _dateController =
-      TextEditingController(text: "20/09/2024:");
+  final TextEditingController _competitionController = TextEditingController();
+  final TextEditingController _homeController = TextEditingController();
+  final TextEditingController _awayControlelr = TextEditingController();
+  final TextEditingController _localeController = TextEditingController();
+  final TextEditingController _faseController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
 
   TimeOfDay? selectedTime;
@@ -42,7 +35,6 @@ class _InsertPageState extends State<InsertPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_faseController.text);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -117,14 +109,9 @@ class _InsertPageState extends State<InsertPage> {
                         initialDate: DateTime.now(), //get today's date
                         firstDate: DateTime(2024), lastDate: DateTime(2101),
                       );
-                      // setState(() {
-                      //   DateTime formatDate = DateTime.parse(_dateController.text);
-                      //   print(formatDate);
 
-                      // });
                       if (_pickedDate != null) {
-                        print(
-                            _pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                        //get the picked date in the format => 2022-07-04 00:00:00.000
                         String formattedDate = Data.DateFormat('dd/MM/yyyy').format(
                             _pickedDate!); // format date in required form here we use yyyy-MM-dd that means time is removed
                         // print(
@@ -166,12 +153,12 @@ class _InsertPageState extends State<InsertPage> {
                         String hour = selectedTime.toString();
                         _timeController.text = hour;
                       }
-                      print(time!);
+
                       setState(() {
                         selectedTime = time;
 
                         _timeController.text =
-                            "${time.hour}:${time.minute > 10 ? time.minute : "0${time.minute}"}";
+                            "${time!.hour}:${time.minute > 10 ? time.minute : "0${time.minute}"}";
                       });
                     },
                   ),
@@ -185,18 +172,16 @@ class _InsertPageState extends State<InsertPage> {
                 title: "Adicionar",
               ),
             ),
-            // Consumer<GameProvider>(
-            //   builder: (context, value, child) {
-            //     if (value.isLoading) {
-            //       return Text(value.error);
-            //     }
-            //     clear();
-            //     return Text(value.status);
-            //   },
-            // ),
           ],
         ),
       ),
+    );
+   
+  }
+
+  SnackBar snackBarInsert(String status) {
+    return SnackBar(
+      content: Text(status),
     );
   }
 
@@ -219,6 +204,7 @@ class _InsertPageState extends State<InsertPage> {
         date: date,
       ),
     );
+    ScaffoldMessenger.of(context).showSnackBar(snackBarInsert(Provider.of<GameProvider>(context, listen: false).status));
   }
 
   clear() {

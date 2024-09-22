@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getUser();
-    Provider.of<GameProvider>(context, listen: false).getGame();
+    Provider.of<GameProvider>(context, listen: false).getGames();
     super.initState();
   }
 
@@ -55,6 +55,7 @@ class _HomeState extends State<Home> {
           },
         ),
         leadingWidth: 20,
+        centerTitle: false,
         automaticallyImplyLeading: false,
         actions: [
           pathImage.isEmpty
@@ -161,24 +162,32 @@ class _HomeState extends State<Home> {
               StreamBuilder<QuerySnapshot>(
                 stream: Provider.of<GameProvider>(context).games,
                 builder: (context, snapshot) {
-                  return ListView(
-                    shrinkWrap: true,
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-                      GameModel game = GameModel.fromJson(data);
-                      print(game);
-                      return NewCard(
+                  if (snapshot.hasData) {
+                    return ListView(
+                      shrinkWrap: true,
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        GameModel game = GameModel.fromJson(data);
+                        return NewCard(
                           title: game.nameCompetition!,
                           home: game.home!,
                           alway: game.away!,
                           fase: game.fase!,
-                          date: DateTime.now(),
+                          date: game.date!,
                           locale: game.locale!,
-                          onTap: () {});
-                    }).toList(),
-                  );
+                          onTap: () => details(
+                            game.home!,
+                            game.away!,
+                            game.date!,
+                            game.locale!,
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
                 },
               )
             ],
@@ -203,11 +212,17 @@ class _HomeState extends State<Home> {
     );
   }
 
-  detalhes() {
+  // Função de navegação para tela de detalhes
+  details(String home, String away, DateTime date, String locale) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const DetailsPage(),
+        builder: (context) => DetailsPage(
+          home: home,
+          away: away,
+          date: date,
+          locale: locale,
+        ),
       ),
     );
   }

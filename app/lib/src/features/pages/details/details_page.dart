@@ -4,9 +4,20 @@ import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/widgets/mini_card_game.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({super.key});
+  final String home;
+  final String away;
+  final DateTime date;
+  final String locale;
+  const DetailsPage({
+    super.key,
+    required this.home,
+    required this.away,
+    required this.date,
+    required this.locale,
+  });
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -15,7 +26,14 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   XFile? file;
   @override
+  void initState() {
+    // Provider.of<GameProvider>(context).getGame(widget.title);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // print(Provider.of<GameProvider>(context).getGame(widget.title));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -31,10 +49,8 @@ class _DetailsPageState extends State<DetailsPage> {
           mainAxisSize: MainAxisSize.max,
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Center(
-              child: ContainerImage(
-               
-              ),
+            const Center(
+              child: ContainerImage(),
             ),
             Center(
               child: Text(
@@ -54,31 +70,31 @@ class _DetailsPageState extends State<DetailsPage> {
             ),
             ListInforDetails(
               title: "Equipe",
-              subTitle: "Atlético",
+              subTitle: widget.home,
               icon: Icons.shield,
               onTap: () {},
             ),
             ListInforDetails(
               title: "Adversário",
-              subTitle: "Boca Juniors",
+              subTitle: widget.away,
               icon: Icons.shield,
               onTap: () {},
             ),
             ListInforDetails(
               title: "Local",
-              subTitle: "Arena Tony",
+              subTitle: widget.locale,
               icon: Icons.location_on,
               onTap: () {},
             ),
             ListInforDetails(
               title: "Data",
-              subTitle: "20/06/2024",
+              subTitle: DateFormat("dd/MM/yyyy").format(widget.date),
               icon: Icons.event,
               onTap: () {},
             ),
             ListInforDetails(
               title: "Horário",
-              subTitle: "16:30 AM",
+              subTitle: DateFormat("HH:mm").format(widget.date),
               icon: Icons.schedule,
               onTap: () {},
             ),
@@ -100,7 +116,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 Icons.arrow_drop_down,
                 size: 30,
                 color: Colors.black,
-              ), 
+              ),
             ),
             MiniCardGame(
                 colorBar: Colors.red,
