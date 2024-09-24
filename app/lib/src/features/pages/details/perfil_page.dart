@@ -2,6 +2,7 @@ import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -12,7 +13,6 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
-
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getUser();
@@ -21,6 +21,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
+    XFile? file;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -45,10 +46,7 @@ class _PerfilPageState extends State<PerfilPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Center(
-              child: ContainerImage(
-                
-          )),
+          // Center(child: ContainerImage(onTap: () {})),
           Text(
             "Foto do Perfil",
             style: Theme.of(context).textTheme.bodyMedium,

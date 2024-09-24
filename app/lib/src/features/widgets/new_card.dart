@@ -139,7 +139,7 @@ class _NewCardState extends State<NewCard> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(
-                  width: 115,
+                  width: 100,
                 ),
                 Text(
                   DateFormat("HH:mm").format(widget.date),

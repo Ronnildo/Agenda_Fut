@@ -1,9 +1,14 @@
 import 'dart:io';
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class ContainerImage extends StatefulWidget {
+  final String path;
+  final void Function() uploadImage;
   const ContainerImage({
+    required this.uploadImage,
+    required this.path,
     super.key,
   });
 
@@ -12,57 +17,72 @@ class ContainerImage extends StatefulWidget {
 }
 
 class _ContainerImageState extends State<ContainerImage> {
-  XFile? fileUpload;
   @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomRight,
-      children: [
-        Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(100),
-            image: DecorationImage(
-              image: fileUpload != null
-                  ? FileImage(File(fileUpload!.path))
-                  : FileImage(
-                      File(""),
-                    ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: fileUpload == null
-              ? const Icon(
-                  Icons.photo,
-                  size: 32,
-                )
-              : null,
-        ),
-        InkWell(
-          onTap: uploadImage,
-          child: Icon(
-            Icons.add_a_photo,
-            size: 40,
-            color: fileUpload == null ? Colors.black : Colors.white,
-          ),
-        ),
-      ],
-    );
+  void dispose() {
+    super.dispose();
   }
 
-  void uploadImage() async {
-    ImagePicker picker = ImagePicker();
-    try {
-      XFile? file = await picker.pickImage(source: ImageSource.gallery);
-      if (file != null) {
-        setState(() {
-          fileUpload = file;
-        });
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<GameProvider>(builder: (context, value, child) {
+      if (value.fileUp != "") {
+        return Stack(alignment: Alignment.bottomRight, children: [
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(100),
+              image: DecorationImage(
+                // ignore: unnecessary_null_comparison
+                image: FileImage(File(
+                    Provider.of<GameProvider>(context, listen: false).fileUp)),
+                fit: BoxFit.cover,
+              ),
+            ),
+            // ignore: unnecessary_null_comparison
+            child: widget.path == null
+                ? const Icon(
+                    Icons.photo,
+                    size: 32,
+                  )
+                : null,
+          ),
+          InkWell(
+            onTap: widget.uploadImage,
+            child: const Icon(
+              Icons.add_a_photo,
+              size: 35,
+              // ignore: unnecessary_null_comparison
+              color: Colors.black,
+            ),
+          ),
+        ]);
       }
-    } catch (e) {
-      e;
-    }
+      return Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: const Icon(
+                Icons.photo,
+                size: 32,
+              )),
+          InkWell(
+            onTap: widget.uploadImage,
+            child: const Icon(
+              Icons.add_a_photo,
+              size: 40,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_Insert_game.dart';
@@ -6,6 +8,7 @@ import 'package:app/src/features/widgets/date_or_hour.dart';
 import 'package:app/src/features/widgets/dropdown_type.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 // ignore: library_prefixes
 import 'package:intl/intl.dart' as Data;
 import 'package:provider/provider.dart';
@@ -32,6 +35,7 @@ class _InsertPageState extends State<InsertPage> {
   MaterialTapTargetSize tapTargetSize = MaterialTapTargetSize.padded;
   bool use24Hours = false;
   DateTime? _pickedDate;
+  XFile _file = XFile("");
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +54,11 @@ class _InsertPageState extends State<InsertPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(
-              child: ContainerImage(),
+            Center(
+              child: ContainerImage(
+                path: _file.path,
+                uploadImage: uploadImage,
+              ),
             ),
             Center(
               child: Padding(
@@ -176,16 +183,20 @@ class _InsertPageState extends State<InsertPage> {
         ),
       ),
     );
-   
   }
 
-  SnackBar snackBarInsert(String status) {
-    return SnackBar(
-      content: Text(status),
-    );
+  Future<void> uploadImage() async {
+    ImagePicker picker = ImagePicker();
+    XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      _file = file;
+    }
+    Provider.of<GameProvider>(context, listen: false).uploadPath(_file.path);
   }
 
-  insertGame() {
+  Future<void> insertGame() async {
+    File file = File(_file.path);
+
     String name = _competitionController.text;
     String home = _homeController.text;
     String away = _awayControlelr.text;
@@ -195,6 +206,7 @@ class _InsertPageState extends State<InsertPage> {
         .parse("${_dateController.text} ${_timeController.text}");
 
     Provider.of<GameProvider>(context, listen: false).addGame(
+      file,
       GameModel(
         nameCompetition: name,
         home: home,
@@ -204,7 +216,21 @@ class _InsertPageState extends State<InsertPage> {
         date: date,
       ),
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBarInsert(Provider.of<GameProvider>(context, listen: false).status));
+    // ScaffoldMessenger.of(context).showSnackBar(snackBarInsert(
+    //     Provider.of<GameProvider>(context, listen: false).status));
+  }
+
+  SnackBar snackBarInsert(String status) {
+    return SnackBar(
+      content: Text(
+        status,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
   }
 
   clear() {

@@ -67,7 +67,7 @@ class _MiniCardGameState extends State<MiniCardGame> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.teamName.substring(0, 4),
+                      widget.teamName.substring(0, 3),
                       style: Theme.of(context).textTheme.displayMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -77,14 +77,14 @@ class _MiniCardGameState extends State<MiniCardGame> {
                     ),
                     Text(
                       "X",
-                      style: Theme.of(context).textTheme.displayMedium,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const Icon(
                       Icons.shield,
                       size: 40,
                     ),
                     Text(
-                      widget.advTeamName.substring(0, 4),
+                      widget.advTeamName.substring(0, 3),
                       style: Theme.of(context).textTheme.displayMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -92,7 +92,7 @@ class _MiniCardGameState extends State<MiniCardGame> {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width / 2.4,
+                width: MediaQuery.of(context).size.width / 2.5,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -124,7 +124,7 @@ class _MiniCardGameState extends State<MiniCardGame> {
                           Text(
                             DateFormat("MMMM", "pt_BR")
                                 .format(widget.date)
-                                .substring(0, 3)
+                                .substring(0, 2)
                                 .toUpperCase(),
                             style: const TextStyle(
                               fontSize: 20,

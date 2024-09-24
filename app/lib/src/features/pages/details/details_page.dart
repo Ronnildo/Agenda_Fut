@@ -1,3 +1,4 @@
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
@@ -5,14 +6,17 @@ import 'package:app/src/features/widgets/mini_card_game.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {
+  final String nameCompetition;
   final String home;
   final String away;
   final DateTime date;
   final String locale;
   const DetailsPage({
     super.key,
+    required this.nameCompetition,
     required this.home,
     required this.away,
     required this.date,
@@ -27,7 +31,7 @@ class _DetailsPageState extends State<DetailsPage> {
   XFile? file;
   @override
   void initState() {
-    // Provider.of<GameProvider>(context).getGame(widget.title);
+    Provider.of<GameProvider>(context, listen: false).getImage(widget.nameCompetition);
     super.initState();
   }
 
@@ -49,8 +53,26 @@ class _DetailsPageState extends State<DetailsPage> {
           mainAxisSize: MainAxisSize.max,
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const Center(
-              child: ContainerImage(),
+            Consumer<GameProvider>(
+              builder: (context, value, child) {
+                
+                return value.isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Center(
+                        child: ContainerImage(
+                          path: value.fileUp,
+                          uploadImage: () {},
+                        ),
+                      );
+                // return Center(
+                //   child: ContainerImage(
+                //     path: value.fileUp,
+                //     uploadImage: () {},
+                //   ),
+                // );
+              },
             ),
             Center(
               child: Text(

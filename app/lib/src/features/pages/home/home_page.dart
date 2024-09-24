@@ -165,6 +165,7 @@ class _HomeState extends State<Home> {
                   if (snapshot.hasData) {
                     return ListView(
                       shrinkWrap: true,
+                      
                       children:
                           snapshot.data!.docs.map((DocumentSnapshot document) {
                         Map<String, dynamic> data =
@@ -178,6 +179,7 @@ class _HomeState extends State<Home> {
                           date: game.date!,
                           locale: game.locale!,
                           onTap: () => details(
+                            game.nameCompetition!,
                             game.home!,
                             game.away!,
                             game.date!,
@@ -213,11 +215,12 @@ class _HomeState extends State<Home> {
   }
 
   // Função de navegação para tela de detalhes
-  details(String home, String away, DateTime date, String locale) {
+  details(String nameCompetition, String home, String away, DateTime date, String locale) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetailsPage(
+          nameCompetition: nameCompetition,
           home: home,
           away: away,
           date: date,
