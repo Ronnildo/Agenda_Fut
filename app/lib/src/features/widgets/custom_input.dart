@@ -1,4 +1,6 @@
+import "package:app/src/features/controllers/game_provider.dart";
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 
 class CustomInput extends StatefulWidget {
   final TextEditingController controller;
@@ -49,6 +51,15 @@ class _CustomInputState extends State<CustomInput> {
               hintStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelStyle: Theme.of(context).textTheme.labelMedium,
               suffixIcon: Icon(widget.icon),
+              errorBorder: Provider.of<GameProvider>(context).error != ""
+                  ? OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: const BorderSide(
+                        color: Colors.red,
+                        width: 4,
+                      ),
+                    )
+                  : null,
               // errorStyle: const TextStyle(fontSize: 14, color: Colors.green),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),

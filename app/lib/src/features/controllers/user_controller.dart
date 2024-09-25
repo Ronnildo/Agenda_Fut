@@ -38,13 +38,8 @@ class UserController extends Repository {
       );
       return "sucess";
     } on FirebaseAuthException catch (err) {
-      if (err.code == "user-not-found") {
-        return "email";
-      } else if (err.code == "wrong-password") {
-        return "senha";
-      }
+      return err.code;
     }
-    return "error";
   }
 
   Future<String> getUser() async{

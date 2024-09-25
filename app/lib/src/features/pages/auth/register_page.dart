@@ -20,7 +20,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _passwordController = TextEditingController();
   // Implementar lógica de cadastro
 
-  register() {
+  login() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -37,9 +37,25 @@ class _RegisterState extends State<Register> {
     Provider.of<UserProvider>(context, listen: false).create(
       UserModel(name: name, email: email, password: password),
     );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Center(
+          child: Text(
+            Provider.of<UserProvider>(context, listen: false).status,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+        ),
+        duration: const Duration(
+          seconds: 5,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
+    );
+    clear();
+    login();
   }
 
-  clear(){
+  clear() {
     setState(() {
       _nameController.clear();
       _emailController.clear();
@@ -103,32 +119,6 @@ class _RegisterState extends State<Register> {
             ),
             const SizedBox(
               height: 16,
-            ),
-            Consumer<UserProvider>(
-              builder: (context, value, child) {
-                if (!value.isLoading) {
-                  clear();
-                  return Center(
-                    child: Text(
-                     value.status == "SingIn" ? "" : value.status,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  );
-                } else {
-                  return Text(
-                    value.error,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  );
-                }
-              },
             ),
             CustomButtom(
               onTap: () => registerUser(

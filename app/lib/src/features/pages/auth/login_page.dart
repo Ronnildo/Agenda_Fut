@@ -20,42 +20,11 @@ class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
 
-  // Implementar validação e autenticação
-  login(String email, String password, void Function() function) {
-    Provider.of<UserProvider>(context, listen: false).auth(
-      UserModel(
-        email: email,
-        password: password,
-      ),
-      function,
-    );
-  }
-
-  home() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Home(),
-      ),
-    );
-  }
-
-  register() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Register(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const CustomTitle(
               heightdiv: 2.8,
@@ -98,33 +67,9 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            Consumer<UserProvider>(
-              builder: (context, value, child) {
-                if (!value.isLoading) {
-                  return Center(
-                    child: Text(
-                      value.status == "SingIn" ? "" : value.status,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  );
-                } else {
-                  return Text(
-                    value.error,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  );
-                }
-              },
-            ),
             CustomButtom(
-              onTap: () => login(_emailController.text, _passController.text, home),
+              onTap: () =>
+                  login(_emailController.text, _passController.text, home),
               title: "Entrar",
             ),
             Padding(
@@ -186,6 +131,47 @@ class _LoginState extends State<Login> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  // Implementar validação e autenticação
+  login(String email, String password, void Function() function) {
+    Provider.of<UserProvider>(context, listen: false).auth(
+      UserModel(
+        email: email,
+        password: password,
+      ),
+      function,
+    );
+    // if (Provider.of<UserProvider>(context, listen: false).error != "") {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text(
+    //         Provider.of<UserProvider>(context, listen: false).error,
+    //         style: Theme.of(context).textTheme.displayMedium,
+    //       ),
+    //       backgroundColor: Theme.of(context).colorScheme.primary,
+    //       duration: const Duration(seconds: 5),
+    //     ),
+    //   );
+    // }
+  }
+
+  home() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Home(),
+      ),
+    );
+  }
+
+  register() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Register(),
       ),
     );
   }
