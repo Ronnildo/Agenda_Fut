@@ -68,8 +68,10 @@ class _LoginState extends State<Login> {
               ),
             ),
             CustomButtom(
-              onTap: () =>
-                  login(_emailController.text, _passController.text, home),
+              onTap: () => login(
+                _emailController.text,
+                _passController.text,
+              ),
               title: "Entrar",
             ),
             Padding(
@@ -135,27 +137,28 @@ class _LoginState extends State<Login> {
     );
   }
 
-  // Implementar validação e autenticação
-  login(String email, String password, void Function() function) {
+  // autenticação
+  login(String email, String password) {
     Provider.of<UserProvider>(context, listen: false).auth(
       UserModel(
         email: email,
         password: password,
       ),
-      function,
+      home,
     );
-    // if (Provider.of<UserProvider>(context, listen: false).error != "") {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text(
-    //         Provider.of<UserProvider>(context, listen: false).error,
-    //         style: Theme.of(context).textTheme.displayMedium,
-    //       ),
-    //       backgroundColor: Theme.of(context).colorScheme.primary,
-    //       duration: const Duration(seconds: 5),
-    //     ),
-    //   );
-    // }
+
+    if (Provider.of<UserProvider>(context, listen: false).status == "failed") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            Provider.of<UserProvider>(context, listen: false).error,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    }
   }
 
   home() {

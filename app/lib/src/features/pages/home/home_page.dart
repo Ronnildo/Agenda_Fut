@@ -34,10 +34,8 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
+    
     super.dispose();
-    Provider.of<UserProvider>(context, listen: false).singOut(() {
-      Navigator.pop(context);
-    });
   }
 
   @override
@@ -78,6 +76,7 @@ class _HomeState extends State<Home> {
                   width: 50,
                   height: 50,
                 ),
+          IconButton(onPressed: singOut, icon: const Icon(Icons.logout, size: 28,))
         ],
         backgroundColor: Theme.of(context).colorScheme.background,
       ),
@@ -165,7 +164,6 @@ class _HomeState extends State<Home> {
                   if (snapshot.hasData) {
                     return ListView(
                       shrinkWrap: true,
-                      
                       children:
                           snapshot.data!.docs.map((DocumentSnapshot document) {
                         Map<String, dynamic> data =
@@ -215,7 +213,8 @@ class _HomeState extends State<Home> {
   }
 
   // Função de navegação para tela de detalhes
-  details(String nameCompetition, String home, String away, DateTime date, String locale) {
+  details(String nameCompetition, String home, String away, DateTime date,
+      String locale) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -228,6 +227,10 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+  singOut(){
+    Provider.of<UserProvider>(context, listen: false).singOut();
+    Navigator.pop(context);
   }
 
   focusChange(DateTime selectDate) {

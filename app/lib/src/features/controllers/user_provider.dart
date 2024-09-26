@@ -40,22 +40,21 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> auth(UserModel user, void Function() function) async {
-    try {
-      String res = await _userController.authUser(user);
-      _status = res;
-      _isLoading = false;
-      notifyListeners();
-    } catch (e) {
-      print(e);
-      _error = '$e';
-      _isLoading = false;
-      notifyListeners();
-      throw Exception("E-mail ou Senha Incorretos.");
-    }
+  Future<void> auth(UserModel user, void Function() login) async {
+      try {
+        await _userController.authUser(user);
+        _status = "sucess";
+        _isLoading = false;
+        notifyListeners();
+      }catch (e) {
+        _status = "failed";
+        _error = e.toString();
+        notifyListeners();
+      }
+    
   }
 
-  Future<void> singOut(void Function() function) async {
+  Future<void> singOut() async {
     await FirebaseAuth.instance.signOut();
   }
 

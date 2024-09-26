@@ -34,7 +34,6 @@ class GameProvider extends ChangeNotifier {
     try {
       _games = await _gameController.getGames();
       _isLoading = false;
-      _status = "";
       notifyListeners();
     } on FirebaseException catch (err) {
       _error = err.code;

@@ -30,15 +30,25 @@ class UserController extends Repository {
     return "failed";
   }
 
-  Future<String> authUser(UserModel user) async {
+  Future authUser(UserModel user) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: user.email!,
         password: user.password!,
       );
-      return "sucess";
     } on FirebaseAuthException catch (err) {
-      return err.code;
+      if(err.code == "invalid-credential"){
+        throw Exception("E-mail ou Senha Inválidos");
+      }else if(err.code == "invalid-email"){
+        throw Exception("E-mail Inválido");
+      }else if(err.code == "channel-error"){
+        throw Exception("Campos vazios");
+      }else if(err.code == "too-many-requests"){
+        throw Exception("Tente novamente em instantes");
+      }
+      else{
+        throw Exception("Error: ${err.code}");
+      }
     }
   }
 
