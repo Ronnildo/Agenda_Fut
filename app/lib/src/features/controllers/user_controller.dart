@@ -1,6 +1,7 @@
 import 'package:app/src/core/repository.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserController extends Repository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -37,23 +38,26 @@ class UserController extends Repository {
         password: user.password!,
       );
     } on FirebaseAuthException catch (err) {
-      if(err.code == "invalid-credential"){
-        throw Exception("E-mail ou Senha Inválidos");
-      }else if(err.code == "invalid-email"){
-        throw Exception("E-mail Inválido");
-      }else if(err.code == "channel-error"){
-        throw Exception("Campos vazios");
-      }else if(err.code == "too-many-requests"){
-        throw Exception("Tente novamente em instantes");
-      }
-      else{
+      if (err.code == "invalid-credential") {
+        throw const AuthException("Erro: Senha Incorreta").message;
+      } else if (err.code == "invalid-email") {
+        throw const AuthException("Erro: E-mail Inválido").message;
+      } else if (err.code == "channel-error") {
+        throw const AuthException("Erro: Campos vazios").message;
+      } else if (err.code == "too-many-requests") {
+        throw const AuthException("Erro: Tente novamente em instantes").message;
+      } else if (err.code == "wrong-password") {
+        throw const AuthException("Erro: Senha muito curta").message;
+      } else if (err.code == "user-not-found") {
+        throw const AuthException("Erro: E-mail não cadastrado").message;
+      } else {
         throw Exception("Error: ${err.code}");
       }
     }
   }
 
-  Future<String> getUser() async{
-    String? name =  _firebaseAuth.currentUser?.displayName;
+  Future<String> getUser() async {
+    String? name = _firebaseAuth.currentUser?.displayName;
     return name!;
   }
 }

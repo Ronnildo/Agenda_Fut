@@ -96,11 +96,8 @@ class _LoginState extends State<Login> {
                           MediaQuery.of(context).size.width,
                           56,
                         ),
-                        backgroundColor: Theme.of(context).colorScheme.primary,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-
-                          
+                          borderRadius: BorderRadius.circular(5),                          
                         ),
                       ),
                       onPressed: register,

@@ -45,12 +45,15 @@ class UserProvider extends ChangeNotifier {
         await _userController.authUser(user);
         _status = "sucess";
         _isLoading = false;
+        login();
         notifyListeners();
       }catch (e) {
         _status = "failed";
         _error = e.toString();
         notifyListeners();
       }
+      _status = "";
+      notifyListeners();
     
   }
 
