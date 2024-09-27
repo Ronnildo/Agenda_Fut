@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/widgets/container_img.dart';
-import 'package:app/src/features/widgets/custom_Insert_game.dart';
+import 'package:app/src/features/widgets/custom_insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/date_or_hour.dart';
 import 'package:app/src/features/widgets/dropdown_type.dart';
@@ -191,6 +191,7 @@ class _InsertPageState extends State<InsertPage> {
     if (file != null) {
       _file = file;
     }
+    // ignore: use_build_context_synchronously
     Provider.of<GameProvider>(context, listen: false).uploadPath(_file.path);
   }
 

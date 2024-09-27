@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,10 +25,10 @@ class GameController {
   }
 
   Future loadImages(String nameCompetition) async {
-    String userId = _firebaseAuth.currentUser!.uid;
+    // String userId = _firebaseAuth.currentUser!.uid;
     try{
       final storageRef = _storage.ref();
-      print(storageRef);
+      // print(storageRef);
       final pathStorage = storageRef.child('banners').listAll();
       return pathStorage;
     }on FirebaseException catch (e){

@@ -30,7 +30,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> create(UserModel user) async {
     try {
-      String res = await _userController.createUser(user);
+      await _userController.createUser(user);
 
       _isLoading = false;
       _status = "Cadastro Realizado com Sucesso!";

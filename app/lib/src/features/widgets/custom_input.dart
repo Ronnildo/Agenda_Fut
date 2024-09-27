@@ -1,7 +1,4 @@
-import "package:app/src/features/controllers/game_provider.dart";
-import "package:app/src/features/controllers/user_provider.dart";
 import "package:flutter/material.dart";
-import "package:provider/provider.dart";
 
 class CustomInput extends StatefulWidget {
   final TextEditingController controller;
