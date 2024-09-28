@@ -35,8 +35,8 @@ class _ContainerImageState extends State<ContainerImage> {
               borderRadius: BorderRadius.circular(100),
               image: DecorationImage(
                 // ignore: unnecessary_null_comparison
-                image: FileImage(File(
-                    Provider.of<GameProvider>(context, listen: false).fileUp)),
+                image: NetworkImage(
+                    Provider.of<GameProvider>(context, listen: false).fileUp),
                 fit: BoxFit.cover,
               ),
             ),

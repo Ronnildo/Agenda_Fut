@@ -5,6 +5,7 @@ import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GameController {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -14,7 +15,8 @@ class GameController {
   Future<String> addGame(GameModel game, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      String ref = 'banners/${userId.toString()}_${game.nameCompetition}.jpg';
+      String ref = 'banners/${userId.toString()}_${game.nameCompetition!}.jpg';
+
       await _storage.ref(ref).putFile(path);
 
       await _firestore.collection(userId).add(game.toJson());
@@ -25,14 +27,24 @@ class GameController {
   }
 
   Future loadImages(String nameCompetition) async {
-    // String userId = _firebaseAuth.currentUser!.uid;
-    try{
+    String userId = _firebaseAuth.currentUser!.uid;
+    try {
       final storageRef = _storage.ref();
-      // print(storageRef);
-      final pathStorage = storageRef.child('banners').listAll();
-      return pathStorage;
-    }on FirebaseException catch (e){
-      return e.code;
+      final pathImage = storageRef
+          .child('banners/${userId}_$nameCompetition.jpg')
+          .getDownloadURL()
+          .then((value) {
+            return value;
+          })
+          .catchError((onError) {
+            return onError;
+      });
+    } on FirebaseException catch (e) {
+      if (e.code == "storage/object-not-found") {
+        throw const StorageException("Objeto não existe");
+      } else {
+        throw const StorageException("Load Image Failed");
+      }
     }
   }
 
@@ -41,8 +53,8 @@ class GameController {
     try {
       Stream<QuerySnapshot> games = _firestore.collection(userId).snapshots();
       return games;
-    } catch (e) {
-      return e;
+    } on FirebaseException catch (e) {
+      throw Exception(e.code);
     }
   }
 }

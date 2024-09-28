@@ -28,33 +28,37 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> create(UserModel user) async {
+  Future<void> create(UserModel user, void Function() page) async {
     try {
       await _userController.createUser(user);
 
+      _status = "sucess";
       _isLoading = false;
-      _status = "Cadastro Realizado com Sucesso!";
+      _error = "Conta criada com sucesso.";
+      // page();
       notifyListeners();
-    } catch (err) {
-      throw Exception("Senha fraca!");
+    } catch (e) {
+      _status = "failed";
+      _error = e.toString();
+      notifyListeners();
     }
   }
 
   Future<void> auth(UserModel user, void Function() login) async {
-      try {
-        await _userController.authUser(user);
-        _status = "sucess";
-        _isLoading = false;
-        login();
-        notifyListeners();
-      }catch (e) {
-        _status = "failed";
-        _error = e.toString();
-        notifyListeners();
-      }
-      _status = "";
-      notifyListeners();
     
+    _status = "";
+    notifyListeners();
+    try {
+      await _userController.authUser(user);
+      _status = "sucess";
+      _isLoading = false;
+      login();
+      notifyListeners();
+    } catch (e) {
+      _status = "failed";
+      _error = e.toString();
+      notifyListeners();
+    }
   }
 
   Future<void> singOut() async {

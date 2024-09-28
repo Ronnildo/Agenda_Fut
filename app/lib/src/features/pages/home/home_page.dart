@@ -34,7 +34,6 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    
     super.dispose();
   }
 
@@ -76,7 +75,12 @@ class _HomeState extends State<Home> {
                   width: 50,
                   height: 50,
                 ),
-          IconButton(onPressed: singOut, icon: const Icon(Icons.logout, size: 28,))
+          IconButton(
+              onPressed: singOut,
+              icon: const Icon(
+                Icons.logout,
+                size: 28,
+              ))
         ],
         backgroundColor: Theme.of(context).colorScheme.background,
       ),
@@ -228,7 +232,8 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  singOut(){
+
+  singOut() {
     Provider.of<UserProvider>(context, listen: false).singOut();
     Navigator.pop(context);
   }

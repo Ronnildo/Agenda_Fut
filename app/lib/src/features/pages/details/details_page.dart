@@ -31,7 +31,8 @@ class _DetailsPageState extends State<DetailsPage> {
   XFile? file;
   @override
   void initState() {
-    Provider.of<GameProvider>(context, listen: false).getImage(widget.nameCompetition);
+    Provider.of<GameProvider>(context, listen: false)
+        .getImage(widget.nameCompetition);
     super.initState();
   }
 
@@ -55,23 +56,20 @@ class _DetailsPageState extends State<DetailsPage> {
           children: [
             Consumer<GameProvider>(
               builder: (context, value, child) {
-                
-                return value.isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Center(
-                        child: ContainerImage(
-                          path: value.fileUp,
-                          uploadImage: () {},
-                        ),
-                      );
-                // return Center(
-                //   child: ContainerImage(
-                //     path: value.fileUp,
-                //     uploadImage: () {},
-                //   ),
-                // );
+                if (!value.isLoading) {
+                  Center(
+                    child: ContainerImage(
+                      path: value.fileUp,
+                      uploadImage: () {},
+                    ),
+                  );
+                }
+                return Center(
+                  child: ContainerImage(
+                    path: "",
+                    uploadImage: () {},
+                  ),
+                );
               },
             ),
             Center(

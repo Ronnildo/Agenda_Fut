@@ -9,7 +9,7 @@ class UserController extends Repository {
   @override
   Future<void> adduser(UserModel user) async {}
 
-  Future<String> createUser(UserModel user) async {
+  Future createUser(UserModel user) async {
     try {
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
@@ -18,17 +18,19 @@ class UserController extends Repository {
       );
 
       await userCredential.user!.updateDisplayName(user.name);
-      return "sucess";
     } on FirebaseAuthException catch (err) {
       if (err.code == "weak-password") {
-        return "password";
+        throw const AuthException("Senha muito fraca").message;
       } else if (err.code == 'email-already-in-use') {
-        return "email";
+        throw const AuthException("E-mail já cadastrado").message;
+      } else if (err.code == 'invalid-email') {
+        throw const AuthException("E-mail inválido").message;
+      } else if (err.code == 'operation-not-allowed') {
+        throw const AuthException("Operação não realizada").message;
+      } else {
+        throw err.code;
       }
-    } catch (e) {
-      return "";
     }
-    return "failed";
   }
 
   Future authUser(UserModel user) async {
@@ -39,19 +41,19 @@ class UserController extends Repository {
       );
     } on FirebaseAuthException catch (err) {
       if (err.code == "invalid-credential") {
-        throw const AuthException("Erro: Senha Incorreta").message;
+        throw const AuthException("Senha Incorreta").message;
       } else if (err.code == "invalid-email") {
-        throw const AuthException("Erro: E-mail Inválido").message;
+        throw const AuthException("E-mail Inválido").message;
       } else if (err.code == "channel-error") {
-        throw const AuthException("Erro: Campos vazios").message;
+        throw const AuthException("Campos vazios").message;
       } else if (err.code == "too-many-requests") {
-        throw const AuthException("Erro: Tente novamente em instantes").message;
+        throw const AuthException("Tente novamente em instantes").message;
       } else if (err.code == "wrong-password") {
-        throw const AuthException("Erro: Senha muito curta").message;
+        throw const AuthException("Senha muito curta").message;
       } else if (err.code == "user-not-found") {
-        throw const AuthException("Erro: E-mail não cadastrado").message;
+        throw const AuthException("E-mail não cadastrado").message;
       } else {
-        throw Exception("Error: ${err.code}");
+        throw Exception(err.code);
       }
     }
   }

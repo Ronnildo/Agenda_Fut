@@ -20,49 +20,6 @@ class _RegisterState extends State<Register> {
   final TextEditingController _passwordController = TextEditingController();
   // Implementar lógica de cadastro
 
-  login() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const Login(),
-      ),
-    );
-  }
-
-  Future<void> registerUser(
-    String name,
-    String email,
-    String password,
-  ) async {
-    Provider.of<UserProvider>(context, listen: false).create(
-      UserModel(name: name, email: email, password: password),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Center(
-          child: Text(
-            Provider.of<UserProvider>(context, listen: false).status,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-        ),
-        duration: const Duration(
-          seconds: 5,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-    );
-    clear();
-    login();
-  }
-
-  clear() {
-    setState(() {
-      _nameController.clear();
-      _emailController.clear();
-      _passwordController.clear();
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -161,5 +118,65 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  login() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const Login(),
+      ),
+    );
+    clear();
+  }
+
+  Future<void> registerUser(
+    String name,
+    String email,
+    String password,
+  ) async {
+    Provider.of<UserProvider>(context, listen: false).create(
+      UserModel(name: name, email: email, password: password),
+      login,
+    );
+    if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Center(
+            child: Text(
+              Provider.of<UserProvider>(context, listen: false).error,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+          duration: const Duration(
+            seconds: 3,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Center(
+            child: Text(
+              Provider.of<UserProvider>(context, listen: false).error,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+          duration: const Duration(
+            seconds: 3,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
+      );
+    }
+  }
+
+  clear() {
+    setState(() {
+      _nameController.clear();
+      _emailController.clear();
+      _passwordController.clear();
+    });
   }
 }

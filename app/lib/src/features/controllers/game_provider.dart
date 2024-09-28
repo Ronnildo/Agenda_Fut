@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class GameProvider extends ChangeNotifier {
   final GameController _gameController = GameController();
-  late Stream<QuerySnapshot> _games;
+  Stream<QuerySnapshot>? _games;
   final List<String> _arqv = [];
   bool _isLoading = true;
   String _status = "";
@@ -20,21 +20,15 @@ class GameProvider extends ChangeNotifier {
   get status => _status;
   get error => _error;
   get arquivos => _arqv;
-  Stream<QuerySnapshot> get games => _games;
-
-  loadImages(String nameCompetition) async {
-
-    _isLoading = false;
-    notifyListeners();
-  }
+  Stream<QuerySnapshot> get games => _games!;
 
   Future<void> getGames() async {
     try {
       _games = await _gameController.getGames();
       _isLoading = false;
       notifyListeners();
-    } on FirebaseException catch (err) {
-      _error = err.code;
+    } catch (err) {
+      _error = err.toString();
       _isLoading = false;
       notifyListeners();
     }
@@ -42,10 +36,15 @@ class GameProvider extends ChangeNotifier {
 
   Future<void> getImage(String nameCompetition) async {
     try {
+      String urlImage = await _gameController.loadImages(nameCompetition);
+      _status = nameCompetition;
+      _fileUp = urlImage;
       _isLoading = false;
       notifyListeners();
     } catch (e) {
-      throw Exception("Get Image Filed: $e");
+      _status = "failed";
+      _error = e.toString();
+      notifyListeners();
     }
   }
 
@@ -61,6 +60,7 @@ class GameProvider extends ChangeNotifier {
       _isLoading = false;
       _fileUp = "";
       _status = "Partida adicionado com Sucesso!";
+      getImage(game.nameCompetition!);
       notifyListeners();
     } on FirebaseException catch (err) {
       _error = err.code;

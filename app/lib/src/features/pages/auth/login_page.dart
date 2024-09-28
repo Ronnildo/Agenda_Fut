@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
                           56,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),                          
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                       onPressed: register,
@@ -147,7 +147,8 @@ class _LoginState extends State<Login> {
       home,
     );
 
-    if (Provider.of<UserProvider>(context, listen: false).status == "failed") {
+    if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -155,7 +156,7 @@ class _LoginState extends State<Login> {
             style: Theme.of(context).textTheme.displayMedium,
           ),
           backgroundColor: Theme.of(context).colorScheme.primary,
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
@@ -168,6 +169,7 @@ class _LoginState extends State<Login> {
         builder: (context) => const Home(),
       ),
     );
+    clear();
   }
 
   register() {
@@ -177,5 +179,12 @@ class _LoginState extends State<Login> {
         builder: (context) => const Register(),
       ),
     );
+  }
+
+  clear() {
+    setState(() {
+      _emailController.clear();
+      _passController.clear();
+    });
   }
 }
