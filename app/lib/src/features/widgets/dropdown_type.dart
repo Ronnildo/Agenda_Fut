@@ -40,9 +40,7 @@ class _DropDownPriorityState extends State<DropDownPriority> {
               ),
               textStyle: Theme.of(context).textTheme.labelSmall,
               menuStyle: const MenuStyle(
-                backgroundColor: MaterialStatePropertyAll(
-                  Colors.white,
-                ),
+                backgroundColor: WidgetStatePropertyAll(Colors.white),
               ),
               dropdownMenuEntries: _typeUsers.map<DropdownMenuEntry<String>>(
                 (String value) {

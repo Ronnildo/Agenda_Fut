@@ -22,7 +22,7 @@ class _PerfilPageState extends State<PerfilPage> {
     // XFile? file;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(
           "Perfil",
           style: Theme.of(context).textTheme.titleMedium,

@@ -40,14 +40,14 @@ class _InsertPageState extends State<InsertPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text(
           "Inserir Jogo",
           style: Theme.of(context).textTheme.titleMedium,
         ),
         leadingWidth: 20,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       body: SingleChildScrollView(
         child: Column(

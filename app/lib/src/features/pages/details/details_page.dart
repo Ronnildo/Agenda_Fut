@@ -41,7 +41,7 @@ class _DetailsPageState extends State<DetailsPage> {
     // print(Provider.of<GameProvider>(context).getGame(widget.title));
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         leadingWidth: 22,
         title: Text(
           "Detalhes da Partida",

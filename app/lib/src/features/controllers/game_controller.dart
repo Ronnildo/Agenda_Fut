@@ -30,7 +30,7 @@ class GameController {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
-      final pathImage = storageRef
+      storageRef
           .child('banners/${userId}_$nameCompetition.jpg')
           .getDownloadURL()
           .then((value) {

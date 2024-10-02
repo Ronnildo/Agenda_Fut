@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app/src/features/controllers/game_controller.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class GameProvider extends ChangeNotifier {

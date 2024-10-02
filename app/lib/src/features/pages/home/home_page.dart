@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         // Implementar lógica de troca por foto
         title: Consumer<UserProvider>(
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
                 size: 28,
               ))
         ],
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
