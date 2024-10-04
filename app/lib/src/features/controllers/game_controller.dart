@@ -30,21 +30,12 @@ class GameController {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
-      storageRef
+      String ref = await storageRef
           .child('banners/${userId}_$nameCompetition.jpg')
-          .getDownloadURL()
-          .then((value) {
-            return value;
-          })
-          .catchError((onError) {
-            return onError;
-      });
-    } on FirebaseException catch (e) {
-      if (e.code == "storage/object-not-found") {
-        throw const StorageException("Objeto não existe");
-      } else {
-        throw const StorageException("Load Image Failed");
-      }
+          .getDownloadURL();
+      return ref;
+    } on StorageException catch (e) {
+        throw Exception(e.message);
     }
   }
 

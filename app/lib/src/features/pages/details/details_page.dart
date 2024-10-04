@@ -56,7 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
           children: [
             Consumer<GameProvider>(
               builder: (context, value, child) {
-                if (!value.isLoading) {
+                if (!value.isLoading && value.status != "failed") {
                   Center(
                     child: ContainerImage(
                       path: value.fileUp,
