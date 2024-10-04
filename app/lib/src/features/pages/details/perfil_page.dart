@@ -54,7 +54,6 @@ class _PerfilPageState extends State<PerfilPage> {
           Center(
             child: Consumer<UserProvider>(
               builder: (context, value, child) {
-                print(value.pathImage.split("/"));
                 if (value.status == "sucess") {
                   return Container(
                     width: 100,
@@ -62,7 +61,9 @@ class _PerfilPageState extends State<PerfilPage> {
                     decoration: BoxDecoration(
                       color: Colors.grey,
                       image: DecorationImage(
-                        image: FileImage(File(value.pathImage)),
+                        image: FileImage(
+                          File(value.pathImage),
+                        ),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(100),

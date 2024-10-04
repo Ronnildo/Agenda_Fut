@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/details_page.dart';
@@ -55,29 +57,38 @@ class _HomeState extends State<Home> {
         centerTitle: false,
         automaticallyImplyLeading: false,
         actions: [
-          pathImage.isEmpty
-              ? InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PerfilPage(),
-                      ),
-                    );
-                  },
-                  child: const Icon(
-                    Icons.account_circle,
-                    size: 50,
+          Consumer<UserProvider>(
+            builder: (context, value, child) {
+              if (!value.isLoading) {
+                return InkWell(
+                  onTap: perfilpage,
+                  child: Consumer<UserProvider>(
+                    builder: (context, value, child) {
+                      return Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          image: DecorationImage(
+                            image: FileImage(File(value.pathImage)),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      );
+                    },
                   ),
-                )
-              : InkWell(
-                onTap: (){},
-                child: Image(
-                    image: AssetImage(pathImage),
-                    width: 50,
-                    height: 50,
-                  ),
-              ),
+                );
+              }
+              return InkWell(
+                onTap: perfilpage,
+                child: const Icon(
+                  Icons.account_circle,
+                  size: 50,
+                ),
+              );
+            },
+          ),
           IconButton(
               onPressed: singOut,
               icon: const Icon(
@@ -215,6 +226,15 @@ class _HomeState extends State<Home> {
           Icons.add,
           color: Colors.white,
         ),
+      ),
+    );
+  }
+
+  perfilpage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PerfilPage(),
       ),
     );
   }
