@@ -62,5 +62,19 @@ class UserController extends Repository {
     String? name = _firebaseAuth.currentUser?.displayName;
     return name!;
   }
+
+  Future uploadImageUser(String pathImage) async {
+    try{
+      await _firebaseAuth.currentUser?.updatePhotoURL(pathImage);
+    } on FirebaseAuthException catch (e){
+      throw Exception(e.code);
+    }
+    
+  }
+
+  Future<String> loadImagePerfil() async {
+    String? photo = _firebaseAuth.currentUser?.photoURL;
+    return photo!;
+  }
 }
 /**  flutter outdated & flutter pub upgrade & reload Windown*/

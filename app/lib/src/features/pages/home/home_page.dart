@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    Provider.of<UserProvider>(context, listen: false).getUser();
+    Provider.of<UserProvider>(context, listen: false).getNameUser();
     Provider.of<GameProvider>(context, listen: false).getGames();
     super.initState();
   }

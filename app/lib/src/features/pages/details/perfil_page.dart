@@ -1,4 +1,6 @@
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
+import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +15,7 @@ class PerfilPage extends StatefulWidget {
 class _PerfilPageState extends State<PerfilPage> {
   @override
   void initState() {
-    Provider.of<UserProvider>(context, listen: false).getUser();
+    Provider.of<UserProvider>(context, listen: false).getNameUser();
     super.initState();
   }
 
@@ -44,7 +46,23 @@ class _PerfilPageState extends State<PerfilPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Center(child: ContainerImage(onTap: () {})),
+          Center(
+            child: Consumer<UserProvider>(
+              builder: (context, value, child) {
+                print(value.pathImage);
+                if (!value.isLoading) {
+                  return ContainerImage(
+                    uploadImage: () {},
+                    path: value.pathImage,
+                  );
+                } else if (value.isLoading) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return ContainerImage(uploadImage: () {}, path: "");
+                }
+              },
+            ),
+          ),
           Text(
             "Foto do Perfil",
             style: Theme.of(context).textTheme.bodyMedium,

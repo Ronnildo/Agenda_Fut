@@ -9,6 +9,7 @@ class UserProvider extends ChangeNotifier {
   String _error = "";
   String _status = "";
   String _name = "";
+  String _pathImage = "";
   String? _uuid;
 
   get isLoading => _isLoading;
@@ -16,6 +17,7 @@ class UserProvider extends ChangeNotifier {
   get status => _status;
   get name => _name;
   get uuid => _uuid;
+  get pathImage => _pathImage;
 
   Future<void> add(UserModel user) async {
     try {
@@ -65,9 +67,10 @@ class UserProvider extends ChangeNotifier {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future<void> getUser() async {
+  Future<void> getNameUser() async {
     String? user = await _userController.getUser();
     _name = user;
     notifyListeners();
   }
+
 }

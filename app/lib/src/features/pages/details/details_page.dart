@@ -37,6 +37,11 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // print(Provider.of<GameProvider>(context).getGame(widget.title));
     return Scaffold(
