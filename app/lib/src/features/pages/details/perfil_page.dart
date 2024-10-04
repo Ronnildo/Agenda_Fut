@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class PerfilPage extends StatefulWidget {
@@ -13,9 +16,11 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
+  XFile _file = XFile("");
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getNameUser();
+    Provider.of<UserProvider>(context, listen: false).getPhoto();
     super.initState();
   }
 
@@ -49,16 +54,25 @@ class _PerfilPageState extends State<PerfilPage> {
           Center(
             child: Consumer<UserProvider>(
               builder: (context, value, child) {
-                print(value.pathImage);
-                if (!value.isLoading) {
-                  return ContainerImage(
-                    uploadImage: () {},
-                    path: value.pathImage,
+                print(value.pathImage.split("/"));
+                if (value.status == "sucess") {
+                  return Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      image: DecorationImage(
+                        image: FileImage(File(value.pathImage)),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
                   );
                 } else if (value.isLoading) {
                   return const CircularProgressIndicator();
                 } else {
-                  return ContainerImage(uploadImage: () {}, path: "");
+                  return ContainerImage(
+                      uploadImage: uploadImage, path: _file.path);
                 }
               },
             ),
@@ -90,6 +104,35 @@ class _PerfilPageState extends State<PerfilPage> {
             onTap: () {},
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> uploadImage() async {
+    ImagePicker picker = ImagePicker();
+    XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      _file = file;
+    }
+    // ignore: use_build_context_synchronously
+    Provider.of<UserProvider>(context, listen: false).setPhoto(_file.path);
+
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Center(
+          child: Text(
+            // ignore: use_build_context_synchronously
+            Provider.of<UserProvider>(context, listen: false).status,
+            // ignore: use_build_context_synchronously
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+        ),
+        duration: const Duration(
+          seconds: 3,
+        ),
+        // ignore: use_build_context_synchronously
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }

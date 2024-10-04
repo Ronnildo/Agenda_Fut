@@ -66,6 +66,7 @@ class UserController extends Repository {
   Future uploadImageUser(String pathImage) async {
     try{
       await _firebaseAuth.currentUser?.updatePhotoURL(pathImage);
+      return "sucess";
     } on FirebaseAuthException catch (e){
       throw Exception(e.code);
     }

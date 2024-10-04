@@ -70,11 +70,14 @@ class _HomeState extends State<Home> {
                     size: 50,
                   ),
                 )
-              : Image(
-                  image: AssetImage(pathImage),
-                  width: 50,
-                  height: 50,
-                ),
+              : InkWell(
+                onTap: (){},
+                child: Image(
+                    image: AssetImage(pathImage),
+                    width: 50,
+                    height: 50,
+                  ),
+              ),
           IconButton(
               onPressed: singOut,
               icon: const Icon(

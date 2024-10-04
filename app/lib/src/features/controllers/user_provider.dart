@@ -73,4 +73,25 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setPhoto(String path) async{
+    try{
+      await _userController.uploadImageUser(path);
+      _status = "sucess";
+      _isLoading = false;
+    } catch (e){
+      _status = "failed";
+      _error = e.toString();
+      _pathImage = "";
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getPhoto() async {
+    String? url = await _userController.loadImagePerfil();
+    _pathImage = url;
+    _isLoading = false;
+    notifyListeners();
+  }
+
 }
