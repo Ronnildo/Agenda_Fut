@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1060842842598",
+    "firebase_url": "https://agenda-fut-default-rtdb.firebaseio.com",
+    "project_id": "agenda-fut",
+    "storage_bucket": "agenda-fut.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060842842598:android:4d0e25fd6d15019bf7ce27",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNrx9-J5cPClN2HPWZmchB4zQ52FQkE-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

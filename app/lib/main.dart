@@ -1,20 +1,23 @@
+import 'package:app/firebase_options.dart';
 import 'package:app/src/app.dart';
-
-// import 'package:app/src/features/screens/login.dart';
-// import 'package:app/src/features/screens/register.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/date_symbol_data_local.dart';
-// import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting('pt_BR', "null");
-  // await Supabase.initialize(
-  //   url: const String.fromEnvironment('SUPABASE_URL',
-  //       defaultValue: 'URL inválida'),
-  //   anonKey: const String.fromEnvironment('SUPABASE_KEY',
-  //       defaultValue: 'Chave não encontrada'),
-  // );
-  
-  runApp(const AgendaApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseAppCheck.instance.activate(
+    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+    androidProvider: AndroidProvider.debug,
+  );
+
+  runApp(
+    const AgendaApp(),
+  );
 }

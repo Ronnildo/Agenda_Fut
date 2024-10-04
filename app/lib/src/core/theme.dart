@@ -5,14 +5,15 @@ class CustomTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      primaryColor: const Color(0xFF03045E),
+      primaryColor: const Color(0xFF17A909),
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF03045E),
-        background: const Color(0xFFDDDDD1),
+        seedColor: const Color(0xFF17A909),
+        surface: const Color(0xFFFFFFFF),
+        primary: const Color(0xFF17A909),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF03045E),
+          backgroundColor: const Color(0xFF17A909),
           shadowColor: Colors.black,
           foregroundColor: Colors.white,
           fixedSize: Size(
@@ -30,31 +31,17 @@ class CustomTheme {
         ),
       ),
       fontFamily: "Play",
-      textTheme:  TextTheme(
-        //Mudar para title
-        displayLarge: const TextStyle(
-          color: Colors.black,
-          fontSize: 55,
-          fontWeight: FontWeight.bold,
-        ),
-        //Mudar Para Title
-        displayMedium: const TextStyle(
+      textTheme: const TextTheme(
+        /*
+         * Títulos Fonts que excedem 24 de tamanho
+         */
+        titleLarge: TextStyle(
           color: Colors.white,
           fontFamily: "BrunoAce",
           fontSize: 36,
           fontWeight: FontWeight.w600,
         ),
-        //
-        displaySmall: TextStyle(
-          fontSize: 12,
-          color: Colors.grey.withOpacity(0.8),
-          fontWeight: FontWeight.w600,
-        ),
-        titleLarge: const TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-        ),
-        titleMedium: const TextStyle(
+        titleMedium: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: Colors.black,
@@ -62,29 +49,66 @@ class CustomTheme {
           wordSpacing: 0,
           letterSpacing: 0,
         ),
-        labelLarge: const TextStyle(
-          fontSize: 26,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 5,
-          height: 0,
-        ),
-        labelMedium: const TextStyle(
-          color: Colors.greenAccent,
-          fontWeight: FontWeight.w800,
-          fontSize: 16,
-        ),
-        labelSmall: const TextStyle(
-          fontSize: 13,
+        titleSmall: TextStyle(
+          fontSize: 18,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
-        bodySmall: const TextStyle(
+        /**
+         * Textos pequenos entre 15 e 20 de tamanho
+         */
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
+        ),
+        bodyMedium: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
+          color: Color(0xFF000000),
         ),
-        bodyMedium: const TextStyle(
-          fontSize: 18,
+        bodySmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+        ),
+        /**
+         * Textos que precisam de uam formatação diferente
+        */
+        displayLarge: TextStyle(
+          color: Colors.black,
+          fontSize: 55,
           fontWeight: FontWeight.bold,
+        ),
+        displayMedium: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+        ),
+        displaySmall: TextStyle(
+          fontSize: 12,
+          color: Color(0xFF484646),
+          fontWeight: FontWeight.w600,
+        ),
+        /**
+         * Textos de uso em caixas de textos ou interações com usuário
+         */
+        labelLarge: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
+          letterSpacing: 3,
+          height: 0,
+        ),
+        labelMedium: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+        ),
+        labelSmall: TextStyle(
+          fontSize: 14,
+          color: Colors.black,
+          fontWeight: FontWeight.w300,
         ),
       ),
     );
@@ -97,7 +121,7 @@ class CustomTheme {
       primaryColor: Colors.black,
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF03045E),
-        background: const Color(0xFFDDDDD1),
+        surface: const Color(0xFFDDDDD1),
       ),
     );
   }

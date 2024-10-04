@@ -24,7 +24,10 @@ class _DateOrHourState extends State<DateOrHour> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.dayOrHour),
+        Text(
+          widget.dayOrHour,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
         SizedBox(
           height: 56,
           width: 170,
@@ -33,15 +36,29 @@ class _DateOrHourState extends State<DateOrHour> {
             keyboardType: TextInputType.datetime,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFFEFEFE),
-              enabledBorder:
-                  const OutlineInputBorder(borderSide: BorderSide.none),
-              hintText: widget.hintText,
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
+              fillColor: Colors.white,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 100,
+                ),
               ),
+              enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.black,
+                  width: 1.5,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              contentPadding: const EdgeInsets.all(20),
+              hintText: widget.hintText,
+              labelStyle: Theme.of(context).textTheme.labelSmall,
+              hintStyle: Theme.of(context).textTheme.labelSmall,
               suffixIcon: InkWell(
                 onTap: widget.onTap,
                 child: const Icon(

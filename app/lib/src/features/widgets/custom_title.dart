@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
 
 class CustomTitle extends StatefulWidget {
-  const CustomTitle({super.key});
+  final double heightdiv;
+  const CustomTitle({super.key, required this.heightdiv});
 
   @override
   State<CustomTitle> createState() => _CustomTitleState();
@@ -13,12 +14,12 @@ class _CustomTitleState extends State<CustomTitle> {
     return CustomPaint(
       painter: _MyPainter(),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height / 2.8,
+        height: MediaQuery.of(context).size.height / widget.heightdiv,
         width: MediaQuery.of(context).size.width, 
         child: Center(
           child:  Text(
             "Fut Agenda",
-            style: Theme.of(context).textTheme.displayMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
       ),
@@ -29,7 +30,7 @@ class _CustomTitleState extends State<CustomTitle> {
 class _MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final title = Paint()..color = const Color(0xFF03045E);
+    final title = Paint()..color = const Color(0xFF17A909);
 
     final path = Path()
       ..moveTo(0, 0)

@@ -6,6 +6,7 @@ class CustomInput extends StatefulWidget {
   final String label;
   final IconData icon;
   final bool obscureText;
+  final String error;
   const CustomInput({
     super.key,
     required this.hintText,
@@ -13,6 +14,7 @@ class CustomInput extends StatefulWidget {
     required this.controller,
     required this.icon,
     required this.obscureText,
+    required this.error,
   });
 
   @override
@@ -23,17 +25,17 @@ class _CustomInputState extends State<CustomInput> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        right: 16,
-        left: 16,
-        top: 10,
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 16,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             widget.label,
-            style: Theme.of(context).textTheme.labelSmall,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           TextField(
             controller: widget.controller,
@@ -41,29 +43,33 @@ class _CustomInputState extends State<CustomInput> {
             obscureText: widget.obscureText,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFFEFEFE),            
-              enabledBorder:
-                  const OutlineInputBorder(borderSide: BorderSide.none),
+              fillColor: const Color(0xFFFEFEFE),
+              contentPadding: const EdgeInsets.all(20),
               hintText: widget.hintText,
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              ),
-              floatingLabelStyle: Theme.of(context).textTheme.bodySmall,
+              hintStyle: Theme.of(context).textTheme.labelSmall,
+              floatingLabelStyle: Theme.of(context).textTheme.labelMedium,
               suffixIcon: Icon(widget.icon),
-              border: const OutlineInputBorder(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: const BorderSide(
+                  color: Colors.black,
+                  width: 4,
+                ),
+              ),
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: Colors.white,
+                  color: Colors.black,
                   width: 1.5,
                 ),
               ),
-              focusColor: Colors.white,
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF03045E)),
+              focusColor: Colors.green,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1.5,
+                ),
               ),
             ),
-
           ),
         ],
       ),
