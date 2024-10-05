@@ -26,7 +26,7 @@ class GameController {
     }
   }
 
-  Future loadImages(String nameCompetition) async {
+  Future<String> loadImages(String nameCompetition) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
@@ -35,7 +35,10 @@ class GameController {
           .getDownloadURL();
       return ref;
     } on StorageException catch (e) {
-        throw Exception(e.message);
+      if(e.statusCode == "404") {
+        throw Exception("Imagem não disponível.");
+      }
+      throw Exception(e.message);
     }
   }
 

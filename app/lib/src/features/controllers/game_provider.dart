@@ -36,15 +36,15 @@ class GameProvider extends ChangeNotifier {
   Future<void> getImage(String nameCompetition) async {
     try {
       String urlImage = await _gameController.loadImages(nameCompetition);
+      _isLoading = false;
       _status = nameCompetition;
       _fileUp = urlImage;
-      _isLoading = false;
       notifyListeners();
-    } catch (e) {
+    }on FirebaseException catch (e) {
       _fileUp = "";
       _status = "failed";
-      _isLoading = false;
       _error = e.toString();
+      _isLoading = false;
       notifyListeners();
     }
   }

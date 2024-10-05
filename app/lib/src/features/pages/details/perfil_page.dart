@@ -1,7 +1,5 @@
-import 'dart:io';
-
-import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
+import 'package:app/src/features/pages/details/widgets/consumer_image_perfil.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:flutter/material.dart';
@@ -55,20 +53,7 @@ class _PerfilPageState extends State<PerfilPage> {
             child: Consumer<UserProvider>(
               builder: (context, value, child) {
                 if (value.status == "sucess") {
-                  return Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      image: DecorationImage(
-                        image: FileImage(
-                          File(value.pathImage),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                  );
+                  return ConsumerImagePerfil(pathImage: value.pathImage, uploadImage: (){},);
                 } else if (value.isLoading) {
                   return const CircularProgressIndicator();
                 } else {

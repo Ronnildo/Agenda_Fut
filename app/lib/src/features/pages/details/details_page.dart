@@ -1,4 +1,5 @@
 import 'package:app/src/features/controllers/game_provider.dart';
+import 'package:app/src/features/pages/details/widgets/consumer_image_game.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
@@ -57,26 +58,18 @@ class _DetailsPageState extends State<DetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Consumer<GameProvider>(
-              builder: (context, value, child) {
-                if (!value.isLoading && value.status != "failed") {
-                  Center(
-                    child: ContainerImage(
-                      path: value.fileUp,
-                      uploadImage: () {},
-                    ),
-                  );
-                }
+            Consumer<GameProvider>(builder: (context, value, child) {
+              if (value.status != "failed") {
                 return Center(
-                  child: ContainerImage(
-                    path: "",
+                  child: ConsumerImageGame(
+                    pathImage: value.fileUp,
                     uploadImage: () {},
                   ),
                 );
-              },
-            ),
+              }
+              return Center(child: ContainerImage(uploadImage: () {}, path: value.fileUp));
+            }),
             Center(
               child: Text(
                 "Escudo da Equipe ou Banner do jogo",
