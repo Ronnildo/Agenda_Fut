@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class GameProvider extends ChangeNotifier {
   final GameController _gameController = GameController();
-  late Stream<QuerySnapshot> _games;
+  Stream<QuerySnapshot>? _games;
   final List<String> _arqv = [];
   bool _isLoading = true;
   String _status = "";
@@ -19,12 +19,13 @@ class GameProvider extends ChangeNotifier {
   get status => _status;
   get error => _error;
   get arquivos => _arqv;
-  Stream<QuerySnapshot> get games => _games;
+  Stream<QuerySnapshot>? get games => _games;
 
   Future<void> getGames() async {
     try {
       _games = await _gameController.getGames();
       _isLoading = false;
+      _status = "sucess";
       notifyListeners();
     } catch (err) {
       _error = err.toString();
@@ -40,11 +41,11 @@ class GameProvider extends ChangeNotifier {
       _status = nameCompetition;
       _fileUp = urlImage;
       notifyListeners();
-    }on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
+      _isLoading = false;
       _fileUp = "";
       _status = "failed";
       _error = e.toString();
-      _isLoading = false;
       notifyListeners();
     }
   }

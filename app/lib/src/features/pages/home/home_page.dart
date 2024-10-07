@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getNameUser();
+    Provider.of<UserProvider>(context, listen: false).getPhoto();
     Provider.of<GameProvider>(context, listen: false).getGames();
     super.initState();
   }
@@ -62,21 +63,17 @@ class _HomeState extends State<Home> {
               if (!value.isLoading) {
                 return InkWell(
                   onTap: perfilpage,
-                  child: Consumer<UserProvider>(
-                    builder: (context, value, child) {
-                      return Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          image: DecorationImage(
-                            image: FileImage(File(value.pathImage)),
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                      );
-                    },
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      image: DecorationImage(
+                        image: FileImage(File(value.pathImage)),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
                   ),
                 );
               }

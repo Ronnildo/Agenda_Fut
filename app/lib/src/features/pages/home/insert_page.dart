@@ -217,8 +217,11 @@ class _InsertPageState extends State<InsertPage> {
         date: date,
       ),
     );
-    // ScaffoldMessenger.of(context).showSnackBar(snackBarInsert(
-    //     Provider.of<GameProvider>(context, listen: false).status));
+    ScaffoldMessenger.of(context).showSnackBar(
+      snackBarInsert(
+        Provider.of<GameProvider>(context, listen: false).status,
+      ),
+    );
   }
 
   SnackBar snackBarInsert(String status) {

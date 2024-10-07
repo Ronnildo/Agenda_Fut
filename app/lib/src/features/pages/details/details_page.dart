@@ -60,7 +60,7 @@ class _DetailsPageState extends State<DetailsPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Consumer<GameProvider>(builder: (context, value, child) {
-              if (value.status != "failed") {
+              if (value.fileUp != "") {
                 return Center(
                   child: ConsumerImageGame(
                     pathImage: value.fileUp,

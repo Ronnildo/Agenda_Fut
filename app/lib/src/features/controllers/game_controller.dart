@@ -16,8 +16,9 @@ class GameController {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       String ref = 'banners/${userId.toString()}_${game.nameCompetition!}.jpg';
-
-      await _storage.ref(ref).putFile(path);
+      if (path.path != "") {
+        await _storage.ref(ref).putFile(path);
+      }
 
       await _firestore.collection(userId).add(game.toJson());
       return "sucess";
@@ -26,16 +27,21 @@ class GameController {
     }
   }
 
-  Future<String> loadImages(String nameCompetition) async {
+  Future loadImages(String nameCompetition) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
-      String ref = await storageRef
-          .child('banners/${userId}_$nameCompetition.jpg')
-          .getDownloadURL();
-      return ref;
+      final res = await storageRef.child("/banners").listAll();
+      for (var item in res.items) {
+        if(item.fullPath.split("/")[1] == "${userId}_$nameCompetition.jpg"){
+          final url = await storageRef.child("/banners/${userId}_$nameCompetition.jpg").getDownloadURL();
+          return url;
+        }else{
+          return "";
+        }
+      }
     } on StorageException catch (e) {
-      if(e.statusCode == "404") {
+      if (e.message == "Not Found.") {
         throw Exception("Imagem não disponível.");
       }
       throw Exception(e.message);

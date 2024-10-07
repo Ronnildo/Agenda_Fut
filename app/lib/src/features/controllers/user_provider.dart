@@ -19,25 +19,14 @@ class UserProvider extends ChangeNotifier {
   get uuid => _uuid;
   get pathImage => _pathImage;
 
-  Future<void> add(UserModel user) async {
-    try {
-      await _userController.adduser(user);
-      _isLoading = false;
-      notifyListeners();
-    } on FirebaseException catch (err) {
-      _error = err.message.toString();
-      notifyListeners();
-    }
-  }
-
   Future<void> create(UserModel user, void Function() page) async {
     try {
       await _userController.createUser(user);
 
-      _status = "sucess";
       _isLoading = false;
+      _status = "sucess";
       _error = "Conta criada com sucesso.";
-      // page();
+      page();
       notifyListeners();
     } catch (e) {
       _status = "failed";
@@ -52,8 +41,8 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     try {
       await _userController.authUser(user);
-      _status = "sucess";
       _isLoading = false;
+      _status = "sucess";
       login();
       notifyListeners();
     } catch (e) {
@@ -79,18 +68,18 @@ class UserProvider extends ChangeNotifier {
       _status = "sucess";
       _isLoading = false;
     } catch (e){
+      _isLoading = false;
       _status = "failed";
       _error = e.toString();
       _pathImage = "";
-      _isLoading = false;
       notifyListeners();
     }
   }
 
   Future<void> getPhoto() async {
     String? url = await _userController.loadImagePerfil();
-    _pathImage = url;
     _isLoading = false;
+    _pathImage = url;
     notifyListeners();
   }
 
