@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_game.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/widgets/mini_card_game.dart';
+import 'package:app/src/features/widgets/upload_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +32,7 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  XFile? file;
+  XFile _file = XFile("");
   @override
   void initState() {
     Provider.of<GameProvider>(context, listen: false)
@@ -44,7 +47,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print(Provider.of<GameProvider>(context).getGame(widget.title));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -60,15 +62,29 @@ class _DetailsPageState extends State<DetailsPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Consumer<GameProvider>(builder: (context, value, child) {
-              if (value.fileUp != "") {
+              if (!value.isLoading) {
+                print("Aqui 1");
                 return Center(
                   child: ConsumerImageGame(
                     pathImage: value.fileUp,
-                    uploadImage: () {},
+                    uploadImage: uploadImage,
                   ),
                 );
               }
-              return Center(child: ContainerImage(uploadImage: () {}, path: value.fileUp));
+              print("Aqui");
+              return _file.path == ""
+                  ? Center(
+                      child: ContainerImage(
+                        path: value.fileUp,
+                        uploadImage: uploadImage,
+                      ),
+                    )
+                  : Center(
+                      child: UploadImageContainer(
+                        filePath: _file.path,
+                        uploadImage: uploadImage,
+                      ),
+                    );
             }),
             Center(
               child: Text(
@@ -145,11 +161,25 @@ class _DetailsPageState extends State<DetailsPage> {
                 onTap: () {}),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: CustomButtom(onTap: () {}, title: "Salvar Alterações"),
+              child: CustomButtom(onTap: save, title: "Salvar Alterações"),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> uploadImage() async {
+    ImagePicker picker = ImagePicker();
+    XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      setState(() {
+        _file = file;
+      });
+    }
+  }
+
+  Future<void> save() async {
+    Provider.of<GameProvider>(context, listen: false).updateImageGame(widget.nameCompetition , _file.path);
   }
 }

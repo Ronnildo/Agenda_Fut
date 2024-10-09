@@ -6,6 +6,7 @@ import 'package:app/src/features/widgets/custom_insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/date_or_hour.dart';
 import 'package:app/src/features/widgets/dropdown_type.dart';
+import 'package:app/src/features/widgets/upload_image.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -55,9 +56,9 @@ class _InsertPageState extends State<InsertPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: ContainerImage(
-                path: _file.path,
-                uploadImage: uploadImage,
+              child: UploadImageContainer(
+                filePath: _file.path,
+                uploadImage: (){},
               ),
             ),
             Center(

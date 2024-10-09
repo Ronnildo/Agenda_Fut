@@ -27,6 +27,19 @@ class GameController {
     }
   }
 
+  Future<String> updateGame(String nameCompetition, File path) async {
+    String userId = _firebaseAuth.currentUser!.uid;
+    try{
+      String ref = 'banners/${userId.toString()}_$nameCompetition.jpg';
+        if (path.path != "") {
+          await _storage.ref(ref).putFile(path);
+        }
+      return "sucess";
+    }on StorageException catch (err){
+      throw Exception(err.message);
+    }
+  }
+
   Future loadImages(String nameCompetition) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {

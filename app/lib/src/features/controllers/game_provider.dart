@@ -51,8 +51,16 @@ class GameProvider extends ChangeNotifier {
   }
 
   Future<void> uploadPath(String file) async {
-    _fileUp = file;
     _isLoading = false;
+    _fileUp = file;
+    notifyListeners();
+  }
+
+  Future<void> updateImageGame(String competition, String file) async{
+    await _gameController.updateGame(competition, File(file));
+    String urlImage = await _gameController.loadImages(competition);
+    _isLoading = false;
+    _fileUp = urlImage;
     notifyListeners();
   }
 
