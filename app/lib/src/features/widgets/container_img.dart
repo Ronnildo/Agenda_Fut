@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class ContainerImage extends StatefulWidget {
@@ -27,16 +25,17 @@ class _ContainerImageState extends State<ContainerImage> {
       alignment: Alignment.bottomRight,
       children: [
         Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(100),           
-            ),
-            child: const Icon(
-              Icons.photo,
-              size: 32,
-            )),
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: const Icon(
+            Icons.photo,
+            size: 32,
+          ),
+        ),
         InkWell(
           onTap: widget.uploadImage,
           child: const Icon(

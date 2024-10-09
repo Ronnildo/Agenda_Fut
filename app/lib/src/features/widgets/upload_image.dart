@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 class UploadImageContainer extends StatefulWidget {
   final String filePath;
   final void Function() uploadImage;
@@ -36,6 +36,10 @@ class _UploadImageContainerState extends State<UploadImageContainer> {
               image: FileImage(File(widget.filePath)),
               fit: BoxFit.cover,
             ),
+          ),
+          child: const Icon(
+            Icons.photo,
+            size: 32,
           ),
         ),
         InkWell(

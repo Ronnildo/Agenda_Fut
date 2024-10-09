@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app/src/features/controllers/game_provider.dart';
-import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/date_or_hour.dart';

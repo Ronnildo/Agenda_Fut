@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 class ConsumerImageGame extends StatefulWidget {
@@ -39,7 +37,7 @@ class _ConsumerImageGameState extends State<ConsumerImageGame> {
           onTap: widget.uploadImage,
           child: const Icon(
             Icons.add_a_photo,
-            size: 40,
+            size: 35,
             color: Colors.black,
           ),
         ),

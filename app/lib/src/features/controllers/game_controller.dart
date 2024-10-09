@@ -29,13 +29,13 @@ class GameController {
 
   Future<String> updateGame(String nameCompetition, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
-    try{
+    try {
       String ref = 'banners/${userId.toString()}_$nameCompetition.jpg';
-        if (path.path != "") {
-          await _storage.ref(ref).putFile(path);
-        }
+      if (path.path != "") {
+        await _storage.ref(ref).putFile(path);
+      }
       return "sucess";
-    }on StorageException catch (err){
+    } on StorageException catch (err) {
       throw Exception(err.message);
     }
   }
@@ -44,15 +44,14 @@ class GameController {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
-      final res = await storageRef.child("/banners").listAll();
-      for (var item in res.items) {
-        if(item.fullPath.split("/")[1] == "${userId}_$nameCompetition.jpg"){
-          final url = await storageRef.child("/banners/${userId}_$nameCompetition.jpg").getDownloadURL();
-          return url;
-        }else{
-          return "";
-        }
+      final res = await storageRef.child("/banners/${userId}_$nameCompetition.jpg").getDownloadURL();
+      if(res.isNotEmpty){
+        return res;
+      }else{
+        return "";
       }
+      
+      
     } on StorageException catch (e) {
       if (e.message == "Not Found.") {
         throw Exception("Imagem não disponível.");

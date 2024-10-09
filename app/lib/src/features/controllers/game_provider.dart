@@ -37,15 +37,17 @@ class GameProvider extends ChangeNotifier {
   Future<void> getImage(String nameCompetition) async {
     try {
       String urlImage = await _gameController.loadImages(nameCompetition);
+      // print(urlImage);
       _isLoading = false;
-      _status = nameCompetition;
       _fileUp = urlImage;
+      _status = nameCompetition;
       notifyListeners();
     } on FirebaseException catch (e) {
       _isLoading = false;
       _fileUp = "";
       _status = "failed";
       _error = e.toString();
+      _isLoading = true;
       notifyListeners();
     }
   }
@@ -56,7 +58,13 @@ class GameProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateImageGame(String competition, String file) async{
+  Future<void> resetPath() async {
+    _isLoading = false;
+    _fileUp = "";
+    notifyListeners();
+  }
+
+  Future<void> updateImageGame(String competition, String file) async {
     await _gameController.updateGame(competition, File(file));
     String urlImage = await _gameController.loadImages(competition);
     _isLoading = false;

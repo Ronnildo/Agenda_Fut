@@ -37,6 +37,7 @@ class _NewCardState extends State<NewCard> {
 
   @override
   Widget build(BuildContext context) {
+    
     return InkWell(
       onDoubleTap: widget.onTap,
       onTap: widget.onTap,

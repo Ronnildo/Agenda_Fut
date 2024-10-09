@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_game.dart';
 import 'package:app/src/features/widgets/container_img.dart';
@@ -63,7 +61,6 @@ class _DetailsPageState extends State<DetailsPage> {
           children: [
             Consumer<GameProvider>(builder: (context, value, child) {
               if (!value.isLoading) {
-                print("Aqui 1");
                 return Center(
                   child: ConsumerImageGame(
                     pathImage: value.fileUp,
@@ -71,7 +68,6 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                 );
               }
-              print("Aqui");
               return _file.path == ""
                   ? Center(
                       child: ContainerImage(
@@ -180,6 +176,7 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Future<void> save() async {
-    Provider.of<GameProvider>(context, listen: false).updateImageGame(widget.nameCompetition , _file.path);
+    Provider.of<GameProvider>(context, listen: false)
+        .updateImageGame(widget.nameCompetition, _file.path);
   }
 }
