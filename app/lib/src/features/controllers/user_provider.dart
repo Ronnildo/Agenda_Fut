@@ -36,7 +36,6 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> auth(UserModel user, void Function() login) async {
-    
     _status = "";
     notifyListeners();
     try {
@@ -53,7 +52,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> singOut() async {
-    await FirebaseAuth.instance.signOut();
+    FirebaseAuth.instance.signOut();
   }
 
   Future<void> getNameUser() async {
@@ -62,12 +61,13 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setPhoto(String path) async{
-    try{
-      await _userController.uploadImageUser(path);
-      _status = "sucess";
+  Future<void> setPhoto(String path) async {
+    try {
+      String res = await _userController.uploadImageUser(path);
+      print(res);
       _isLoading = false;
-    } catch (e){
+      _status = res;
+    } catch (e) {
       _isLoading = false;
       _status = "failed";
       _error = e.toString();
@@ -77,10 +77,17 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> getPhoto() async {
-    String? url = await _userController.loadImagePerfil();
-    _isLoading = false;
-    _pathImage = url;
-    notifyListeners();
+    try {
+      String? url = await _userController.loadImagePerfil();
+      _isLoading = false;
+      _pathImage = url;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _status = "notFound";
+      _error = e.toString();
+      _pathImage = "";
+      notifyListeners();
+    }
   }
-
 }

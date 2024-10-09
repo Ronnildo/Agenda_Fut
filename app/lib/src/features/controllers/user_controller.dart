@@ -1,6 +1,7 @@
 import 'package:app/src/core/repository.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserController extends Repository {
@@ -74,8 +75,12 @@ class UserController extends Repository {
   }
 
   Future<String> loadImagePerfil() async {
-    String? photo = _firebaseAuth.currentUser?.photoURL;
-    return photo!;
+     try{
+      String? photo = _firebaseAuth.currentUser?.photoURL;
+      return photo!;
+    } on FirebaseAuthException catch (e){
+      throw Exception(e.code);
+    }
   }
 }
 /**  flutter outdated & flutter pub upgrade & reload Windown*/

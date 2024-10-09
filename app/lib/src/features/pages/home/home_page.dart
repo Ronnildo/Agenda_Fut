@@ -46,13 +46,9 @@ class _HomeState extends State<Home> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         // Implementar lógica de troca por foto
-        title: Consumer<UserProvider>(
-          builder: (context, value, child) {
-            return Text(
-              value.name,
-              style: Theme.of(context).textTheme.titleMedium,
-            );
-          },
+        title: Text(
+          Provider.of<UserProvider>(context).name,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         leadingWidth: 20,
         centerTitle: false,
@@ -60,7 +56,7 @@ class _HomeState extends State<Home> {
         actions: [
           Consumer<UserProvider>(
             builder: (context, value, child) {
-              if (!value.isLoading) {
+              if (!value.isLoading && value.status != "notFound") {
                 return InkWell(
                   onTap: perfilpage,
                   child: Container(
