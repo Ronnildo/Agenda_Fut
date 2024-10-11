@@ -34,10 +34,9 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getImage(String nameCompetition) async {
+  Future<void> getImage(String nameCompetition, String hour) async {
     try {
-      String urlImage = await _gameController.loadImages(nameCompetition);
-      // print(urlImage);
+      String urlImage = await _gameController.loadImages(nameCompetition, hour);
       _isLoading = false;
       _fileUp = urlImage;
       _status = nameCompetition;
@@ -52,33 +51,21 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> uploadPath(String file) async {
-    _isLoading = false;
-    _fileUp = file;
-    notifyListeners();
-  }
-
-  Future<void> resetPath() async {
-    _isLoading = false;
-    _fileUp = "";
-    notifyListeners();
-  }
-
-  Future<void> updateImageGame(String competition, String file) async {
-    await _gameController.updateGame(competition, File(file));
-    String urlImage = await _gameController.loadImages(competition);
+  Future<void> updateImageGame(String competition, String hour, String file) async {
+    await _gameController.updateGame(competition, hour, File(file));
+    String urlImage = await _gameController.loadImages(competition, hour);
     _isLoading = false;
     _fileUp = urlImage;
     notifyListeners();
   }
 
-  Future<void> addGame(File path, GameModel game) async {
+  Future<void> addGame(File path, String date, GameModel game) async {
     try {
-      await _gameController.addGame(game, path);
+      await _gameController.addGame(game, date, path);
       _isLoading = false;
       _fileUp = "";
       _status = "Partida adicionado com Sucesso!";
-      getImage(game.nameCompetition!);
+      getImage(game.nameCompetition!, date);
       notifyListeners();
     } on FirebaseException catch (err) {
       _error = err.code;

@@ -34,7 +34,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     Provider.of<GameProvider>(context, listen: false)
-        .getImage(widget.nameCompetition);
+        .getImage(widget.nameCompetition, widget.date.hour.toString());
     super.initState();
   }
 
@@ -177,6 +177,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Future<void> save() async {
     Provider.of<GameProvider>(context, listen: false)
-        .updateImageGame(widget.nameCompetition, _file.path);
+        .updateImageGame(widget.nameCompetition, widget.date.hour.toString(),_file.path);
   }
 }

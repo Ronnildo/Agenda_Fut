@@ -12,10 +12,10 @@ class GameController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future<String> addGame(GameModel game, File path) async {
+  Future<String> addGame(GameModel game, String date, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      String ref = 'banners/${userId.toString()}_${game.nameCompetition!}.jpg';
+      String ref = 'banners/${userId.toString()}_${game.nameCompetition!}_$date.jpg';
       if (path.path != "") {
         await _storage.ref(ref).putFile(path);
       }
@@ -27,10 +27,10 @@ class GameController {
     }
   }
 
-  Future<String> updateGame(String nameCompetition, File path) async {
+  Future<String> updateGame(String nameCompetition, String hour, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      String ref = 'banners/${userId.toString()}_$nameCompetition.jpg';
+      String ref = 'banners/${userId.toString()}_${nameCompetition}_$hour.jpg';
       if (path.path != "") {
         await _storage.ref(ref).putFile(path);
       }
@@ -40,11 +40,11 @@ class GameController {
     }
   }
 
-  Future loadImages(String nameCompetition) async {
+  Future loadImages(String nameCompetition, String hour) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
-      final res = await storageRef.child("/banners/${userId}_$nameCompetition.jpg").getDownloadURL();
+      final res = await storageRef.child("/banners/${userId}_${nameCompetition}_$hour.jpg").getDownloadURL();
       if(res.isNotEmpty){
         return res;
       }else{

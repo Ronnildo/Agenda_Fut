@@ -96,6 +96,7 @@ class _HomeState extends State<Home> {
           horizontal: 10,
         ),
         child: SingleChildScrollView(
+          // padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               EasyInfiniteDateTimeLine(

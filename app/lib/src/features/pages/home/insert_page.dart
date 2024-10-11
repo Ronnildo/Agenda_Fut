@@ -57,7 +57,7 @@ class _InsertPageState extends State<InsertPage> {
             Center(
               child: UploadImageContainer(
                 filePath: _file.path,
-                uploadImage: (){},
+                uploadImage: uploadImage,
               ),
             ),
             Center(
@@ -191,8 +191,6 @@ class _InsertPageState extends State<InsertPage> {
     if (file != null) {
       _file = file;
     }
-    // ignore: use_build_context_synchronously
-    Provider.of<GameProvider>(context, listen: false).uploadPath(_file.path);
   }
 
   Future<void> insertGame() async {
@@ -208,6 +206,7 @@ class _InsertPageState extends State<InsertPage> {
 
     Provider.of<GameProvider>(context, listen: false).addGame(
       file,
+      date.toString(),
       GameModel(
         nameCompetition: name,
         home: home,
@@ -217,11 +216,19 @@ class _InsertPageState extends State<InsertPage> {
         date: date,
       ),
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-      snackBarInsert(
-        Provider.of<GameProvider>(context, listen: false).status,
-      ),
-    );
+    if (!Provider.of<GameProvider>(context, listen: false).isLoading) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        snackBarInsert(
+          Provider.of<GameProvider>(context, listen: false).status,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        snackBarInsert(
+          Provider.of<GameProvider>(context, listen: false).error,
+        ),
+      );
+    }
   }
 
   SnackBar snackBarInsert(String status) {
