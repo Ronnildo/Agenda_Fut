@@ -21,14 +21,16 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> create(UserModel user, void Function() page) async {
     try {
+      _clear();
+      notifyListeners();
       await _userController.createUser(user);
 
       _isLoading = false;
-      _status = "sucess";
-      _error = "Conta criada com sucesso.";
+      _status = "Cadastro realizado com sucesso.";
       page();
       notifyListeners();
     } catch (e) {
+      _isLoading = false;
       _status = "failed";
       _error = e.toString();
       notifyListeners();
@@ -36,16 +38,18 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> auth(UserModel user, void Function() login) async {
-    _status = "";
-    notifyListeners();
     try {
+      _clear();
+      notifyListeners();
       await _userController.authUser(user);
       _isLoading = false;
       _status = "sucess";
+      print(status);
       login();
       notifyListeners();
     } catch (e) {
       _status = "failed";
+       print(status);
       _error = e.toString();
       notifyListeners();
     }
@@ -63,8 +67,9 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> setPhoto(String path) async {
     try {
+      _clear();
+      notifyListeners();
       String res = await _userController.uploadImageUser(path);
-      print(res);
       _isLoading = false;
       _status = res;
     } catch (e) {
@@ -84,10 +89,18 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _isLoading = false;
-      _status = "notFound";
+      _status = "failed";
       _error = e.toString();
       _pathImage = "";
       notifyListeners();
     }
+  }
+
+  Future<void> _clear() async {
+    _isLoading = true;
+    _status = "";
+    _error = "";
+    _pathImage = "";
+    notifyListeners();
   }
 }

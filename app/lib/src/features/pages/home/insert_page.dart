@@ -233,6 +233,7 @@ class _InsertPageState extends State<InsertPage> {
 
   SnackBar snackBarInsert(String status) {
     return SnackBar(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       content: Text(
         status,
         style: const TextStyle(

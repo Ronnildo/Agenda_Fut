@@ -1,7 +1,6 @@
 import 'package:app/src/core/repository.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserController extends Repository {
@@ -41,20 +40,22 @@ class UserController extends Repository {
         password: user.password!,
       );
     } on FirebaseAuthException catch (err) {
-      if (err.code == "invalid-credential") {
-        throw const AuthException("Senha Incorreta").message;
-      } else if (err.code == "invalid-email") {
-        throw const AuthException("E-mail Inválido").message;
-      } else if (err.code == "channel-error") {
-        throw const AuthException("Campos vazios").message;
-      } else if (err.code == "too-many-requests") {
-        throw const AuthException("Tente novamente em instantes").message;
-      } else if (err.code == "wrong-password") {
-        throw const AuthException("Senha muito curta").message;
-      } else if (err.code == "user-not-found") {
-        throw const AuthException("E-mail não cadastrado").message;
-      } else {
-        throw Exception(err.code);
+      switch (err.code){
+        case "invalid-credential":
+          throw const AuthException("E-mail não cadastrado ou senha incorreta").message;
+        case "invalid-email":
+          throw const AuthException("E-mail Inválido").message;
+        case "channel-error":
+          throw const AuthException("Preencha corretamente as informações.").message;
+        case "too-many-requests":
+          throw const AuthException("Tente novamente em instantes").message;
+        case "wrong-password":
+          throw const AuthException("Senha muito curta").message;
+        case "user-not-found":
+          throw const AuthException("E-mail não cadastrado").message;
+        default:
+          throw Exception(err.code);
+          
       }
     }
   }

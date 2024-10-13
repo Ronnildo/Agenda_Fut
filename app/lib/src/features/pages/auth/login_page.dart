@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/home/home_page.dart';
 import 'package:app/src/features/pages/auth/register_page.dart';
@@ -138,8 +140,8 @@ class _LoginState extends State<Login> {
   }
 
   // autenticação
-  login(String email, String password) {
-    Provider.of<UserProvider>(context, listen: false).auth(
+  login(String email, String password) async {
+    await Provider.of<UserProvider>(context, listen: false).auth(
       UserModel(
         email: email,
         password: password,
@@ -147,8 +149,8 @@ class _LoginState extends State<Login> {
       home,
     );
 
-    if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
-    } else {
+    
+    if (await Provider.of<UserProvider>(context, listen: false).status == "failed") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -156,8 +158,9 @@ class _LoginState extends State<Login> {
             style: Theme.of(context).textTheme.displayMedium,
           ),
           backgroundColor: Theme.of(context).colorScheme.primary,
-          duration: const Duration(seconds: 3),
+          duration: const Duration(seconds: 2),
         ),
+
       );
     }
   }
@@ -170,6 +173,7 @@ class _LoginState extends State<Login> {
       ),
     );
     clear();
+    
   }
 
   register() {

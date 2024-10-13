@@ -139,7 +139,7 @@ class _RegisterState extends State<Register> {
       UserModel(name: name, email: email, password: password),
       login,
     );
-    if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
+    if (Provider.of<UserProvider>(context, listen: false).status == "failed") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Center(
@@ -159,7 +159,7 @@ class _RegisterState extends State<Register> {
         SnackBar(
           content: Center(
             child: Text(
-              Provider.of<UserProvider>(context, listen: false).error,
+              Provider.of<UserProvider>(context, listen: false).status,
               style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
