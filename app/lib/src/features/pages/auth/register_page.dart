@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
@@ -135,18 +137,16 @@ class _RegisterState extends State<Register> {
     String email,
     String password,
   ) async {
-    Provider.of<UserProvider>(context, listen: false).create(
+    await Provider.of<UserProvider>(context, listen: false).create(
       UserModel(name: name, email: email, password: password),
       login,
     );
-    if (Provider.of<UserProvider>(context, listen: false).status == "failed") {
+    if (await Provider.of<UserProvider>(context, listen: false).status == "failed") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Center(
-            child: Text(
-              Provider.of<UserProvider>(context, listen: false).error,
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
+          content: Text(
+            Provider.of<UserProvider>(context, listen: false).error,
+            style: Theme.of(context).textTheme.displayMedium,
           ),
           duration: const Duration(
             seconds: 3,

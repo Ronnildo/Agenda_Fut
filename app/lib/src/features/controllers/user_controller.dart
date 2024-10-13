@@ -19,6 +19,18 @@ class UserController extends Repository {
 
       await userCredential.user!.updateDisplayName(user.name);
     } on FirebaseAuthException catch (err) {
+      switch(err.code){
+        case "weak-password":
+          throw const AuthException("Senha muito fraca").message;
+        case "email-already-in-use":
+          throw const AuthException("E-mail já cadastrado").message;
+        case "invalid-email":
+          throw const AuthException("E-mail inválido").message;
+        case "operation-not-allowed":
+           throw const AuthException("Operação não realizada").message;
+        case "channel-error":
+           throw const AuthException("Preencha as informações corretamente.").message;
+      }
       if (err.code == "weak-password") {
         throw const AuthException("Senha muito fraca").message;
       } else if (err.code == 'email-already-in-use') {
