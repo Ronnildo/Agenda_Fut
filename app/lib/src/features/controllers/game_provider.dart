@@ -21,15 +21,17 @@ class GameProvider extends ChangeNotifier {
   get arquivos => _arqv;
   Stream<QuerySnapshot>? get games => _games;
 
-  Future<void> getGames() async {
+  Future<void> getGames(DateTime date) async {
+    // print(date);
     try {
-      _games = await _gameController.getGames();
+      _games = await _gameController.getGames(date);
       _isLoading = false;
       _status = "sucess";
       notifyListeners();
     } catch (err) {
-      _error = err.toString();
       _isLoading = false;
+      _games = const Stream.empty();
+      _error = err.toString();
       notifyListeners();
     }
   }
@@ -43,10 +45,9 @@ class GameProvider extends ChangeNotifier {
       notifyListeners();
     } on FirebaseException catch (e) {
       _isLoading = false;
-      _fileUp = "";
       _status = "failed";
+      _fileUp = "";
       _error = e.toString();
-      _isLoading = true;
       notifyListeners();
     }
   }

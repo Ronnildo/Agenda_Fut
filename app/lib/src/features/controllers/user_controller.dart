@@ -11,6 +11,7 @@ class UserController extends Repository {
 
   Future createUser(UserModel user) async {
     try {
+     
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: user.email!,
@@ -30,17 +31,6 @@ class UserController extends Repository {
            throw const AuthException("Operação não realizada").message;
         case "channel-error":
            throw const AuthException("Preencha as informações corretamente.").message;
-      }
-      if (err.code == "weak-password") {
-        throw const AuthException("Senha muito fraca").message;
-      } else if (err.code == 'email-already-in-use') {
-        throw const AuthException("E-mail já cadastrado").message;
-      } else if (err.code == 'invalid-email') {
-        throw const AuthException("E-mail inválido").message;
-      } else if (err.code == 'operation-not-allowed') {
-        throw const AuthException("Operação não realizada").message;
-      } else {
-        throw err.code;
       }
     }
   }

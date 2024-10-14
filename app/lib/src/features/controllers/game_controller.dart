@@ -60,10 +60,10 @@ class GameController {
     }
   }
 
-  Future getGames() async {
+  Future getGames(DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      Stream<QuerySnapshot> games = _firestore.collection(userId).snapshots();
+      Stream<QuerySnapshot> games = _firestore.collection(userId).where({"data": date}).limit(10).snapshots();
       return games;
     } on FirebaseException catch (e) {
       throw Exception(e.code);
