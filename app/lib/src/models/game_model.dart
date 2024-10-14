@@ -20,22 +20,22 @@ class GameModel {
   }
 
   GameModel.fromJson(Map<String, dynamic> json){
-    nameCompetition = json["competicao"];
-    home = json["casa"];
-    away = json["fora"];
-    locale = json["local"];
+    nameCompetition = json["competitionName"];
+    home = json["home"];
+    away = json["away"];
+    locale = json["locale"];
     fase = json["fase"];
-    date = (json["data"] as Timestamp).toDate();
+    date = (json["date"] as Timestamp).toDate();
   }
 
   Map<String, dynamic> toJson(){
     Map<String, dynamic> data = {};
-    data["competicao"] = nameCompetition;
-    data["casa"] = home;
-    data["fora"] = away;
-    data["local"] = locale;
+    data["competitionName"] = nameCompetition;
+    data["home"] = home;
+    data["away"] = away;
+    data["locale"] = locale;
     data["fase"] = fase;
-    data["data"] = date;
+    data["date"] = date;
     return data;
   }
 }

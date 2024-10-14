@@ -15,7 +15,8 @@ class GameController {
   Future<String> addGame(GameModel game, String date, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      String ref = 'banners/${userId.toString()}_${game.nameCompetition!}_$date.jpg';
+      String ref =
+          'banners/${userId.toString()}_${game.nameCompetition!}_$date.jpg';
       if (path.path != "") {
         await _storage.ref(ref).putFile(path);
       }
@@ -27,7 +28,8 @@ class GameController {
     }
   }
 
-  Future<String> updateGame(String nameCompetition, String hour, File path) async {
+  Future<String> updateGame(
+      String nameCompetition, String hour, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       String ref = 'banners/${userId.toString()}_${nameCompetition}_$hour.jpg';
@@ -44,14 +46,14 @@ class GameController {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
-      final res = await storageRef.child("/banners/${userId}_${nameCompetition}_$hour.jpg").getDownloadURL();
-      if(res.isNotEmpty){
+      final res = await storageRef
+          .child("/banners/${userId}_${nameCompetition}_$hour.jpg")
+          .getDownloadURL();
+      if (res.isNotEmpty) {
         return res;
-      }else{
+      } else {
         return "";
       }
-      
-      
     } on StorageException catch (e) {
       if (e.message == "Not Found.") {
         throw Exception("Imagem não disponível.");
@@ -62,8 +64,10 @@ class GameController {
 
   Future getGames(DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
+    print(Timestamp.now().toDate());
     try {
-      Stream<QuerySnapshot> games = _firestore.collection(userId).where({"data": date}).limit(10).snapshots();
+      Stream<QuerySnapshot> games = _firestore.collection(userId).where("date", isLessThanOrEqualTo: Timestamp.fromDate(date).toDate()).snapshots();
+
       return games;
     } on FirebaseException catch (e) {
       throw Exception(e.code);

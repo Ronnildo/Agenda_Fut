@@ -22,7 +22,7 @@ class GameProvider extends ChangeNotifier {
   Stream<QuerySnapshot>? get games => _games;
 
   Future<void> getGames(DateTime date) async {
-    // print(date);
+    
     try {
       _games = await _gameController.getGames(date);
       _isLoading = false;

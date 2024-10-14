@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getNameUser();
     Provider.of<UserProvider>(context, listen: false).getPhoto();
-    Provider.of<GameProvider>(context, listen: false).getGames(_focusDate);
+    // Provider.of<GameProvider>(context, listen: false).getGames(_focusDate);
     super.initState();
   }
 
@@ -171,12 +171,13 @@ class _HomeState extends State<Home> {
               ),
               const Divider(endIndent: 8, height: 24),
               FutureBuilder(
-                future: Provider.of<GameProvider>(context, listen: false).getGames(_focusDate),
+                future: Provider.of<GameProvider>(context, listen: false)
+                    .getGames(_focusDate),
                 builder: (context, snapshot) {
-                  return StreamBuilder<QuerySnapshot>(
-                    stream: Provider.of<GameProvider>(context).games,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
+                  // if (snapshot.hasData) {
+                    return StreamBuilder<QuerySnapshot>(
+                      stream: Provider.of<GameProvider>(context).games,
+                      builder: (context, snapshot) {
                         return ListView(
                           shrinkWrap: true,
                           children: snapshot.data!.docs
@@ -201,10 +202,10 @@ class _HomeState extends State<Home> {
                             );
                           }).toList(),
                         );
-                      }
-                      return const Center(child: Text("Insira uma partida +"));
-                    },
-                  );
+                      },
+                    );
+                  // }
+                  // return const Center(child: Text("Insira uma partida +"));
                 },
               ),
             ],
@@ -264,6 +265,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _focusDate = selectDate;
     });
+
     Provider.of<GameProvider>(context, listen: false).getGames(_focusDate);
   }
 }
