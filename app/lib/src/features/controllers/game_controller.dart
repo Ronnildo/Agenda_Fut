@@ -22,8 +22,8 @@ class GameController {
       }
 
       await _firestore.collection(userId).add(game.toJson());
-    } on FirebaseException catch (err) {
-      throw Exception(err.code);
+    } on StorageException catch (err) {
+      throw Exception(err.message);
     }
   }
 
@@ -34,8 +34,8 @@ class GameController {
       if (path.path != "") {
         await _storage.ref(ref).putFile(path);
       }
-    } on StorageException catch (err) {
-      throw Exception(err.message);
+    } on FirebaseException catch (err) {
+      return err.message;
     }
   }
 
@@ -78,6 +78,15 @@ class GameController {
       return games;
     } on FirebaseException catch (e) {
       throw Exception(e.code);
+    }
+  }
+
+  Future delete() async{
+    String userId = _firebaseAuth.currentUser!.uid;
+    try{
+      await _firestore.collection(userId).doc().delete();
+    } on FirebaseException catch (err){
+      throw Exception(err.code);
     }
   }
 }

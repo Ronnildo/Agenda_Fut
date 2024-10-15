@@ -53,9 +53,7 @@ class _DropDownPriorityState extends State<DropDownPriority> {
               onSelected: (String? value) {
                 setState(() {
                   dropDownValue = value!;
-                });
-                setState(() {
-                  widget.controller.text = dropDownValue; 
+                  widget.controller.text = value;
                 });
               }),
         ],

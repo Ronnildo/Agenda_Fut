@@ -123,8 +123,8 @@ class _NewCardState extends State<NewCard> {
                 ],
               ),
             ),
-            const ContainerFase(
-              fase: "Fase de Grupos",
+            ContainerFase(
+              fase: widget.fase,
               width: 120,
               heigth: 22,
             ),

@@ -129,7 +129,11 @@ class _InsertPageState extends State<InsertPage> {
                               formattedDate; //set foratted date to TextField value.
                         });
                       } else {
-                        // print("Date is not selected");
+                        setState(() {
+                          String formattedDate = Data.DateFormat('dd/MM/yyyy')
+                              .format(DateTime.now());
+                          _dateController.text = formattedDate;
+                        });
                       }
                     },
                   ),
@@ -157,6 +161,9 @@ class _InsertPageState extends State<InsertPage> {
                       );
                       if (selectedTime != null) {
                         String hour = selectedTime.toString();
+                        _timeController.text = hour;
+                      } else {
+                        String hour = TimeOfDay.now().toString();
                         _timeController.text = hour;
                       }
 
@@ -195,56 +202,43 @@ class _InsertPageState extends State<InsertPage> {
   Future insertGame() async {
     File file = File(_file.path);
 
-    String name = _competitionController.text;
-    String home = _homeController.text;
-    String away = _awayControlelr.text;
-    String locale = _localeController.text;
-    String fase = _faseController.text;
-    DateTime date = Data.DateFormat("dd/MM/yyyy hh:mm")
-        .parse("${_dateController.text} ${_timeController.text}");
-
-    Provider.of<GameProvider>(context, listen: false).addGame(
-      file,
-      date.toString(),
-      GameModel(
-        nameCompetition: name,
-        home: home,
-        away: away,
-        locale: locale,
-        fase: fase,
+    if (_competitionController.text != "" &&
+        _homeController.text != "" &&
+        _timeController.text != "") {
+      DateTime date = Data.DateFormat("dd/MM/yyyy hh:mm")
+          .parse("${_dateController.text} ${_timeController.text}");
+      GameModel data = GameModel(
+        nameCompetition: _competitionController.text,
+        home: _homeController.text,
+        away: _awayControlelr.text,
+        locale: _localeController.text,
+        fase: _faseController.text,
         date: date,
-      ),
-    );
-
-   if (await Provider.of<GameProvider>(context, listen: false).status == "failed") {
+      );
+      Provider.of<GameProvider>(context, listen: false)
+          .addGame(file, date.toString(), data);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            Provider.of<GameProvider>(context, listen: false).error,
+            Provider.of<GameProvider>(context, listen: false).status,
             style: Theme.of(context).textTheme.displayMedium,
           ),
-          duration: const Duration(
-            seconds: 3,
-          ),
           backgroundColor: Theme.of(context).colorScheme.primary,
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Center(
-            child: Text(
-              Provider.of<GameProvider>(context, listen: false).status,
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-          duration: const Duration(
-            seconds: 3,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          duration: const Duration(seconds: 2),
         ),
       );
       clear();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Aconteceu um erro ao adicionar partida. Tente Novamente.",
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          duration: const Duration(seconds: 2),
+        ),
+      );
     }
   }
 
@@ -253,7 +247,7 @@ class _InsertPageState extends State<InsertPage> {
     _homeController.clear();
     _awayControlelr.clear();
     _localeController.clear();
-    _faseController.clear();
+    _faseController.text = "Fase de Grupos";
     _dateController.clear();
   }
 }

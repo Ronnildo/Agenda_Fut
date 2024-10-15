@@ -27,9 +27,10 @@ class GameProvider extends ChangeNotifier {
       _isLoading = false;
       _status = "Partida adicionado com Sucesso!";
       notifyListeners();
-    } on FirebaseException catch (err) {
+    } catch (err) {
+      _isLoading = false;
       _status = "failed";
-      _error = err.code;
+      _error = err.toString();
       notifyListeners();
     }
   }
