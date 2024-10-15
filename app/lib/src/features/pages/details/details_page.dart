@@ -99,13 +99,13 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             ListInforDetails(
-              title: "Equipe",
+              title: "Casa",
               subTitle: widget.home,
               icon: Icons.shield,
               onTap: () {},
             ),
             ListInforDetails(
-              title: "Adversário",
+              title: "Fora",
               subTitle: widget.away,
               icon: Icons.shield,
               onTap: () {},

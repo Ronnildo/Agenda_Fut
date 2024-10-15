@@ -26,7 +26,6 @@ class GameProvider extends ChangeNotifier {
       await _gameController.addGame(game, date, path);
       _isLoading = false;
       _status = "Partida adicionado com Sucesso!";
-      print(_status);
       notifyListeners();
     } on FirebaseException catch (err) {
       _status = "failed";

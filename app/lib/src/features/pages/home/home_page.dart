@@ -174,10 +174,10 @@ class _HomeState extends State<Home> {
                 future: Provider.of<GameProvider>(context, listen: false)
                     .getGames(_focusDate),
                 builder: (context, snapshot) {
-                  // if (snapshot.hasData) {
-                    return StreamBuilder<QuerySnapshot>(
-                      stream: Provider.of<GameProvider>(context).games,
-                      builder: (context, snapshot) {
+                  return StreamBuilder<QuerySnapshot>(
+                    stream: Provider.of<GameProvider>(context).games,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
                         return ListView(
                           shrinkWrap: true,
                           children: snapshot.data!.docs
@@ -202,10 +202,10 @@ class _HomeState extends State<Home> {
                             );
                           }).toList(),
                         );
-                      },
-                    );
-                  // }
-                  // return const Center(child: Text("Insira uma partida +"));
+                      }
+                      return const Center(child: Text("Insira uma partida +"));
+                    },
+                  );
                 },
               ),
             ],

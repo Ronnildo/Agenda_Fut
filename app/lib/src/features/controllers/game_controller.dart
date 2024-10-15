@@ -27,8 +27,7 @@ class GameController {
     }
   }
 
-  Future updateGame(
-      String nameCompetition, String date, File path) async {
+  Future updateGame(String nameCompetition, String date, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       String ref = 'banners/${userId.toString()}_${nameCompetition}_$date.jpg';
@@ -62,8 +61,14 @@ class GameController {
 
   Future getGames(DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
+    DateTime nextDay = date.add(const Duration(days: 1));
     try {
-      Stream<QuerySnapshot> games = _firestore.collection(userId).where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate()).snapshots();
+      Stream<QuerySnapshot> games = _firestore
+          .collection(userId)
+          .where("date",
+              isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate())
+            .where("date", isLessThan: Timestamp.fromDate(nextDay).toDate())
+          .snapshots();
 
       return games;
     } on FirebaseException catch (e) {
