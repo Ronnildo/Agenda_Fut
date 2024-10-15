@@ -12,7 +12,7 @@ class GameController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future<String> addGame(GameModel game, String date, File path) async {
+  Future addGame(GameModel game, String date, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       String ref =
@@ -22,32 +22,30 @@ class GameController {
       }
 
       await _firestore.collection(userId).add(game.toJson());
-      return "sucess";
     } on FirebaseException catch (err) {
-      return err.code;
+      throw Exception(err.code);
     }
   }
 
-  Future<String> updateGame(
-      String nameCompetition, String hour, File path) async {
+  Future updateGame(
+      String nameCompetition, String date, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      String ref = 'banners/${userId.toString()}_${nameCompetition}_$hour.jpg';
+      String ref = 'banners/${userId.toString()}_${nameCompetition}_$date.jpg';
       if (path.path != "") {
         await _storage.ref(ref).putFile(path);
       }
-      return "sucess";
     } on StorageException catch (err) {
       throw Exception(err.message);
     }
   }
 
-  Future loadImages(String nameCompetition, String hour) async {
+  Future loadImages(String nameCompetition, String date) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       final storageRef = _storage.ref();
       final res = await storageRef
-          .child("/banners/${userId}_${nameCompetition}_$hour.jpg")
+          .child("/banners/${userId}_${nameCompetition}_$date.jpg")
           .getDownloadURL();
       if (res.isNotEmpty) {
         return res;
@@ -64,9 +62,8 @@ class GameController {
 
   Future getGames(DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
-    print(Timestamp.now().toDate());
     try {
-      Stream<QuerySnapshot> games = _firestore.collection(userId).where("date", isLessThanOrEqualTo: Timestamp.fromDate(date).toDate()).snapshots();
+      Stream<QuerySnapshot> games = _firestore.collection(userId).where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate()).snapshots();
 
       return games;
     } on FirebaseException catch (e) {

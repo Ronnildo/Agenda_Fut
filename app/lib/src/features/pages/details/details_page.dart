@@ -33,8 +33,8 @@ class _DetailsPageState extends State<DetailsPage> {
   XFile _file = XFile("");
   @override
   void initState() {
-    Provider.of<GameProvider>(context, listen: false)
-        .getImage(widget.nameCompetition, widget.date.hour.toString());
+    _file.path != "" ? Provider.of<GameProvider>(context, listen: false)
+        .getImage(widget.nameCompetition, widget.date.toString()) : null;
     super.initState();
   }
 
@@ -177,6 +177,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Future<void> save() async {
     Provider.of<GameProvider>(context, listen: false)
-        .updateImageGame(widget.nameCompetition, widget.date.hour.toString(),_file.path);
+        .updateImageGame(widget.nameCompetition, widget.date.toString(),_file.path);
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:app/src/features/controllers/game_provider.dart';
@@ -67,7 +69,7 @@ class _InsertPageState extends State<InsertPage> {
                   top: 5,
                 ),
                 child: Text(
-                  "Banner do Jogo/Competição",
+                  "Banner do Jogo/Arte",
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   style: Theme.of(context).textTheme.displaySmall,
@@ -121,9 +123,6 @@ class _InsertPageState extends State<InsertPage> {
                         //get the picked date in the format => 2022-07-04 00:00:00.000
                         String formattedDate = Data.DateFormat('dd/MM/yyyy').format(
                             _pickedDate!); // format date in required form here we use yyyy-MM-dd that means time is removed
-                        // print(
-                        //     formattedDate); //formatted date output using intl package =>  2022-07-04
-                        //You can format date as per your need
 
                         setState(() {
                           _dateController.text =
@@ -193,7 +192,7 @@ class _InsertPageState extends State<InsertPage> {
     }
   }
 
-  Future<void> insertGame() async {
+  insertGame() async {
     File file = File(_file.path);
 
     String name = _competitionController.text;
@@ -216,33 +215,36 @@ class _InsertPageState extends State<InsertPage> {
         date: date,
       ),
     );
-    if (!Provider.of<GameProvider>(context, listen: false).isLoading) {
+
+   if (await Provider.of<GameProvider>(context, listen: false).status == "failed") {
       ScaffoldMessenger.of(context).showSnackBar(
-        snackBarInsert(
-          Provider.of<GameProvider>(context, listen: false).status,
+        SnackBar(
+          content: Text(
+            Provider.of<GameProvider>(context, listen: false).error,
+            style: Theme.of(context).textTheme.displayMedium,
+          ),
+          duration: const Duration(
+            seconds: 3,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        snackBarInsert(
-          Provider.of<GameProvider>(context, listen: false).error,
+        SnackBar(
+          content: Center(
+            child: Text(
+              Provider.of<GameProvider>(context, listen: false).status,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+          duration: const Duration(
+            seconds: 3,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
     }
-  }
-
-  SnackBar snackBarInsert(String status) {
-    return SnackBar(
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      content: Text(
-        status,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-    );
   }
 
   clear() {

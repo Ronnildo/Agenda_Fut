@@ -21,12 +21,24 @@ class GameProvider extends ChangeNotifier {
   get arquivos => _arqv;
   Stream<QuerySnapshot>? get games => _games;
 
+  Future<void> addGame(File path, String date, GameModel game) async {
+    try {
+      await _gameController.addGame(game, date, path);
+      _isLoading = false;
+      _status = "Partida adicionado com Sucesso!";
+      print(_status);
+      notifyListeners();
+    } on FirebaseException catch (err) {
+      _status = "failed";
+      _error = err.code;
+      notifyListeners();
+    }
+  }
+
   Future<void> getGames(DateTime date) async {
-    
     try {
       _games = await _gameController.getGames(date);
       _isLoading = false;
-      _status = "sucess";
       notifyListeners();
     } catch (err) {
       _isLoading = false;
@@ -36,9 +48,9 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getImage(String nameCompetition, String hour) async {
+  Future<void> getImage(String nameCompetition, String date) async {
     try {
-      String urlImage = await _gameController.loadImages(nameCompetition, hour);
+      String urlImage = await _gameController.loadImages(nameCompetition, date);
       _isLoading = false;
       _fileUp = urlImage;
       _status = nameCompetition;
@@ -52,25 +64,20 @@ class GameProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateImageGame(String competition, String hour, String file) async {
-    await _gameController.updateGame(competition, hour, File(file));
-    String urlImage = await _gameController.loadImages(competition, hour);
+  Future<void> updateImageGame(
+      String competition, String date, String file) async {
+    await _gameController.updateGame(competition, date, File(file));
+    String urlImage = await _gameController.loadImages(competition, date);
     _isLoading = false;
     _fileUp = urlImage;
     notifyListeners();
   }
 
-  Future<void> addGame(File path, String date, GameModel game) async {
-    try {
-      await _gameController.addGame(game, date, path);
-      _isLoading = false;
-      _fileUp = "";
-      _status = "Partida adicionado com Sucesso!";
-      getImage(game.nameCompetition!, date);
-      notifyListeners();
-    } on FirebaseException catch (err) {
-      _error = err.code;
-      notifyListeners();
-    }
-  }
+  // Future<void> _clear() async {
+  //   _isLoading = true;
+  //   _status = "";
+  //   _error = "";
+
+  //   notifyListeners();
+  // }
 }
