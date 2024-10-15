@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getNameUser();
     Provider.of<UserProvider>(context, listen: false).getPhoto();
-    // Provider.of<GameProvider>(context, listen: false).getGames(_focusDate);
     super.initState();
   }
 
@@ -171,43 +170,45 @@ class _HomeState extends State<Home> {
               ),
               const Divider(endIndent: 8, height: 24),
               FutureBuilder(
-                future: Provider.of<GameProvider>(context, listen: false)
-                    .getGames(_focusDate),
-                builder: (context, snapshot) {
-                  return StreamBuilder<QuerySnapshot>(
-                    stream: Provider.of<GameProvider>(context).games,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView(
-                          shrinkWrap: true,
-                          children: snapshot.data!.docs
-                              .map((DocumentSnapshot document) {
-                            Map<String, dynamic> data =
-                                document.data()! as Map<String, dynamic>;
-                            GameModel game = GameModel.fromJson(data);
-                            return NewCard(
-                              title: game.nameCompetition!,
-                              home: game.home!,
-                              alway: game.away!,
-                              fase: game.fase!,
-                              date: game.date!,
-                              locale: game.locale!,
-                              onTap: () => details(
-                                game.nameCompetition!,
-                                game.home!,
-                                game.away!,
-                                game.date!,
-                                game.locale!,
-                              ),
-                            );
-                          }).toList(),
+                  future: Provider.of<GameProvider>(context, listen: false)
+                      .getGames(_focusDate),
+                  builder: (context, snapshot) {
+                    return StreamBuilder<QuerySnapshot>(
+                      stream: Provider.of<GameProvider>(context).games,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView(
+                            shrinkWrap: true,
+                            children: snapshot.data!.docs
+                                .map((DocumentSnapshot document) {
+                              Map<String, dynamic> data =
+                                  document.data()! as Map<String, dynamic>;
+                              GameModel game = GameModel.fromJson(data);
+                              return NewCard(
+                                title: game.nameCompetition!,
+                                home: game.home!,
+                                alway: game.away!,
+                                fase: game.fase!,
+                                date: game.date!,
+                                locale: game.locale!,
+                                onTap: () => details(
+                                  game.nameCompetition!,
+                                  game.home!,
+                                  game.away!,
+                                  game.date!,
+                                  game.locale!,
+                                ),
+                              );
+                            }).toList(),
+                          );
+                        }
+                        print("teste");
+                        return const Center(
+                          child: Text("Insira uma partida +"),
                         );
-                      }
-                      return const Center(child: Text("Insira uma partida +"));
-                    },
-                  );
-                },
-              ),
+                      },
+                    );
+                  }),
             ],
           ),
         ),

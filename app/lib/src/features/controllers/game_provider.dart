@@ -71,12 +71,4 @@ class GameProvider extends ChangeNotifier {
     _fileUp = urlImage;
     notifyListeners();
   }
-
-  // Future<void> _clear() async {
-  //   _isLoading = true;
-  //   _status = "";
-  //   _error = "";
-
-  //   notifyListeners();
-  // }
 }

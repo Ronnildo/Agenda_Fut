@@ -61,13 +61,18 @@ class GameController {
 
   Future getGames(DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
-    DateTime nextDay = date.add(const Duration(days: 1));
+
+    DateTime nextDay = date.add(const Duration(
+      days: 1,
+    ));
+
     try {
       Stream<QuerySnapshot> games = _firestore
           .collection(userId)
           .where("date",
               isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate())
-            .where("date", isLessThan: Timestamp.fromDate(nextDay).toDate())
+          .where("date",
+              isLessThanOrEqualTo: Timestamp.fromDate(nextDay).toDate())
           .snapshots();
 
       return games;

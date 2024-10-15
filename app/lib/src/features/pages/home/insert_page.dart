@@ -192,7 +192,7 @@ class _InsertPageState extends State<InsertPage> {
     }
   }
 
-  insertGame() async {
+  Future insertGame() async {
     File file = File(_file.path);
 
     String name = _competitionController.text;
@@ -244,6 +244,7 @@ class _InsertPageState extends State<InsertPage> {
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
+      clear();
     }
   }
 
