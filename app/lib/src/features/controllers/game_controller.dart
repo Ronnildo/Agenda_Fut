@@ -67,6 +67,12 @@ class GameController {
     ));
 
     try {
+      QuerySnapshot getDocs = await _firestore.collection(userId).get();
+      List documents = [];
+      for (DocumentSnapshot item in getDocs.docs) {
+        var dados = item.id;
+        documents.add(dados);
+      }
       Stream<QuerySnapshot> games = _firestore
           .collection(userId)
           .where("date",
@@ -74,18 +80,19 @@ class GameController {
           .where("date",
               isLessThanOrEqualTo: Timestamp.fromDate(nextDay).toDate())
           .snapshots();
-
-      return games;
+      return [games, documents];
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  Future delete() async{
+  Future delete(String id) async {
     String userId = _firebaseAuth.currentUser!.uid;
-    try{
-      await _firestore.collection(userId).doc().delete();
-    } on FirebaseException catch (err){
+    try {
+      await _firestore.collection(userId).doc(id).delete();
+
+      return "sucess";
+    } on FirebaseException catch (err) {
       throw Exception(err.code);
     }
   }

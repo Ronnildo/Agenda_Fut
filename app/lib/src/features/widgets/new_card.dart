@@ -1,8 +1,11 @@
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/widgets/container_fase.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class NewCard extends StatefulWidget {
+  final String id;
   final String title;
   final String home;
   final String? urlImageHome;
@@ -12,8 +15,10 @@ class NewCard extends StatefulWidget {
   final DateTime date;
   final String locale;
   final void Function() onTap;
+  final void Function() delete;
   const NewCard({
     super.key,
+    required this.id,
     required this.title,
     required this.home,
     required this.alway,
@@ -21,6 +26,7 @@ class NewCard extends StatefulWidget {
     required this.date,
     required this.locale,
     required this.onTap,
+    required this.delete,
     this.urlImageAlway,
     this.urlImageHome,
   });
@@ -32,6 +38,7 @@ class NewCard extends StatefulWidget {
 class _NewCardState extends State<NewCard> {
   @override
   void initState() {
+    Provider.of<GameProvider>(context, listen: false).setId(widget.id);
     super.initState();
   }
 
@@ -41,6 +48,7 @@ class _NewCardState extends State<NewCard> {
     return InkWell(
       onDoubleTap: widget.onTap,
       onTap: widget.onTap,
+      onLongPress: widget.delete,
       child: Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(bottom: 10),

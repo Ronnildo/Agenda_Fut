@@ -13,11 +13,16 @@ class GameProvider extends ChangeNotifier {
   String _status = "";
   String _error = "";
   String _fileUp = "";
+  List _ids  = [];
+  String _idDoc = "";
+  
 
   get fileUp => _fileUp;
   get isLoading => _isLoading;
   get status => _status;
   get error => _error;
+  get ids => _ids;
+  get idDoc => _idDoc;
   get arquivos => _arqv;
   Stream<QuerySnapshot>? get games => _games;
 
@@ -37,7 +42,9 @@ class GameProvider extends ChangeNotifier {
 
   Future<void> getGames(DateTime date) async {
     try {
-      _games = await _gameController.getGames(date);
+      List data = await _gameController.getGames(date);
+      _games = data[0];
+      _ids = data[1];
       _isLoading = false;
       notifyListeners();
     } catch (err) {
@@ -70,6 +77,24 @@ class GameProvider extends ChangeNotifier {
     String urlImage = await _gameController.loadImages(competition, date);
     _isLoading = false;
     _fileUp = urlImage;
+    notifyListeners();
+  }
+
+  Future<void> delete() async {
+    try{
+      await _gameController.delete(_idDoc);
+      _isLoading = false;
+      _status = "Partida deletada com sucesso.";
+      notifyListeners();
+    } catch (err){
+      _error = err.toString();
+      notifyListeners();
+    }
+  }
+
+  Future<void> setId(String id) async{
+    _idDoc = id;
+    print(_idDoc);
     notifyListeners();
   }
 }

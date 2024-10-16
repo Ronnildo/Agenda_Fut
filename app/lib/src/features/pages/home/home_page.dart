@@ -41,6 +41,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    int i = 0;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -176,6 +177,7 @@ class _HomeState extends State<Home> {
                     return StreamBuilder<QuerySnapshot>(
                       stream: Provider.of<GameProvider>(context).games,
                       builder: (context, snapshot) {
+                              
                         if (snapshot.hasData) {
                           return ListView(
                             shrinkWrap: true,
@@ -184,7 +186,11 @@ class _HomeState extends State<Home> {
                               Map<String, dynamic> data =
                                   document.data()! as Map<String, dynamic>;
                               GameModel game = GameModel.fromJson(data);
+                              i == data.length ? i = 0 : i;
                               return NewCard(
+                                id: Provider.of<GameProvider>(context,
+                                        listen: false)
+                                    .ids[i],
                                 title: game.nameCompetition!,
                                 home: game.home!,
                                 alway: game.away!,
@@ -198,11 +204,12 @@ class _HomeState extends State<Home> {
                                   game.date!,
                                   game.locale!,
                                 ),
+                                delete: delete,
                               );
                             }).toList(),
                           );
                         }
-                        print("teste");
+
                         return const Center(
                           child: Text("Insira uma partida +"),
                         );
@@ -255,6 +262,61 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  delete() async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Deletar partida?"),
+          content: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Provider.of<GameProvider>(context, listen: false)
+                      .delete();
+                  Navigator.pop(context);
+                },
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    Colors.green,
+                  ),
+                  foregroundColor: WidgetStatePropertyAll(Colors.white),
+                  textStyle: WidgetStatePropertyAll(
+                    TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                child: const Text("Sim"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Colors.red),
+                  foregroundColor: WidgetStatePropertyAll(Colors.white),
+                  textStyle: WidgetStatePropertyAll(
+                    TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                child: const Text("Não"),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    // await Provider.of<GameProvider>(context, listen: false).delete();
+    // print(Provider.of<GameProvider>(context, listen: false).status);
   }
 
   singOut() {

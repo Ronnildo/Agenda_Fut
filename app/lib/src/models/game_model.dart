@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GameModel {
+  String? id;
   String? nameCompetition;
   String? home;
   String? away;
