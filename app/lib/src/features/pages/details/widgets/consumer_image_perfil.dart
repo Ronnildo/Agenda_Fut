@@ -18,6 +18,7 @@ class ConsumerImagePerfil extends StatefulWidget {
 class _ConsumerImagesState extends State<ConsumerImagePerfil> {
   @override
   Widget build(BuildContext context) {
+    
     return Stack(
       alignment: Alignment.bottomRight,
       children: [

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
+import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/details/perfil_page.dart';
@@ -56,7 +57,7 @@ class _HomeState extends State<Home> {
         actions: [
           Consumer<UserProvider>(
             builder: (context, value, child) {
-              if (!value.isLoading && value.status != "notFound") {
+              if (value.status == "sucess") {
                 return InkWell(
                   onTap: perfilpage,
                   child: Container(
@@ -65,7 +66,9 @@ class _HomeState extends State<Home> {
                     decoration: BoxDecoration(
                       color: Colors.grey,
                       image: DecorationImage(
-                        image: FileImage(File(value.pathImage)),
+                        image: FileImage(
+                          File(value.pathImage),
+                        ),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(100),
@@ -177,7 +180,6 @@ class _HomeState extends State<Home> {
                     return StreamBuilder<QuerySnapshot>(
                       stream: Provider.of<GameProvider>(context).games,
                       builder: (context, snapshot) {
-                              
                         if (snapshot.hasData) {
                           return ListView(
                             shrinkWrap: true,
@@ -276,8 +278,7 @@ class _HomeState extends State<Home> {
             children: [
               TextButton(
                 onPressed: () {
-                  Provider.of<GameProvider>(context, listen: false)
-                      .delete();
+                  Provider.of<GameProvider>(context, listen: false).delete();
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
@@ -315,13 +316,62 @@ class _HomeState extends State<Home> {
         );
       },
     );
-    // await Provider.of<GameProvider>(context, listen: false).delete();
-    // print(Provider.of<GameProvider>(context, listen: false).status);
   }
 
   singOut() {
-    Provider.of<UserProvider>(context, listen: false).singOut();
-    Navigator.pop(context);
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Sair do Aplicativo?"),
+          content: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Provider.of<UserProvider>(context, listen: false).singOut();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Login(),
+                      ));
+                },
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    Colors.green,
+                  ),
+                  foregroundColor: WidgetStatePropertyAll(Colors.white),
+                  textStyle: WidgetStatePropertyAll(
+                    TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                child: const Text("Sim"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Colors.red),
+                  foregroundColor: WidgetStatePropertyAll(Colors.white),
+                  textStyle: WidgetStatePropertyAll(
+                    TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                child: const Text("Não"),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   focusChange(DateTime selectDate) {

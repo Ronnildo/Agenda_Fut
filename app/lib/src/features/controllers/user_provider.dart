@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/src/features/controllers/user_controller.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,10 +68,10 @@ class UserProvider extends ChangeNotifier {
   Future<void> setPhoto(String path) async {
     try {
       _clear();
-      notifyListeners();
-      String res = await _userController.uploadImageUser(path);
+      await _userController.uploadImageUser(path);
       _isLoading = false;
-      _status = res;
+      _status = "sucess";
+      notifyListeners();
     } catch (e) {
       _isLoading = false;
       _status = "failed";
@@ -83,7 +85,8 @@ class UserProvider extends ChangeNotifier {
     try {
       String? url = await _userController.loadImagePerfil();
       _isLoading = false;
-      _pathImage = url;
+      _status = "sucess";
+      _pathImage = url!.toString();
       notifyListeners();
     } catch (e) {
       _isLoading = false;

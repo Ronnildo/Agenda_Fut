@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_perfil.dart';
 import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/list_details.dart';
+import 'package:app/src/features/widgets/upload_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +28,6 @@ class _PerfilPageState extends State<PerfilPage> {
 
   @override
   Widget build(BuildContext context) {
-    // XFile? file;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -53,13 +56,13 @@ class _PerfilPageState extends State<PerfilPage> {
             child: Consumer<UserProvider>(
               builder: (context, value, child) {
                 if (value.status == "sucess") {
-                  return ConsumerImagePerfil(pathImage: value.pathImage, uploadImage: (){},);
-                } else if (value.isLoading) {
-                  return const CircularProgressIndicator();
-                } else {
-                  return ContainerImage(
-                      uploadImage: uploadImage, path: _file.path);
+                  return ConsumerImagePerfil(
+                    pathImage: value.pathImage,
+                    uploadImage: uploadImage,
+                  );
                 }
+                return UploadImageContainer(
+                    filePath: _file.path, uploadImage: uploadImage);
               },
             ),
           ),
@@ -99,27 +102,40 @@ class _PerfilPageState extends State<PerfilPage> {
     XFile? file = await picker.pickImage(source: ImageSource.gallery);
     if (file != null) {
       _file = file;
+      await Provider.of<UserProvider>(context, listen: false)
+          .setPhoto(_file.path);
     }
-    // ignore: use_build_context_synchronously
-    Provider.of<UserProvider>(context, listen: false).setPhoto(_file.path);
-
-    // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Center(
-          child: Text(
-            // ignore: use_build_context_synchronously
-            Provider.of<UserProvider>(context, listen: false).status,
-            // ignore: use_build_context_synchronously
-            style: Theme.of(context).textTheme.displayMedium,
+    if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Center(
+            child: Text(
+              "Imagem de perfil carregada.",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
           ),
+          duration: const Duration(
+            seconds: 3,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
-        duration: const Duration(
-          seconds: 3,
+      );
+      Provider.of<UserProvider>(context, listen: false).getPhoto();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Center(
+            child: Text(
+              Provider.of<UserProvider>(context, listen: false).error,
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
+          ),
+          duration: const Duration(
+            seconds: 3,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
-        // ignore: use_build_context_synchronously
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-    );
+      );
+    }
   }
 }
