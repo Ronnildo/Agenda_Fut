@@ -19,6 +19,8 @@ class _PerfilPageState extends State<PerfilPage> {
   final TextEditingController _positionController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   bool editName = false;
+  bool editPos = false;
+  bool editPhone = false;
   XFile _file = XFile("");
   @override
   void initState() {
@@ -73,30 +75,71 @@ class _PerfilPageState extends State<PerfilPage> {
             "Foto do Perfil",
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          ListInforDetails(
-            controller: _nameController,
-            edit: editName,
-            title: "Nome",
-            subTitle: Provider.of<UserProvider>(context, listen: false).name,
-            icon: Icons.person,
-            onTap: () => updateName(_nameController.text),
+          Consumer<UserProvider>(
+            builder: (context, value, child) {
+              if (!value.isLoading) {
+                return ListInforDetails(
+                  controller: _nameController,
+                  edit: editName,
+                  title: "Nome",
+                  subTitle: value.name,
+                  icon: Icons.person,
+                  onTap: () => updateName(_nameController.text),
+                );
+              }
+              return ListInforDetails(
+                controller: _nameController,
+                edit: editName,
+                title: "Nome",
+                subTitle: value.name,
+                icon: Icons.person,
+                onTap: () => updateName(_nameController.text),
+              );
+            },
           ),
-          ListInforDetails(
-            controller: _positionController,
-            edit: false,
-            title: "Posição",
-            subTitle:
-                Provider.of<UserProvider>(context, listen: false).position,
-            icon: Icons.info,
-            onTap: () {},
+          Consumer<UserProvider>(
+            builder: (context, value, child) {
+              if (!value.isLoading) {
+                return ListInforDetails(
+                  controller: _positionController,
+                  edit: editPos,
+                  title: "Posição",
+                  subTitle: value.position,
+                  icon: Icons.info,
+                  onTap: () => updatePosition(_positionController.text),
+                );
+              }
+              return ListInforDetails(
+                controller: _positionController,
+                edit: editPos,
+                title: "Posição",
+                subTitle: value.position,
+                icon: Icons.info,
+                onTap: () => updatePosition(_positionController.text),
+              );
+            },
           ),
-          ListInforDetails(
-            controller: _phoneController,
-            edit: false,
-            title: "Número",
-            subTitle: Provider.of<UserProvider>(context, listen: false).phone,
-            icon: Icons.phone,
-            onTap: () {},
+          Consumer<UserProvider>(
+            builder: (context, value, child) {
+              if (!value.isLoading) {
+                return ListInforDetails(
+                  controller: _phoneController,
+                  edit: editPhone,
+                  title: "Número",
+                  subTitle: value.phone,
+                  icon: Icons.phone,
+                  onTap: () => updatePhone(_phoneController.text),
+                );
+              }
+              return ListInforDetails(
+                controller: _phoneController,
+                edit: editPhone,
+                title: "Número",
+                subTitle: value.phone,
+                icon: Icons.phone,
+                onTap: () => updatePhone(_phoneController.text),
+              );
+            },
           ),
         ],
       ),
@@ -109,7 +152,8 @@ class _PerfilPageState extends State<PerfilPage> {
         editName = true;
       });
     }
-    if (Provider.of<UserProvider>(context, listen: false).name != name) {
+    if (name != "" &&
+        Provider.of<UserProvider>(context, listen: false).name != name) {
       setState(() {
         editName = false;
       });
@@ -119,9 +163,91 @@ class _PerfilPageState extends State<PerfilPage> {
           "sucess") {
         Provider.of<UserProvider>(context, listen: false).getUser();
       } else {
+        setState(() {
+          editName = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text("Não foi possível atualizar o nome."),
+            content: const Text("Não foi possível atualizar seu nome."),
+            duration: const Duration(seconds: 2),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+          ),
+        );
+      }
+    } 
+  }
+
+  Future<void> updatePosition(String position) async {
+    if (!editPos) {
+      setState(() {
+        editPos = true;
+      });
+    }
+    if (Provider.of<UserProvider>(context, listen: false).position == "") {
+      await Provider.of<UserProvider>(context, listen: false)
+          .setPostionUser(position);
+      if (Provider.of<UserProvider>(context, listen: false).status ==
+          "sucess") {
+        print("Up");
+        Provider.of<UserProvider>(context, listen: false).getUser();
+      } else {
+        setState(() {
+          editPos = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Não foi possível atualizar sua posição."),
+            duration: const Duration(seconds: 2),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+          ),
+        );
+      }
+    } else {
+      if (Provider.of<UserProvider>(context, listen: false).position !=
+          position) {
+        setState(() {
+          editPos = false;
+        });
+        await Provider.of<UserProvider>(context, listen: false)
+            .updateUserName(_nameController.text);
+        if (Provider.of<UserProvider>(context, listen: false).status ==
+            "sucess") {
+          Provider.of<UserProvider>(context, listen: false).getUser();
+        } else {
+          setState(() {
+            editPos = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text("Não foi possível atualizar sua posição."),
+              duration: const Duration(seconds: 2),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+          );
+        }
+      }
+    }
+  }
+
+  Future<void> updatePhone(String phone) async {
+    if (!editPhone) {
+      setState(() {
+        editPhone = true;
+      });
+    }
+    if (Provider.of<UserProvider>(context, listen: false).phone != phone) {
+      setState(() {
+        editPhone = false;
+      });
+      await Provider.of<UserProvider>(context, listen: false)
+          .updateUserName(_nameController.text);
+      if (Provider.of<UserProvider>(context, listen: false).status ==
+          "sucess") {
+        Provider.of<UserProvider>(context, listen: false).getUser();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Não foi possível atualizar o seu número."),
             duration: const Duration(seconds: 2),
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),

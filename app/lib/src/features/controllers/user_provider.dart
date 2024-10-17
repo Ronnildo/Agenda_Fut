@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/src/features/controllers/user_controller.dart';
+import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -64,11 +65,28 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> getUser() async {
-    String? userName = await _userController.getNameUser();
-    String? userPhone = await _userController.getPhoneUser();
-    _name = userName!;
-    _phone = userPhone!;
+    String userName = await _userController.getNameUser();
+    String userPhone = await _userController.getPhoneUser();
+    PositionModel pos = await _userController.getPositionUser();
+    _name = userName;
+    _phone = userPhone;
+    _position = pos.position!;
     notifyListeners();
+  }
+
+  Future<void> setPostionUser(String position) async{
+    try {
+      _clear();
+      String res = await _userController.setPositionUser(position);
+      _isLoading = false;
+      _status = res;
+      notifyListeners();
+    } catch (e) {
+      _status = "failed";
+      _error = e.toString();
+      notifyListeners();
+    }
+
   }
   
   Future<void> setPhoto(String path) async {

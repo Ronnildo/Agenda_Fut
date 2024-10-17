@@ -45,10 +45,4 @@ class _ListInforDetailsState extends State<ListInforDetails> {
       ),
     );
   }
-
-  completeEdit(){
-    setState(() {
-      edit = false;
-    });
-  }
 }

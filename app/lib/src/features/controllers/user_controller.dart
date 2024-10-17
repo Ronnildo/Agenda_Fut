@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:app/src/core/repository.dart';
+import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -86,6 +88,7 @@ class UserController extends Repository {
       throw Exception(e.code);
     }
   }
+
   Future getPhoneUser() async {
     final userCredential = _firebaseAuth.currentUser;
     try {
@@ -94,6 +97,19 @@ class UserController extends Repository {
       } else {
         return userCredential.phoneNumber;
       }
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
+    }
+  }
+
+  Future getPositionUser() async {
+    final userCredential = _firebaseAuth.currentUser;
+    try {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection("positions")
+          .doc(userCredential!.uid)
+          .get();
+      return PositionModel.fromJson(doc.data() as Map<String, dynamic>);
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }
@@ -108,16 +124,30 @@ class UserController extends Repository {
     }
   }
 
+  Future setPositionUser(String position) async {
+    final userCredential = _firebaseAuth.currentUser;
+    try {
+      await FirebaseFirestore.instance
+          .collection("positions")
+          .doc(userCredential!.uid)
+          .set({"position": position});
+      return "sucess";
+    } on FirebaseException catch (err) {
+      throw Exception(err.code);
+    }
+  }
+
   Future updateDisplayName(String newName) async {
     final userCredential = _firebaseAuth.currentUser;
-    try{
-      if(userCredential!.displayName == null || userCredential.displayName != newName){
+    try {
+      if (userCredential!.displayName == null ||
+          userCredential.displayName != newName) {
         await userCredential.updateDisplayName(newName);
         return "sucess";
-      }else{
+      } else {
         return "";
       }
-    }on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }
   }
