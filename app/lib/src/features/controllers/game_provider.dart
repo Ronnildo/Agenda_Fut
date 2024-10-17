@@ -94,7 +94,5 @@ class GameProvider extends ChangeNotifier {
 
   Future<void> setId(String id) async{
     _idDoc = id;
-    print(_idDoc);
-    notifyListeners();
   }
 }

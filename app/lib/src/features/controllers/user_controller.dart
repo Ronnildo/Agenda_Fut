@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/src/core/repository.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +13,6 @@ class UserController extends Repository {
 
   Future createUser(UserModel user) async {
     try {
-     
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: user.email!,
@@ -20,7 +21,7 @@ class UserController extends Repository {
 
       await userCredential.user!.updateDisplayName(user.name);
     } on FirebaseAuthException catch (err) {
-      switch(err.code){
+      switch (err.code) {
         case "weak-password":
           throw const AuthException("Senha muito fraca").message;
         case "email-already-in-use":
@@ -28,10 +29,20 @@ class UserController extends Repository {
         case "invalid-email":
           throw const AuthException("E-mail inválido").message;
         case "operation-not-allowed":
-           throw const AuthException("Operação não realizada").message;
+          throw const AuthException("Operação não realizada").message;
         case "channel-error":
-           throw const AuthException("Preencha as informações corretamente.").message;
+          throw const AuthException("Preencha as informações corretamente.")
+              .message;
       }
+    }
+  }
+
+  Future uploadImageUser(String pathImage) async {
+    try {
+      await _firebaseAuth.currentUser?.updatePhotoURL(pathImage);
+      return "sucess";
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
     }
   }
 
@@ -42,13 +53,15 @@ class UserController extends Repository {
         password: user.password!,
       );
     } on FirebaseAuthException catch (err) {
-      switch (err.code){
+      switch (err.code) {
         case "invalid-credential":
-          throw const AuthException("E-mail não cadastrado ou senha incorreta").message;
+          throw const AuthException("E-mail não cadastrado ou senha incorreta")
+              .message;
         case "invalid-email":
           throw const AuthException("E-mail Inválido").message;
         case "channel-error":
-          throw const AuthException("Preencha corretamente as informações.").message;
+          throw const AuthException("Preencha corretamente as informações.")
+              .message;
         case "too-many-requests":
           throw const AuthException("Tente novamente em instantes").message;
         case "wrong-password":
@@ -57,31 +70,54 @@ class UserController extends Repository {
           throw const AuthException("E-mail não cadastrado").message;
         default:
           throw Exception(err.code);
-          
       }
     }
   }
 
-  Future<String> getUser() async {
-    String? name = _firebaseAuth.currentUser?.displayName;
-    return name!;
-  }
-
-  Future uploadImageUser(String pathImage) async {
-    try{
-      await _firebaseAuth.currentUser?.updatePhotoURL(pathImage);
-      return "sucess";
-    } on FirebaseAuthException catch (e){
+  Future getNameUser() async {
+    final userCredential = _firebaseAuth.currentUser;
+    try {
+      if (userCredential!.displayName == null) {
+        return "";
+      } else {
+        return userCredential.displayName;
+      }
+    } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }
-    
+  }
+  Future getPhoneUser() async {
+    final userCredential = _firebaseAuth.currentUser;
+    try {
+      if (userCredential!.phoneNumber == null) {
+        return "";
+      } else {
+        return userCredential.phoneNumber;
+      }
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
+    }
   }
 
-  Future<String> loadImagePerfil() async {
-     try{
+  Future loadImagePerfil() async {
+    try {
       String? photo = _firebaseAuth.currentUser?.photoURL;
       return photo!;
-    } on FirebaseAuthException catch (e){
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
+    }
+  }
+
+  Future updateDisplayName(String newName) async {
+    final userCredential = _firebaseAuth.currentUser;
+    try{
+      if(userCredential!.displayName == null || userCredential.displayName != newName){
+        await userCredential.updateDisplayName(newName);
+        return "sucess";
+      }else{
+        return "";
+      }
+    }on FirebaseAuthException catch(e){
       throw Exception(e.code);
     }
   }

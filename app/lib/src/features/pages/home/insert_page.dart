@@ -215,7 +215,7 @@ class _InsertPageState extends State<InsertPage> {
         fase: _faseController.text,
         date: date,
       );
-      Provider.of<GameProvider>(context, listen: false)
+      await Provider.of<GameProvider>(context, listen: false)
           .addGame(file, date.toString(), data);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

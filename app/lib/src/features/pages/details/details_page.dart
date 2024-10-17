@@ -30,6 +30,11 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  final TextEditingController _homeController = TextEditingController();
+  final TextEditingController _awayController = TextEditingController();
+  final TextEditingController _localeController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
   XFile _file = XFile("");
   @override
   void initState() {
@@ -99,33 +104,43 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
             ),
             ListInforDetails(
+              controller: _homeController,
               title: "Casa",
               subTitle: widget.home,
+              edit: false,
               icon: Icons.shield,
               onTap: () {},
             ),
             ListInforDetails(
+              controller: _awayController,
               title: "Fora",
               subTitle: widget.away,
               icon: Icons.shield,
+              edit: false,
               onTap: () {},
             ),
             ListInforDetails(
+              controller: _localeController,
               title: "Local",
               subTitle: widget.locale,
               icon: Icons.location_on,
+              edit: false,
               onTap: () {},
             ),
             ListInforDetails(
+              controller: _dateController,
               title: "Data",
               subTitle: DateFormat("dd/MM/yyyy").format(widget.date),
               icon: Icons.event,
+              edit: false,
               onTap: () {},
             ),
             ListInforDetails(
+              controller: _timeController,
               title: "Horário",
               subTitle: DateFormat("HH:mm").format(widget.date),
               icon: Icons.schedule,
+              edit: false,
               onTap: () {},
             ),
             Padding(

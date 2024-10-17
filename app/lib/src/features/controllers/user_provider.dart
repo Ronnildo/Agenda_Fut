@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/src/features/controllers/user_controller.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,8 @@ class UserProvider extends ChangeNotifier {
   String _error = "";
   String _status = "";
   String _name = "";
+  String _phone = "";
+  String _position = "";
   String _pathImage = "";
   String? _uuid;
 
@@ -16,6 +20,8 @@ class UserProvider extends ChangeNotifier {
   get error => _error;
   get status => _status;
   get name => _name;
+  get phone => _phone;
+  get position => _position;
   get uuid => _uuid;
   get pathImage => _pathImage;
 
@@ -57,19 +63,21 @@ class UserProvider extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 
-  Future<void> getNameUser() async {
-    String? user = await _userController.getUser();
-    _name = user;
+  Future<void> getUser() async {
+    String? userName = await _userController.getNameUser();
+    String? userPhone = await _userController.getPhoneUser();
+    _name = userName!;
+    _phone = userPhone!;
     notifyListeners();
   }
-
+  
   Future<void> setPhoto(String path) async {
     try {
       _clear();
-      notifyListeners();
-      String res = await _userController.uploadImageUser(path);
+      await _userController.uploadImageUser(path);
       _isLoading = false;
-      _status = res;
+      _status = "sucess";
+      notifyListeners();
     } catch (e) {
       _isLoading = false;
       _status = "failed";
@@ -83,7 +91,8 @@ class UserProvider extends ChangeNotifier {
     try {
       String? url = await _userController.loadImagePerfil();
       _isLoading = false;
-      _pathImage = url;
+      _status = "sucess";
+      _pathImage = url!.toString();
       notifyListeners();
     } catch (e) {
       _isLoading = false;
@@ -99,6 +108,14 @@ class UserProvider extends ChangeNotifier {
     _status = "";
     _error = "";
     _pathImage = "";
+    notifyListeners();
+  }
+
+  Future updateUserName(String newName) async{
+    String res = await _userController.updateDisplayName(newName);
+    _isLoading = false;
+    _status = res;
+    getUser();
     notifyListeners();
   }
 }

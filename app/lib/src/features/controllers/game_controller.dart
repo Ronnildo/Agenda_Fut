@@ -78,7 +78,7 @@ class GameController {
           .where("date",
               isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate())
           .where("date",
-              isLessThanOrEqualTo: Timestamp.fromDate(nextDay).toDate())
+              isLessThan: Timestamp.fromDate(nextDay).toDate())
           .snapshots();
       return [games, documents];
     } on FirebaseException catch (e) {
