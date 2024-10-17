@@ -1,4 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
+
+import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_perfil.dart';
 import 'package:app/src/features/widgets/list_details.dart';
