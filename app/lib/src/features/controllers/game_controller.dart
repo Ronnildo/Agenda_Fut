@@ -75,14 +75,37 @@ class GameController {
       }
       Stream<QuerySnapshot> games = _firestore
           .collection(userId)
-          .where("date",
-              isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate())
-          .where("date",
-              isLessThan: Timestamp.fromDate(nextDay).toDate())
+          .where(
+            "date",
+            isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate(),
+          )
+          .where(
+            "date",
+            isLessThan: Timestamp.fromDate(nextDay).toDate(),
+          )
           .snapshots();
       return [games, documents];
     } on FirebaseException catch (e) {
       throw Exception(e.code);
+    }
+  }
+
+  Future updateMatchGame(String nameCompetition, String home, String away,
+      String locale, String fase, DateTime date) async {
+    String userId = _firebaseAuth.currentUser!.uid;
+    try {
+      // DocumentSnapshot doc = await FirebaseFirestore.instance
+      //     .collection(userId).doc("jERkT8UrIPySjzEXW5RN").get();
+      GameModel gameModel = GameModel(
+          nameCompetition: nameCompetition,
+          home: home,
+          away: away,
+          locale: locale,
+          fase: fase,
+          date: date);
+      await _firestore.collection(userId).doc("jERkT8UrIPySjzEXW5RN").update(gameModel.toJson());
+    } on FirebaseException catch (err) {
+      throw Exception(err.code);
     }
   }
 

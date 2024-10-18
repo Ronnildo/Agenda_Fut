@@ -13,9 +13,8 @@ class GameProvider extends ChangeNotifier {
   String _status = "";
   String _error = "";
   String _fileUp = "";
-  List _ids  = [];
+  List _ids = [];
   String _idDoc = "";
-  
 
   get fileUp => _fileUp;
   get isLoading => _isLoading;
@@ -81,18 +80,23 @@ class GameProvider extends ChangeNotifier {
   }
 
   Future<void> delete() async {
-    try{
+    try {
       await _gameController.delete(_idDoc);
       _isLoading = false;
       _status = "Partida deletada com sucesso.";
       notifyListeners();
-    } catch (err){
+    } catch (err) {
       _error = err.toString();
       notifyListeners();
     }
   }
 
-  Future<void> setId(String id) async{
+  Future<void> setId(String id) async {
     _idDoc = id;
+  }
+
+  Future<void> updateMatchGame(String nameCompetition, String home, String away,
+      String locale, String fase, DateTime date) async{
+    await _gameController.updateMatchGame(nameCompetition, home, away, locale, fase, date);
   }
 }

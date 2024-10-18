@@ -19,7 +19,7 @@ class PerfilPage extends StatefulWidget {
 class _PerfilPageState extends State<PerfilPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _positionController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
+  
   bool editName = false;
   bool editPos = false;
   bool editPhone = false;

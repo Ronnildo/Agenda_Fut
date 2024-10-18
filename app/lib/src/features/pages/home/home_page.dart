@@ -205,6 +205,7 @@ class _HomeState extends State<Home> {
                                   game.nameCompetition!,
                                   game.home!,
                                   game.away!,
+                                  game.fase!,
                                   game.date!,
                                   game.locale!,
                                 ),
@@ -252,7 +253,7 @@ class _HomeState extends State<Home> {
   }
 
   // Função de navegação para tela de detalhes
-  details(String nameCompetition, String home, String away, DateTime date,
+  details(String nameCompetition, String home, String away, String fase, DateTime date,
       String locale) {
     Navigator.push(
       context,
@@ -260,6 +261,7 @@ class _HomeState extends State<Home> {
         builder: (context) => DetailsPage(
           nameCompetition: nameCompetition,
           home: home,
+          fase: fase,
           away: away,
           date: date,
           locale: locale,
