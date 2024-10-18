@@ -60,7 +60,7 @@ class _PerfilPageState extends State<PerfilPage> {
           Center(
             child: Consumer<UserProvider>(
               builder: (context, value, child) {
-                if (value.status == "sucess") {
+                if (!value.isLoading) {
                   return ConsumerImagePerfil(
                     pathImage: value.pathImage,
                     uploadImage: uploadImage,
@@ -86,7 +86,7 @@ class _PerfilPageState extends State<PerfilPage> {
                   title: "Nome",
                   subTitle: value.name,
                   icon: Icons.person,
-                  onTap: () => updateName(_nameController.text),
+                  onTap: updateName,
                 );
               }
               return ListInforDetails(
@@ -95,7 +95,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: "Nome",
                 subTitle: value.name,
                 icon: Icons.person,
-                onTap: () => updateName(_nameController.text),
+                onTap: updateName,
               );
             },
           ),
@@ -108,7 +108,7 @@ class _PerfilPageState extends State<PerfilPage> {
                   title: "Posição",
                   subTitle: value.position,
                   icon: Icons.info,
-                  onTap: () => updatePosition(_positionController.text),
+                  onTap: updatePosition,
                 );
               }
               return ListInforDetails(
@@ -117,29 +117,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 title: "Posição",
                 subTitle: value.position,
                 icon: Icons.info,
-                onTap: () => updatePosition(_positionController.text),
-              );
-            },
-          ),
-          Consumer<UserProvider>(
-            builder: (context, value, child) {
-              if (!value.isLoading) {
-                return ListInforDetails(
-                  controller: _phoneController,
-                  edit: editPhone,
-                  title: "Número",
-                  subTitle: value.phone,
-                  icon: Icons.phone,
-                  onTap: () => updatePhone(_phoneController.text),
-                );
-              }
-              return ListInforDetails(
-                controller: _phoneController,
-                edit: editPhone,
-                title: "Número",
-                subTitle: value.phone,
-                icon: Icons.phone,
-                onTap: () => updatePhone(_phoneController.text),
+                onTap: updatePosition,
               );
             },
           ),
@@ -148,26 +126,20 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 
-  Future<void> updateName(String name) async {
+  Future<void> updateName() async {
     if (!editName) {
       setState(() {
         editName = true;
+        _nameController.text =
+            Provider.of<UserProvider>(context, listen: false).name;
       });
-    }
-    if (name != "" &&
-        Provider.of<UserProvider>(context, listen: false).name != name) {
+    } else {
       setState(() {
         editName = false;
       });
-      await Provider.of<UserProvider>(context, listen: false)
-          .updateUserName(_nameController.text);
-      if (Provider.of<UserProvider>(context, listen: false).status ==
-          "sucess") {
-        Provider.of<UserProvider>(context, listen: false).getUser();
-      } else {
-        setState(() {
-          editName = false;
-        });
+      if (_nameController.text ==
+              Provider.of<UserProvider>(context, listen: false).name ||
+          _nameController.text == "") {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text("Não foi possível atualizar seu nome."),
@@ -175,27 +147,28 @@ class _PerfilPageState extends State<PerfilPage> {
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
+      } else {
+        await Provider.of<UserProvider>(context, listen: false)
+            .updateUserName(_nameController.text);
+        await Provider.of<UserProvider>(context, listen: false).getUser();
       }
-    } 
+    }
   }
 
-  Future<void> updatePosition(String position) async {
+  Future<void> updatePosition() async {
     if (!editPos) {
       setState(() {
         editPos = true;
+        _positionController.text =
+            Provider.of<UserProvider>(context, listen: false).position;
       });
-    }
-    if (Provider.of<UserProvider>(context, listen: false).position == "") {
-      await Provider.of<UserProvider>(context, listen: false)
-          .setPostionUser(position);
-      if (Provider.of<UserProvider>(context, listen: false).status ==
-          "sucess") {
-        print("Up");
-        Provider.of<UserProvider>(context, listen: false).getUser();
-      } else {
-        setState(() {
-          editPos = false;
-        });
+    } else {
+      setState(() {
+        editPos = false;
+      });
+      if (_positionController.text == "" ||
+          _positionController.text ==
+              Provider.of<UserProvider>(context, listen: false).position) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text("Não foi possível atualizar sua posição."),
@@ -203,57 +176,10 @@ class _PerfilPageState extends State<PerfilPage> {
             backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         );
-      }
-    } else {
-      if (Provider.of<UserProvider>(context, listen: false).position !=
-          position) {
-        setState(() {
-          editPos = false;
-        });
-        await Provider.of<UserProvider>(context, listen: false)
-            .updateUserName(_nameController.text);
-        if (Provider.of<UserProvider>(context, listen: false).status ==
-            "sucess") {
-          Provider.of<UserProvider>(context, listen: false).getUser();
-        } else {
-          setState(() {
-            editPos = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text("Não foi possível atualizar sua posição."),
-              duration: const Duration(seconds: 2),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
-          );
-        }
-      }
-    }
-  }
-
-  Future<void> updatePhone(String phone) async {
-    if (!editPhone) {
-      setState(() {
-        editPhone = true;
-      });
-    }
-    if (Provider.of<UserProvider>(context, listen: false).phone != phone) {
-      setState(() {
-        editPhone = false;
-      });
-      await Provider.of<UserProvider>(context, listen: false)
-          .updateUserName(_nameController.text);
-      if (Provider.of<UserProvider>(context, listen: false).status ==
-          "sucess") {
-        Provider.of<UserProvider>(context, listen: false).getUser();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Não foi possível atualizar o seu número."),
-            duration: const Duration(seconds: 2),
-            backgroundColor: Theme.of(context).colorScheme.primary,
-          ),
-        );
+        await Provider.of<UserProvider>(context, listen: false)
+            .setPostionUser(_positionController.text);
+        await Provider.of<UserProvider>(context, listen: false).getUser();
       }
     }
   }

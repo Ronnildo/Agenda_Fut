@@ -74,9 +74,8 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setPostionUser(String position) async{
+  Future<void> setPostionUser(String position) async {
     try {
-      _clear();
       String res = await _userController.setPositionUser(position);
       _isLoading = false;
       _status = res;
@@ -86,9 +85,8 @@ class UserProvider extends ChangeNotifier {
       _error = e.toString();
       notifyListeners();
     }
-
   }
-  
+
   Future<void> setPhoto(String path) async {
     try {
       _clear();
@@ -121,19 +119,23 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  Future updateUserName(String newName) async {
+    try {
+      String res = await _userController.updateDisplayName(newName);
+      _isLoading = false;
+      _status = res;
+      notifyListeners();
+    } catch (err) {
+      _error = err.toString();
+      notifyListeners();
+    }
+  }
+
   Future<void> _clear() async {
     _isLoading = true;
     _status = "";
     _error = "";
     _pathImage = "";
-    notifyListeners();
-  }
-
-  Future updateUserName(String newName) async{
-    String res = await _userController.updateDisplayName(newName);
-    _isLoading = false;
-    _status = res;
-    getUser();
     notifyListeners();
   }
 }
