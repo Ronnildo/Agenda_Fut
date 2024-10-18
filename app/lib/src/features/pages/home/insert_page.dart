@@ -3,11 +3,11 @@
 import 'dart:io';
 
 import 'package:app/src/features/controllers/game_provider.dart';
-import 'package:app/src/features/widgets/custom_insert_game.dart';
+import 'package:app/src/features/pages/home/widgets/custom_insert_game.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
-import 'package:app/src/features/widgets/date_or_hour.dart';
-import 'package:app/src/features/widgets/dropdown_type.dart';
-import 'package:app/src/features/widgets/upload_image.dart';
+import 'package:app/src/features/pages/home/widgets/date_or_hour.dart';
+import 'package:app/src/features/pages/home/widgets/dropdown_type.dart';
+import 'package:app/src/features/pages/home/widgets/upload_image.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

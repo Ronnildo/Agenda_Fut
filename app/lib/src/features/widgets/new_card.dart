@@ -1,5 +1,5 @@
 import 'package:app/src/features/controllers/game_provider.dart';
-import 'package:app/src/features/widgets/container_fase.dart';
+import 'package:app/src/features/pages/home/widgets/container_fase.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

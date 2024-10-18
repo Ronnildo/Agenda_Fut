@@ -4,7 +4,7 @@ import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/widgets/mini_card_game.dart';
-import 'package:app/src/features/widgets/upload_image.dart';
+import 'package:app/src/features/pages/home/widgets/upload_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
