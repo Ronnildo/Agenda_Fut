@@ -195,7 +195,9 @@ class _InsertPageState extends State<InsertPage> {
     ImagePicker picker = ImagePicker();
     XFile? file = await picker.pickImage(source: ImageSource.gallery);
     if (file != null) {
-      _file = file;
+      setState(() {
+        _file = file;
+      });
     }
   }
 
@@ -204,6 +206,7 @@ class _InsertPageState extends State<InsertPage> {
 
     if (_competitionController.text != "" &&
         _homeController.text != "" &&
+        _dateController.text != "" &&
         _timeController.text != "") {
       DateTime date = Data.DateFormat("dd/MM/yyyy hh:mm")
           .parse("${_dateController.text} ${_timeController.text}");
@@ -249,5 +252,7 @@ class _InsertPageState extends State<InsertPage> {
     _localeController.clear();
     _faseController.text = "Fase de Grupos";
     _dateController.clear();
+    _timeController.clear();
+    _file = XFile("");
   }
 }

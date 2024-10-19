@@ -78,6 +78,15 @@ class GameProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> setImageGame(
+      String competition, String date, String file) async {
+    await _gameController.updateGame(competition, date, File(file));
+    String urlImage = await _gameController.loadImages(competition, date);
+    _isLoading = false;
+    _fileUp = urlImage;
+    notifyListeners();
+  }
+
   Future<void> delete() async {
     try {
       await _gameController.delete(_idDoc);

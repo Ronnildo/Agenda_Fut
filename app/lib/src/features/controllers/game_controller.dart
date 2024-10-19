@@ -21,7 +21,7 @@ class GameController {
         await _storage.ref(ref).putFile(path);
       }
 
-      await _firestore.collection(userId).add(game.toJson());
+      await _firestore.collection("matches").doc(userId).collection("games").add(game.toJson());
     } on StorageException catch (err) {
       throw Exception(err.message);
     }
@@ -67,14 +67,14 @@ class GameController {
     ));
 
     try {
-      QuerySnapshot getDocs = await _firestore.collection(userId).get();
+      QuerySnapshot getDocs = await _firestore.collection("matches").doc(userId).collection("games").get();
       List documents = [];
       for (DocumentSnapshot item in getDocs.docs) {
         var dados = item.id;
         documents.add(dados);
       }
       Stream<QuerySnapshot> games = _firestore
-          .collection(userId)
+          .collection("matches").doc(userId).collection("games")
           .where(
             "date",
             isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate(),

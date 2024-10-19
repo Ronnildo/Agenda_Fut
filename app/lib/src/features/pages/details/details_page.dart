@@ -43,10 +43,8 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   void initState() {
-    _file.path != ""
-        ? Provider.of<GameProvider>(context, listen: false)
-            .getImage(widget.nameCompetition, widget.date.toString())
-        : null;
+    Provider.of<GameProvider>(context, listen: false)
+        .getImage(widget.nameCompetition, widget.date.toString());
     super.initState();
   }
 
@@ -72,6 +70,7 @@ class _DetailsPageState extends State<DetailsPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Consumer<GameProvider>(builder: (context, value, child) {
+              // print(value.fileUp);
               if (!value.isLoading && value.fileUp != "") {
                 return Center(
                   child: ConsumerImageGame(
