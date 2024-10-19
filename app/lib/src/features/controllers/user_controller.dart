@@ -118,7 +118,10 @@ class UserController extends Repository {
   Future loadImagePerfil() async {
     try {
       String? photo = _firebaseAuth.currentUser?.photoURL;
-      return photo!;
+      if(photo == null){
+        return "";
+      }
+      return photo;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }

@@ -58,7 +58,7 @@ class _PerfilPageState extends State<PerfilPage> {
           Center(
             child: Consumer<UserProvider>(
               builder: (context, value, child) {
-                if (!value.isLoading) {
+                if (!value.isLoading || value.pathImage != "") {
                   return ConsumerImagePerfil(
                     pathImage: value.pathImage,
                     uploadImage: uploadImage,
@@ -189,6 +189,8 @@ class _PerfilPageState extends State<PerfilPage> {
       _file = file;
       await Provider.of<UserProvider>(context, listen: false)
           .setPhoto(_file.path);
+    }else{
+      return;
     }
     if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
       ScaffoldMessenger.of(context).showSnackBar(
