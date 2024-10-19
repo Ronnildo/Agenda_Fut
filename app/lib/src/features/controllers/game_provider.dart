@@ -59,12 +59,11 @@ class GameProvider extends ChangeNotifier {
       String urlImage = await _gameController.loadImages(nameCompetition, date);
       _isLoading = false;
       _fileUp = urlImage;
-      _status = nameCompetition;
+      _status = "sucess";
       notifyListeners();
     } on FirebaseException catch (e) {
       _isLoading = false;
       _status = "failed";
-      _fileUp = "";
       _error = e.toString();
       notifyListeners();
     }

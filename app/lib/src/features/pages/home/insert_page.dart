@@ -37,7 +37,7 @@ class _InsertPageState extends State<InsertPage> {
   MaterialTapTargetSize tapTargetSize = MaterialTapTargetSize.padded;
   bool use24Hours = false;
   DateTime? _pickedDate;
-  XFile _file = XFile("");
+  XFile? _file = XFile("");
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _InsertPageState extends State<InsertPage> {
           children: [
             Center(
               child: UploadImageContainer(
-                filePath: _file.path,
+                filePath: _file!.path,
                 uploadImage: uploadImage,
               ),
             ),
@@ -200,7 +200,7 @@ class _InsertPageState extends State<InsertPage> {
   }
 
   Future insertGame() async {
-    File file = File(_file.path);
+    File file = File(_file!.path);
 
     if (_competitionController.text != "" &&
         _homeController.text != "" &&
