@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app/src/features/controllers/user_controller.dart';
 import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
