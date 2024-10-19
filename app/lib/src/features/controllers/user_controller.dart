@@ -109,7 +109,10 @@ class UserController extends Repository {
           .collection("positions")
           .doc(userCredential!.uid)
           .get();
-      return PositionModel.fromJson(doc.data() as Map<String, dynamic>);
+      if(doc.exists){
+        return PositionModel.fromJson(doc.data() as Map<String, dynamic>);
+      }
+      return PositionModel(position: "");
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }

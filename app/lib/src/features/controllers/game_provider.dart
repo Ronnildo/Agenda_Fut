@@ -13,14 +13,14 @@ class GameProvider extends ChangeNotifier {
   String _status = "";
   String _error = "";
   String _fileUp = "";
-  List _ids = [];
+  String _id = "";
   String _idDoc = "";
 
   get fileUp => _fileUp;
   get isLoading => _isLoading;
   get status => _status;
   get error => _error;
-  get ids => _ids;
+  get id => _id;
   get idDoc => _idDoc;
   get arquivos => _arqv;
   Stream<QuerySnapshot>? get games => _games;
@@ -43,7 +43,7 @@ class GameProvider extends ChangeNotifier {
     try {
       List data = await _gameController.getGames(date);
       _games = data[0];
-      _ids = data[1];
+      _id = data[0].toString();
       _isLoading = false;
       notifyListeners();
     } catch (err) {

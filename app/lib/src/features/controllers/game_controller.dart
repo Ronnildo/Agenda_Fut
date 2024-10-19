@@ -67,12 +67,6 @@ class GameController {
     ));
 
     try {
-      QuerySnapshot getDocs = await _firestore.collection("matches").doc(userId).collection("games").get();
-      List documents = [];
-      for (DocumentSnapshot item in getDocs.docs) {
-        var dados = item.id;
-        documents.add(dados);
-      }
       Stream<QuerySnapshot> games = _firestore
           .collection("matches").doc(userId).collection("games")
           .where(
@@ -84,7 +78,7 @@ class GameController {
             isLessThan: Timestamp.fromDate(nextDay).toDate(),
           )
           .snapshots();
-      return [games, documents];
+      return [games, userId];
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class ConsumerImagePerfil extends StatefulWidget {
@@ -26,7 +27,9 @@ class _ConsumerImagesState extends State<ConsumerImagePerfil> {
             return Padding(
               padding: const EdgeInsets.all(12.0),
               child: CircleAvatar(
-                foregroundImage: FileImage(File(widget.pathImage)),
+                foregroundImage: FileImage(
+                  File(widget.pathImage),
+                ),
               ),
             );
           },

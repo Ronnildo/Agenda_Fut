@@ -42,7 +42,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    int i = 0;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -190,11 +189,10 @@ class _HomeState extends State<Home> {
                               Map<String, dynamic> data =
                                   document.data()! as Map<String, dynamic>;
                               GameModel game = GameModel.fromJson(data);
-                              i == data.length ? i = 0 : i;
                               return NewCard(
                                 id: Provider.of<GameProvider>(context,
                                         listen: false)
-                                    .ids[i],
+                                    .id,
                                 title: game.nameCompetition!,
                                 home: game.home!,
                                 alway: game.away!,
