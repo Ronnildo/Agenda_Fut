@@ -214,37 +214,38 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Future<void> save() async {
     setState(() {
-        _editDetails = false;
-      });
+      _editDetails = false;
+    });
 
-      DateTime date = DateFormat("dd/MM/yyyy hh:mm")
-          .parse("${_dateController.text} ${_timeController.text}");
-      if (_homeController.text == widget.home &&
-          _awayController.text == widget.away &&
-          _localeController.text == widget.locale &&
+    if (_homeController.text == widget.home &&
+        _awayController.text == widget.away &&
+        _localeController.text == widget.locale &&
+        _dateController.text == DateFormat("dd/MM/yyyy").format(widget.date) &&
+        _timeController.text == DateFormat("HH:mm").format(widget.date)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          content: const Text("Error nada alterado para ser salvo."),
+        ),
+      );
+    } else {
+      if (_homeController.text != widget.home &&
+              _awayController.text != widget.away &&
+              _localeController.text == widget.locale ||
           _dateController.text ==
-              DateFormat("dd/MM/yyyy").format(widget.date) &&
+              DateFormat("dd/MM/yyyy").format(widget.date) ||
           _timeController.text == DateFormat("HH:mm").format(widget.date)) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Error")),
+        DateTime dateConvert = DateFormat("dd/MM/yyyy hh:mm")
+            .parse("${_dateController.text} ${_timeController.text}");
+        await Provider.of<GameProvider>(context, listen: false).updateMatchGame(
+          widget.nameCompetition,
+          _homeController.text,
+          _awayController.text,
+          _localeController.text,
+          widget.fase,
+          dateConvert,
         );
-      } else {
-        if (_homeController.text != widget.home &&
-                _awayController.text != widget.away &&
-            _localeController.text == widget.locale ||
-            _dateController.text ==
-                DateFormat("dd/MM/yyyy").format(widget.date) ||
-            _timeController.text == DateFormat("HH:mm").format(widget.date)) {
-          await Provider.of<GameProvider>(context, listen: false)
-              .updateMatchGame(
-            widget.nameCompetition,
-            _homeController.text,
-            _awayController.text,
-            _localeController.text,
-            widget.fase,
-            date,
-          );
-        }
       }
+    }
   }
 }
