@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:app/src/core/repository.dart';
 import 'package:app/src/models/position_model.dart';
@@ -36,6 +35,15 @@ class UserController extends Repository {
           throw const AuthException("Preencha as informações corretamente.")
               .message;
       }
+    }
+  }
+
+  Future resetPassword(String email) async{
+    try{
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return "Verifique seu e-mail para redefir sua senha.";
+    }on FirebaseException catch(err){
+      throw Exception(err.code);
     }
   }
 

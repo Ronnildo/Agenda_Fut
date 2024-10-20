@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: resetPassword,
                   hoverColor: Colors.green,
                   hoverDuration: const Duration(
                     seconds: 2,
@@ -163,6 +163,13 @@ class _LoginState extends State<Login> {
 
       );
     }
+  }
+
+  Future resetPassword() async{
+    if(_emailController.text != ""){
+      await Provider.of<UserProvider>(context, listen: false).resetPassword(_emailController.text);
+    }
+    return;
   }
 
   home() {

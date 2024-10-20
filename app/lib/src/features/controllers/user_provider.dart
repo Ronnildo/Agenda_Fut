@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:app/src/features/controllers/user_controller.dart';
 import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:email_validator/email_validator.dart';
 
 class UserProvider extends ChangeNotifier {
   final UserController _userController = UserController();
@@ -28,19 +26,38 @@ class UserProvider extends ChangeNotifier {
   get pathImage => _pathImage;
 
   Future<void> create(UserModel user, void Function() page) async {
-    try {
+    if (EmailValidator.validate(user.email!.trim(), true) || user.email! != "") {
+      try {
+        _clear();
+        notifyListeners();
+        await _userController.createUser(user);
+        _isLoading = false;
+        _status = "Cadastro realizado com sucesso.";
+        page();
+        notifyListeners();
+      } catch (e) {
+        _isLoading = false;
+        _status = "failed";
+        _error = e.toString();
+        notifyListeners();
+      }
+    } else {
       _clear();
       notifyListeners();
-      await _userController.createUser(user);
-
       _isLoading = false;
-      _status = "Cadastro realizado com sucesso.";
-      page();
+      _error = "E-mail inválido, por favor insire um e-mail válido.";
       notifyListeners();
-    } catch (e) {
+    }
+  }
+
+  Future resetPassword (String email) async{
+    try{
+      String res = await _userController.resetPassword(email);
       _isLoading = false;
-      _status = "failed";
-      _error = e.toString();
+      _status = res;
+      notifyListeners();
+    }catch (err){
+      _error = err.toString();
       notifyListeners();
     }
   }
