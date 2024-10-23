@@ -2,7 +2,6 @@
 
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_game.dart';
-import 'package:app/src/features/widgets/container_img.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/pages/home/widgets/upload_image.dart';
@@ -218,7 +217,7 @@ class _DetailsPageState extends State<DetailsPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Theme.of(context).colorScheme.error,
-          content: const Text("Error nada alterado para ser salvo."),
+          content: const Text("Nada alterado para ser salvo."),
         ),
       );
     } else {

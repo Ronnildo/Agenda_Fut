@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:app/src/features/controllers/game_provider.dart';
@@ -7,11 +6,13 @@ import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/details/perfil_page.dart';
+import 'package:app/src/features/pages/home/widgets/banner_ad.dart';
 import 'package:app/src/features/widgets/new_card.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -24,6 +25,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final EasyInfiniteDateTimelineController _easyInfiniteDateTimelineController =
       EasyInfiniteDateTimelineController();
+  
   String pathImage = "";
 // Procurar API de Calendário
   DateTime _focusDate = DateTime.now();
@@ -38,6 +40,7 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
+    
     super.dispose();
   }
 
@@ -211,7 +214,8 @@ class _HomeState extends State<Home> {
                     child: Text("Insira uma partida +"),
                   );
                 },
-              )
+              ),
+              // BannerAdMob(),
             ],
           ),
         ),
