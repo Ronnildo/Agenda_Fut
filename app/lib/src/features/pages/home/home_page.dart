@@ -174,51 +174,43 @@ class _HomeState extends State<Home> {
                 ),
               ),
               const Divider(endIndent: 8, height: 24),
-              FutureBuilder(
-                  future: Provider.of<GameProvider>(context, listen: false)
-                      .getGames(_focusDate),
-                  builder: (context, snapshot) {
-                    return StreamBuilder<QuerySnapshot>(
-                      stream: Provider.of<GameProvider>(context).games,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ListView(
-                            shrinkWrap: true,
-                            children: snapshot.data!.docs
-                                .map((DocumentSnapshot document) {
-                              Map<String, dynamic> data =
-                                  document.data()! as Map<String, dynamic>;
-                              GameModel game = GameModel.fromJson(data);
-                              return NewCard(
-                                id: Provider.of<GameProvider>(context,
-                                        listen: false)
-                                    .id,
-                                title: game.nameCompetition!,
-                                home: game.home!,
-                                alway: game.away!,
-                                fase: game.fase!,
-                                date: game.date!,
-                                locale: game.locale!,
-                                onTap: () => details(
-                                  game.nameCompetition!,
-                                  game.home!,
-                                  game.away!,
-                                  game.fase!,
-                                  game.date!,
-                                  game.locale!,
-                                ),
-                                delete: delete,
-                              );
-                            }).toList(),
-                          );
-                        }
-
-                        return const Center(
-                          child: Text("Insira uma partida +"),
+              StreamBuilder<QuerySnapshot>(
+                stream: Provider.of<GameProvider>(context, listen: false).games,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final List<DocumentSnapshot> gameDocs = snapshot.data!.docs;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: gameDocs.length,
+                      itemBuilder: (context, index) {
+                        String docId = snapshot.data!.docs[index].id;
+                        Map<String, dynamic> data =
+                            gameDocs[index].data() as Map<String, dynamic>;
+                        GameModel game = GameModel.fromJson(docId, data);
+                        return NewCard(
+                          id: game.id!,
+                          title: game.nameCompetition!,
+                          home: game.home!,
+                          alway: game.away!,
+                          fase: game.fase!,
+                          date: game.date!,
+                          locale: game.locale!,
+                          onTap: () => details(
+                            game.id!,
+                            game.nameCompetition!,
+                            game.fase!,
+                            game.date!,
+                          ),
+                          delete: delete,
                         );
                       },
                     );
-                  }),
+                  }
+                  return const Center(
+                    child: Text("Insira uma partida +"),
+                  );
+                },
+              )
             ],
           ),
         ),
@@ -251,18 +243,22 @@ class _HomeState extends State<Home> {
   }
 
   // Função de navegação para tela de detalhes
-  details(String nameCompetition, String home, String away, String fase, DateTime date,
-      String locale) {
+  details(
+    String docId,
+    String nameCompetition,
+    String fase,
+    DateTime date,
+  ) {
+    Provider.of<GameProvider>(context, listen: false).getMatcheDetails(docId);
+    // Provider.of<GameProvider>(context, listen: false).getMatcheDetails(docId);
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => DetailsPage(
+          id: docId,
           nameCompetition: nameCompetition,
-          home: home,
           fase: fase,
-          away: away,
           date: date,
-          locale: locale,
         ),
       ),
     );

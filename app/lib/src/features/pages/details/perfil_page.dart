@@ -142,7 +142,7 @@ class _PerfilPageState extends State<PerfilPage> {
           SnackBar(
             content: const Text("Não foi possível atualizar seu nome."),
             duration: const Duration(seconds: 2),
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
       } else {
@@ -171,7 +171,7 @@ class _PerfilPageState extends State<PerfilPage> {
           SnackBar(
             content: const Text("Não foi possível atualizar sua posição."),
             duration: const Duration(seconds: 2),
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
       } else {
@@ -220,7 +220,7 @@ class _PerfilPageState extends State<PerfilPage> {
           duration: const Duration(
             seconds: 3,
           ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
     }

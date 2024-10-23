@@ -1,8 +1,6 @@
-import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/pages/home/widgets/container_fase.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class NewCard extends StatefulWidget {
   final String id;
@@ -38,7 +36,6 @@ class NewCard extends StatefulWidget {
 class _NewCardState extends State<NewCard> {
   @override
   void initState() {
-    Provider.of<GameProvider>(context, listen: false).setId(widget.id);
     super.initState();
   }
 

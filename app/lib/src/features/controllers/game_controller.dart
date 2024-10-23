@@ -21,7 +21,11 @@ class GameController {
         await _storage.ref(ref).putFile(path);
       }
 
-      await _firestore.collection("matches").doc(userId).collection("games").add(game.toJson());
+      await _firestore
+          .collection("matches")
+          .doc(userId)
+          .collection("games")
+          .add(game.toJson());
     } on StorageException catch (err) {
       throw Exception(err.message);
     }
@@ -68,7 +72,9 @@ class GameController {
 
     try {
       Stream<QuerySnapshot> games = _firestore
-          .collection("matches").doc(userId).collection("games")
+          .collection("matches")
+          .doc(userId)
+          .collection("games")
           .where(
             "date",
             isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate(),
@@ -78,26 +84,52 @@ class GameController {
             isLessThan: Timestamp.fromDate(nextDay).toDate(),
           )
           .snapshots();
-      return [games, userId];
+        return games;
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  Future updateMatchGame(String nameCompetition, String home, String away,
-      String locale, String fase, DateTime date) async {
+  Future updateMatchGame(String docId, String nameCompetition, String home,
+      String away, String locale, String fase, DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       // DocumentSnapshot doc = await FirebaseFirestore.instance
       //     .collection(userId).doc("jERkT8UrIPySjzEXW5RN").get();
       GameModel gameModel = GameModel(
-          nameCompetition: nameCompetition,
-          home: home,
-          away: away,
-          locale: locale,
-          fase: fase,
-          date: date);
-      await _firestore.collection(userId).doc("jERkT8UrIPySjzEXW5RN").update(gameModel.toJson());
+        nameCompetition: nameCompetition,
+        home: home,
+        away: away,
+        locale: locale,
+        fase: fase,
+        date: date,
+      );
+      await _firestore
+          .collection("matches")
+          .doc(userId)
+          .collection("games")
+          .doc(docId)
+          .update(
+            gameModel.toJson(),
+          ).then((e){
+            print("OK");
+          });
+    } on FirebaseException catch (err) {
+      throw Exception(err.code);
+    }
+  }
+
+  Future getMatcheId(String docId) async{
+      String userId = _firebaseAuth.currentUser!.uid;
+    try {
+      DocumentSnapshot game = await _firestore
+          .collection("matches")
+          .doc(userId)
+          .collection("games")
+          .doc(docId)
+          .get();
+        print(game.id);
+       return game.data();  
     } on FirebaseException catch (err) {
       throw Exception(err.code);
     }

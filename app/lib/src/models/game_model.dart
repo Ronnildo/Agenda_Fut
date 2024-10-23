@@ -20,7 +20,8 @@ class GameModel {
     throw UnimplementedError();
   }
 
-  GameModel.fromJson(Map<String, dynamic> json){
+  GameModel.fromJson(String docId, Map<String, dynamic> json){
+    id = docId;
     nameCompetition = json["competitionName"];
     home = json["home"];
     away = json["away"];

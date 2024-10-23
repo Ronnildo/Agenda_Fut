@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_game.dart';
 import 'package:app/src/features/widgets/container_img.dart';
@@ -10,20 +12,16 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {
+  final String id;
   final String nameCompetition;
-  final String home;
-  final String away;
   final String fase;
   final DateTime date;
-  final String locale;
   const DetailsPage({
     super.key,
+    required this.id,
     required this.nameCompetition,
-    required this.home,
-    required this.away,
     required this.fase,
     required this.date,
-    required this.locale,
   });
 
   @override
@@ -44,6 +42,9 @@ class _DetailsPageState extends State<DetailsPage> {
   void initState() {
     Provider.of<GameProvider>(context, listen: false)
         .getImage(widget.nameCompetition, widget.date.toString());
+    Provider.of<GameProvider>(context, listen: false).setId(widget.id);
+    Provider.of<GameProvider>(context, listen: false)
+        .getMatcheDetails(widget.id);
     super.initState();
   }
 
@@ -64,122 +65,111 @@ class _DetailsPageState extends State<DetailsPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Consumer<GameProvider>(builder: (context, value, child) {
-              // print(value.fileUp);
-              if (!value.isLoading && value.fileUp != "") {
-                return Center(
-                  child: ConsumerImageGame(
-                    pathImage: value.fileUp,
-                    uploadImage: uploadImage,
-                  ),
-                );
-              }
-              return _file.path == ""
-                  ? Center(
-                      child: ContainerImage(
-                        path: value.fileUp,
-                        uploadImage: uploadImage,
-                      ),
-                    )
-                  : Center(
-                      child: UploadImageContainer(
-                        filePath: _file.path,
+        child: Consumer<GameProvider>(
+          builder: (context, value, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Consumer<GameProvider>(builder: (context, value, child) {
+                  // print(value.fileUp);
+                  if (!value.isLoading && value.fileUp != "") {
+                    return Center(
+                      child: ConsumerImageGame(
+                        pathImage: value.fileUp,
                         uploadImage: uploadImage,
                       ),
                     );
-            }),
-            Center(
-              child: Text(
-                "Escudo da Equipe ou Banner do jogo",
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 10,
-              ),
-              child: Text(
-                "Descrição da Partida:",
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ),
-            ListInforDetails(
-              controller: _homeController,
-              title: "Casa",
-              subTitle: widget.home,
-              edit: _editDetails,
-              icon: Icons.shield,
-              onTap: updateDetails,
-            ),
-            ListInforDetails(
-              controller: _awayController,
-              title: "Fora",
-              subTitle: widget.away,
-              icon: Icons.shield,
-              edit: _editDetails,
-              onTap: updateDetails,
-            ),
-            ListInforDetails(
-              controller: _localeController,
-              title: "Local",
-              subTitle: widget.locale,
-              icon: Icons.location_on,
-              edit: _editDetails,
-              onTap: updateDetails,
-            ),
-            ListInforDetails(
-              controller: _dateController,
-              title: "Data",
-              subTitle: DateFormat("dd/MM/yyyy").format(widget.date),
-              icon: Icons.event,
-              edit: _editDetails,
-              onTap: updateDetails,
-            ),
-            ListInforDetails(
-              controller: _timeController,
-              title: "Horário",
-              subTitle: DateFormat("HH:mm").format(widget.date),
-              icon: Icons.schedule,
-              edit: _editDetails,
-              onTap: updateDetails,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Divider(
-                thickness: 1,
-                height: 8,
-                color: Colors.grey.withOpacity(0.4),
-              ),
-            ),
-            // ListTile(
-            //   title: Text(
-            //     "Outras Jogos",
-            //     style: Theme.of(context).textTheme.titleSmall,
-            //   ),
-            //   // Criar função de ocultar
-            //   trailing: const Icon(
-            //     Icons.arrow_drop_down,
-            //     size: 30,
-            //     color: Colors.black,
-            //   ),
-            // ),
-            // MiniCardGame(
-            //     colorBar: Colors.red,
-            //     teamName: "Atlético",
-            //     advTeamName: "Real FC",
-            //     localeName: "Ginásio Poliesportivo",
-            //     date: DateTime(2024, 10, 21),
-            //     onTap: () {}),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: CustomButtom(onTap: save, title: "Salvar Alterações"),
-            ),
-          ],
+                  }
+                  return _file.path == ""
+                      ? Center(
+                          child: ContainerImage(
+                            path: value.fileUp,
+                            uploadImage: uploadImage,
+                          ),
+                        )
+                      : Center(
+                          child: UploadImageContainer(
+                            filePath: _file.path,
+                            uploadImage: uploadImage,
+                          ),
+                        );
+                }),
+                Center(
+                  child: Text(
+                    "Escudo da Equipe ou Banner do jogo",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 10,
+                  ),
+                  child: Text(
+                    "Descrição da Partida:",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                ListInforDetails(
+                  controller: _homeController,
+                  title: "Casa",
+                  subTitle: value.home,
+                  edit: _editDetails,
+                  icon: Icons.shield,
+                  onTap: updateDetails,
+                ),
+                ListInforDetails(
+                  controller: _awayController,
+                  title: "Fora",
+                  subTitle: value.away,
+                  icon: Icons.shield,
+                  edit: _editDetails,
+                  onTap: updateDetails,
+                ),
+                ListInforDetails(
+                  controller: _localeController,
+                  title: "Local",
+                  subTitle: value.locale,
+                  icon: Icons.location_on,
+                  edit: _editDetails,
+                  onTap: updateDetails,
+                ),
+                ListInforDetails(
+                  controller: _dateController,
+                  title: "Data",
+                  subTitle: DateFormat("dd/MM/yyyy").format(
+                    value.date,
+                  ),
+                  icon: Icons.event,
+                  edit: _editDetails,
+                  onTap: updateDetails,
+                ),
+                ListInforDetails(
+                  controller: _timeController,
+                  title: "Horário",
+                  subTitle: DateFormat("HH:mm").format(
+                    value.date,
+                  ),
+                  icon: Icons.schedule,
+                  edit: _editDetails,
+                  onTap: updateDetails,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Divider(
+                    thickness: 1,
+                    height: 8,
+                    color: Colors.grey.withOpacity(0.4),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: CustomButtom(onTap: save, title: "Salvar Alterações"),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -201,11 +191,16 @@ class _DetailsPageState extends State<DetailsPage> {
     if (!_editDetails) {
       setState(() {
         _editDetails = true;
-        _homeController.text = widget.home;
-        _awayController.text = widget.away;
-        _localeController.text = widget.locale;
-        _dateController.text = DateFormat("dd/MM/yyyy").format(widget.date);
-        _timeController.text = DateFormat("HH:mm").format(widget.date);
+        _homeController.text =
+            Provider.of<GameProvider>(context, listen: false).home;
+        _awayController.text =
+            Provider.of<GameProvider>(context, listen: false).away;
+        _localeController.text =
+            Provider.of<GameProvider>(context, listen: false).locale;
+        _dateController.text = DateFormat("dd/MM/yyyy")
+            .format(Provider.of<GameProvider>(context, listen: false).date);
+        _timeController.text = DateFormat("HH:mm")
+            .format(Provider.of<GameProvider>(context, listen: false).date);
       });
     }
   }
@@ -215,27 +210,42 @@ class _DetailsPageState extends State<DetailsPage> {
       _editDetails = false;
     });
 
-    if (_homeController.text == widget.home &&
-        _awayController.text == widget.away &&
-        _localeController.text == widget.locale &&
-        _dateController.text == DateFormat("dd/MM/yyyy").format(widget.date) &&
-        _timeController.text == DateFormat("HH:mm").format(widget.date)) {
+    if (_homeController.text ==
+            Provider.of<GameProvider>(context, listen: false).home &&
+        _awayController.text ==
+            Provider.of<GameProvider>(context, listen: false).away &&
+        _localeController.text ==
+            Provider.of<GameProvider>(context, listen: false).locale &&
+        _dateController.text ==
+            DateFormat("dd/MM/yyyy").format(
+                Provider.of<GameProvider>(context, listen: false).date) &&
+        _timeController.text ==
+            DateFormat("HH:mm").format(
+                Provider.of<GameProvider>(context, listen: false).date)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.error,
           content: const Text("Error nada alterado para ser salvo."),
         ),
       );
     } else {
-      if (_homeController.text != widget.home &&
-              _awayController.text != widget.away &&
-              _localeController.text == widget.locale ||
+      if (_homeController.text !=
+                  Provider.of<GameProvider>(context, listen: false).home &&
+              _awayController.text !=
+                  Provider.of<GameProvider>(context, listen: false).away &&
+              _localeController.text ==
+                  Provider.of<GameProvider>(context, listen: false).locale ||
           _dateController.text ==
-              DateFormat("dd/MM/yyyy").format(widget.date) ||
-          _timeController.text == DateFormat("HH:mm").format(widget.date)) {
+              DateFormat("dd/MM/yyyy").format(
+                  Provider.of<GameProvider>(context, listen: false).date) ||
+          _timeController.text ==
+              DateFormat("HH:mm").format(
+                Provider.of<GameProvider>(context, listen: false).date,
+              )) {
         DateTime dateConvert = DateFormat("dd/MM/yyyy hh:mm")
             .parse("${_dateController.text} ${_timeController.text}");
         await Provider.of<GameProvider>(context, listen: false).updateMatchGame(
+          widget.id,
           widget.nameCompetition,
           _homeController.text,
           _awayController.text,
@@ -243,6 +253,8 @@ class _DetailsPageState extends State<DetailsPage> {
           widget.fase,
           dateConvert,
         );
+        Provider.of<GameProvider>(context, listen: false)
+            .getMatcheDetails(widget.id);
       }
     }
   }
