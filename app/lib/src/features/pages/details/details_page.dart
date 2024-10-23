@@ -81,19 +81,12 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     );
                   }
-                  return _file.path == ""
-                      ? Center(
-                          child: ContainerImage(
-                            path: value.fileUp,
-                            uploadImage: uploadImage,
-                          ),
-                        )
-                      : Center(
-                          child: UploadImageContainer(
-                            filePath: _file.path,
-                            uploadImage: uploadImage,
-                          ),
-                        );
+                  return Center(
+                    child: UploadImageContainer(
+                      filePath: _file.path,
+                      uploadImage: uploadImage,
+                    ),
+                  );
                 }),
                 Center(
                   child: Text(

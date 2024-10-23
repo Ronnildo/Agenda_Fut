@@ -28,6 +28,23 @@ dependencies:
   extended_image: ^9.0.4
   email_validator: '^2.1.17'
   another_flutter_splash_screen: ^1.2.1
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.2
+
+flutter_native_splash:
+  color: "#17A909"
+  image: "assets/launcher_icon/icon-adaptive.png"
+  ios: true
+  android: true
+
+flutter_icons:
+  image_path: "assets/launcher_icon/logo_futagenda.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  adaptive_icon_background: "#17A990"
+  adaptive_icon_foreground: "assets/launcher_icon/icon-adaptive.png"
+
 
 dev_dependencies:
   flutter_test:
