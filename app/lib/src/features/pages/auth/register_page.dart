@@ -151,7 +151,7 @@ class _RegisterState extends State<Register> {
           duration: const Duration(
             seconds: 3,
           ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
     } else {

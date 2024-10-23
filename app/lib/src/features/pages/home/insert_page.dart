@@ -238,7 +238,7 @@ class _InsertPageState extends State<InsertPage> {
             "Aconteceu um erro ao adicionar partida. Tente Novamente.",
             style: Theme.of(context).textTheme.displayMedium,
           ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.error,
           duration: const Duration(seconds: 2),
         ),
       );

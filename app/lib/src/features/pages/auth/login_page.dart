@@ -157,7 +157,7 @@ class _LoginState extends State<Login> {
             Provider.of<UserProvider>(context, listen: false).error,
             style: Theme.of(context).textTheme.displayMedium,
           ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.error,
           duration: const Duration(seconds: 2),
         ),
 
