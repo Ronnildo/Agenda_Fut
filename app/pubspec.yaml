@@ -27,6 +27,7 @@ dependencies:
   firebase_app_check: ^0.3.1
   extended_image: ^9.0.4
   email_validator: '^2.1.17'
+  another_flutter_splash_screen: ^1.2.1
 
 dev_dependencies:
   flutter_test:

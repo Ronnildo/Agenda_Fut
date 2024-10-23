@@ -111,9 +111,7 @@ class GameController {
           .doc(docId)
           .update(
             gameModel.toJson(),
-          ).then((e){
-            print("OK");
-          });
+          );
     } on FirebaseException catch (err) {
       throw Exception(err.code);
     }
@@ -128,7 +126,7 @@ class GameController {
           .collection("games")
           .doc(docId)
           .get();
-        print(game.id);
+      
        return game.data();  
     } on FirebaseException catch (err) {
       throw Exception(err.code);
