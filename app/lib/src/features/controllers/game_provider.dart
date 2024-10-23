@@ -132,7 +132,7 @@ class GameProvider extends ChangeNotifier {
       _home = game.home!;
       _away = game.away!;
       _locale = game.locale!;
-      _date = game.date;
+      _date = game.date!;
       notifyListeners();
     } catch (err) {
       _error = err.toString();
