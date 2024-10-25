@@ -3,7 +3,7 @@ import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
+import '../../core/functions.dart';
 
 class UserProvider extends ChangeNotifier {
   final UserController _userController = UserController();
@@ -26,7 +26,9 @@ class UserProvider extends ChangeNotifier {
   get pathImage => _pathImage;
 
   Future<void> create(UserModel user, void Function() page) async {
-    if (EmailValidator.validate(user.email!.trim(), true) || user.email! != "") {
+    String? validateEmail = Functions.validateEmail(user.email!);
+
+    if (validateEmail != null || user.email! != "") {
       try {
         _clear();
         notifyListeners();
@@ -50,13 +52,13 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future resetPassword (String email) async{
-    try{
+  Future resetPassword(String email) async {
+    try {
       String res = await _userController.resetPassword(email);
       _isLoading = false;
       _status = res;
       notifyListeners();
-    }catch (err){
+    } catch (err) {
       _error = err.toString();
       notifyListeners();
     }
