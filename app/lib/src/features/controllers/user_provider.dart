@@ -26,7 +26,8 @@ class UserProvider extends ChangeNotifier {
   get pathImage => _pathImage;
 
   Future<void> create(UserModel user, void Function() page) async {
-    if (EmailValidator.validate(user.email!.trim(), true) || user.email! != "") {
+    if (EmailValidator.validate(user.email!.trim(), true) ||
+        user.email! != "") {
       try {
         _clear();
         notifyListeners();
@@ -50,13 +51,13 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future resetPassword (String email) async{
-    try{
+  Future resetPassword(String email) async {
+    try {
       String res = await _userController.resetPassword(email);
       _isLoading = false;
       _status = res;
       notifyListeners();
-    }catch (err){
+    } catch (err) {
       _error = err.toString();
       notifyListeners();
     }
@@ -74,6 +75,30 @@ class UserProvider extends ChangeNotifier {
     } catch (e) {
       _status = "failed";
       _error = e.toString();
+      notifyListeners();
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    try {
+      UserCredential user = await _userController.signInWithGoogle();
+      _isLoading = false;
+      _name = user.user!.displayName!;
+      notifyListeners();
+    } catch (err) {
+      _error = err.toString();
+      notifyListeners();
+    }
+  }
+
+  Future<void> signInWithFacebook() async {
+    try {
+      UserCredential user = await _userController.signInWithGoogle();
+      _isLoading = false;
+      _name = user.user!.displayName!;
+      notifyListeners();
+    } catch (err) {
+      _error = err.toString();
       notifyListeners();
     }
   }

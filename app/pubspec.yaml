@@ -31,6 +31,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.1
   flutter_native_splash: ^2.4.2
   google_mobile_ads: ^5.2.0
+  google_sign_in: ^6.2.1
+  flutter_facebook_auth: '^7.1.1'
 
 flutter_native_splash:
   color: "#17a909"

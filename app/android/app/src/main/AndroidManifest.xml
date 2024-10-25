@@ -3,8 +3,6 @@
         android:label="Fut Agenda"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
-        <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
