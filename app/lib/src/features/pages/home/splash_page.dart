@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       body: FlutterSplashScreen(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 3),
         splashScreenBody: Center(
           child: Text(
             "Fut Agenda",

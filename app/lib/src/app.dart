@@ -1,7 +1,7 @@
 import 'package:app/src/core/theme.dart';
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
-import 'package:app/src/features/pages/auth/login_page.dart';
+import 'package:app/src/features/pages/home/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class AgendaApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: CustomTheme.lightThemeData(context),
-        home: const Login(),
+        home: const SplashPage(),
       ),
     );
   }
