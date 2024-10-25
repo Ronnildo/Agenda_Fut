@@ -153,7 +153,7 @@ class _NewCardState extends State<NewCard> {
                   width:
                       DateFormat("EEEE", "pt_BR").format(widget.date).length <=
                               7
-                          ? 135
+                          ? 125
                           : 90,
                 ),
                 Text(

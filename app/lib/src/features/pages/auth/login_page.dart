@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
               label: "Senha",
               hintText: "Digite sua Senha",
               controller: _passController,
-              icon: isVisible ?  Icons.visibility_off : Icons.visibility,
+              icon: isVisible ? Icons.visibility_off : Icons.visibility,
               obscureText: isVisible,
               error: "",
               visibility: visibility,
@@ -110,24 +110,30 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Image(
-                        image: AssetImage(
-                          "assets/images/google.png",
+                      InkWell(
+                        onTap: loginGoogle,
+                        child: const Image(
+                          image: AssetImage(
+                            "assets/images/google.png",
+                          ),
+                          fit: BoxFit.contain,
+                          width: 36,
+                          height: 36,
                         ),
-                        fit: BoxFit.contain,
-                        width: 36,
-                        height: 36,
                       ),
-                      Image(
-                        image: AssetImage(
-                          "assets/images/facebook.png",
+                      InkWell(
+                        onTap: loginFacebook,
+                        child: const Image(
+                          image: AssetImage(
+                            "assets/images/facebook.png",
+                          ),
+                          fit: BoxFit.contain,
+                          width: 36,
+                          height: 36,
                         ),
-                        fit: BoxFit.contain,
-                        width: 36,
-                        height: 36,
                       ),
                     ],
                   )
@@ -140,15 +146,50 @@ class _LoginState extends State<Login> {
     );
   }
 
-  visibility(){
-    if(isVisible){
+  visibility() {
+    if (isVisible) {
       setState(() {
         isVisible = false;
       });
-    }else{
-       setState(() {
+    } else {
+      setState(() {
         isVisible = true;
       });
+    }
+  }
+
+  void loginGoogle() async {
+    await Provider.of<UserProvider>(context, listen: false).signInWithGoogle();
+    if (Provider.of<UserProvider>(context, listen: false).isLoading) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Home()));
+    } else {
+      SnackBar(
+        content: Text(
+          Provider.of<UserProvider>(context, listen: false).error,
+          style: Theme.of(context).textTheme.displayMedium,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.error,
+        duration: const Duration(seconds: 2),
+      );
+    }
+  }
+
+  void loginFacebook() async {
+    await Provider.of<UserProvider>(context, listen: false)
+        .signInWithFacebook();
+    if (Provider.of<UserProvider>(context, listen: false).isLoading) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Home()));
+    } else {
+      SnackBar(
+        content: Text(
+          Provider.of<UserProvider>(context, listen: false).error,
+          style: Theme.of(context).textTheme.displayMedium,
+        ),
+        backgroundColor: Theme.of(context).colorScheme.error,
+        duration: const Duration(seconds: 2),
+      );
     }
   }
 
@@ -162,8 +203,8 @@ class _LoginState extends State<Login> {
       home,
     );
 
-    
-    if (await Provider.of<UserProvider>(context, listen: false).status == "failed") {
+    if (await Provider.of<UserProvider>(context, listen: false).status ==
+        "failed") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -173,14 +214,14 @@ class _LoginState extends State<Login> {
           backgroundColor: Theme.of(context).colorScheme.error,
           duration: const Duration(seconds: 2),
         ),
-
       );
     }
   }
 
-  Future resetPassword() async{
-    if(_emailController.text != ""){
-      await Provider.of<UserProvider>(context, listen: false).resetPassword(_emailController.text);
+  Future resetPassword() async {
+    if (_emailController.text != "") {
+      await Provider.of<UserProvider>(context, listen: false)
+          .resetPassword(_emailController.text);
     }
     return;
   }
@@ -193,7 +234,6 @@ class _LoginState extends State<Login> {
       ),
     );
     clear();
-    
   }
 
   register() {

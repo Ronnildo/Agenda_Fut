@@ -1,10 +1,11 @@
-
 import 'package:app/src/core/repository.dart';
 import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class UserController extends Repository {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -38,11 +39,11 @@ class UserController extends Repository {
     }
   }
 
-  Future resetPassword(String email) async{
-    try{
+  Future resetPassword(String email) async {
+    try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       return "Verifique seu e-mail para redefir sua senha.";
-    }on FirebaseException catch(err){
+    } on FirebaseException catch (err) {
       throw Exception(err.code);
     }
   }
@@ -84,6 +85,36 @@ class UserController extends Repository {
     }
   }
 
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
+
   Future getNameUser() async {
     final userCredential = _firebaseAuth.currentUser;
     try {
@@ -117,7 +148,7 @@ class UserController extends Repository {
           .collection("positions")
           .doc(userCredential!.uid)
           .get();
-      if(doc.exists){
+      if (doc.exists) {
         return PositionModel.fromJson(doc.data() as Map<String, dynamic>);
       }
       return PositionModel(position: "");
@@ -129,7 +160,7 @@ class UserController extends Repository {
   Future loadImagePerfil() async {
     try {
       String? photo = _firebaseAuth.currentUser?.photoURL;
-      if(photo == null){
+      if (photo == null) {
         return "";
       }
       return photo;

@@ -80,6 +80,30 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> signInWithGoogle() async {
+    try {
+      UserCredential user = await _userController.signInWithGoogle();
+      _isLoading = false;
+      _name = user.user!.displayName!;
+      notifyListeners();
+    } catch (err) {
+      _error = err.toString();
+      notifyListeners();
+    }
+  }
+
+  Future<void> signInWithFacebook() async {
+    try {
+      UserCredential user = await _userController.signInWithGoogle();
+      _isLoading = false;
+      _name = user.user!.displayName!;
+      notifyListeners();
+    } catch (err) {
+      _error = err.toString();
+      notifyListeners();
+    }
+  }
+
   Future<void> singOut() async {
     FirebaseAuth.instance.signOut();
   }
