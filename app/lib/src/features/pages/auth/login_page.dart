@@ -21,7 +21,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
-
+  bool isVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +43,10 @@ class _LoginState extends State<Login> {
               label: "Senha",
               hintText: "Digite sua Senha",
               controller: _passController,
-              icon: Icons.visibility,
-              obscureText: true,
+              icon: isVisible ?  Icons.visibility_off : Icons.visibility,
+              obscureText: isVisible,
               error: "",
+              visibility: visibility,
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -137,6 +138,18 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  visibility(){
+    if(isVisible){
+      setState(() {
+        isVisible = false;
+      });
+    }else{
+       setState(() {
+        isVisible = true;
+      });
+    }
   }
 
   // autenticação

@@ -7,6 +7,7 @@ class CustomInput extends StatefulWidget {
   final IconData icon;
   final bool obscureText;
   final String error;
+  final void Function()? visibility;
   const CustomInput({
     super.key,
     required this.hintText,
@@ -15,6 +16,7 @@ class CustomInput extends StatefulWidget {
     required this.icon,
     required this.obscureText,
     required this.error,
+    this.visibility,
   });
 
   @override
@@ -48,7 +50,8 @@ class _CustomInputState extends State<CustomInput> {
               hintText: widget.hintText,
               hintStyle: Theme.of(context).textTheme.labelSmall,
               floatingLabelStyle: Theme.of(context).textTheme.labelMedium,
-              suffixIcon: Icon(widget.icon),
+              suffixIcon:
+                  InkWell(onTap: widget.visibility, child: Icon(widget.icon)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: const BorderSide(
