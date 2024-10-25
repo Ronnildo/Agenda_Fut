@@ -1,16 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class BannerAdMob extends StatefulWidget {
-  final AdSize adSize;
-  final String adUnitId = Platform.isAndroid
-      ? "ca-app-pub-3101866454473029/4032911718"
-      : "ca-app-pub-3101866454473029/4032911718";
-  BannerAdMob({
+  // final AdSize adSize;
+  final String adUnitId;
+  const BannerAdMob({
     super.key,
-    this.adSize = AdSize.banner,
+    required this.adUnitId,
   });
 
   @override
@@ -18,16 +14,20 @@ class BannerAdMob extends StatefulWidget {
 }
 
 class _BannerAdMobState extends State<BannerAdMob> {
-   BannerAd? _bannerAd;
+  BannerAd? _bannerAd;
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return _bannerAd == null ? const SizedBox() :SizedBox(
+      width: AdSize.banner.width.toDouble(),
+      height: AdSize.banner.height.toDouble(),
+      child: AdWidget(ad: _bannerAd!),
+    );
   }
 
-   @override
+  @override
   void initState() {
-    super.initState();
     _loadAd();
+    super.initState();
   }
 
   @override
@@ -39,9 +39,11 @@ class _BannerAdMobState extends State<BannerAdMob> {
   /// Loads a banner ad.
   void _loadAd() {
     final bannerAd = BannerAd(
-      size: widget.adSize,
+      size: AdSize.banner,
       adUnitId: widget.adUnitId,
-      request: const AdRequest(),
+      request: const AdRequest(
+
+      ),
       listener: BannerAdListener(
         // Called when an ad is successfully received.
         onAdLoaded: (ad) {

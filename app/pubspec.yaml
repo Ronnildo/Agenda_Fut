@@ -33,13 +33,13 @@ dependencies:
   google_mobile_ads: ^5.2.0
 
 flutter_native_splash:
-  color: "#17A909"
-  image: "assets/launcher_icon/logo_futagenda.png"
+  color: "#17a909"
+  image: "assets/launcher_icon/icon.png"
   ios: true
   android: true
 
 flutter_icons:
-  image_path: "assets/launcher_icon/logo_futagenda.png"
+  image_path: "assets/launcher_icon/icon.png"
   ios: true
   remove_alpha_ios: true
   android: "launcher_icon"
@@ -57,6 +57,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/launcher_icon/
 
   fonts:
     - family: BrunoAce

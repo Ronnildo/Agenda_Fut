@@ -117,7 +117,7 @@ class GameController {
     }
   }
 
-  Future getMatcheId(String docId) async{
+  Future getMatcheId(String docId) async {
       String userId = _firebaseAuth.currentUser!.uid;
     try {
       DocumentSnapshot game = await _firestore

@@ -2,6 +2,7 @@
 
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_game.dart';
+import 'package:app/src/features/pages/home/widgets/banner_ad.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/pages/home/widgets/upload_image.dart';
@@ -163,6 +164,9 @@ class _DetailsPageState extends State<DetailsPage> {
             );
           },
         ),
+      ),
+      bottomNavigationBar: const BannerAdMob(
+        adUnitId: "ca-app-pub-3101866454473029/4032911718",
       ),
     );
   }
