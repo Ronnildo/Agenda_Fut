@@ -21,7 +21,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   // Implementar lógica de cadastro
-
+  bool isVisible = false;
   @override
   void initState() {
     super.initState();
@@ -72,9 +72,10 @@ class _RegisterState extends State<Register> {
               label: "Senha",
               hintText: "Crie sua Senha",
               controller: _passwordController,
-              icon: Icons.visibility,
-              obscureText: true,
+              icon: isVisible ?  Icons.visibility_off : Icons.visibility,
+              obscureText: isVisible,
               error: "",
+              visibility: visibility,
             ),
             const SizedBox(
               height: 16,
@@ -122,6 +123,18 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  visibility(){
+    if(isVisible){
+      setState(() {
+        isVisible = false;
+      });
+    }else{
+       setState(() {
+        isVisible = true;
+      });
+    }
+  }
+
   login() {
     Navigator.push(
       context,
@@ -141,7 +154,8 @@ class _RegisterState extends State<Register> {
       UserModel(name: name, email: email, password: password),
       login,
     );
-    if (await Provider.of<UserProvider>(context, listen: false).status == "failed") {
+    if (await Provider.of<UserProvider>(context, listen: false).status ==
+        "failed") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
