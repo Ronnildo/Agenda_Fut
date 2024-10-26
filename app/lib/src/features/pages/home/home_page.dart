@@ -382,7 +382,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _focusDate = selectDate;
     });
-
+    
     Provider.of<GameProvider>(context, listen: false).getGames(_focusDate);
   }
 }
