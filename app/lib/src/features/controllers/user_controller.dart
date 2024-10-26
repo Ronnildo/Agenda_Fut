@@ -128,19 +128,6 @@ class UserController extends Repository {
     }
   }
 
-  Future getPhoneUser() async {
-    final userCredential = _firebaseAuth.currentUser;
-    try {
-      if (userCredential!.phoneNumber == null) {
-        return "";
-      } else {
-        return userCredential.phoneNumber;
-      }
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
-    }
-  }
-
   Future getPositionUser() async {
     final userCredential = _firebaseAuth.currentUser;
     try {

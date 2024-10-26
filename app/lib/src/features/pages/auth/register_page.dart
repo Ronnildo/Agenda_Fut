@@ -72,8 +72,8 @@ class _RegisterState extends State<Register> {
               label: "Senha",
               hintText: "Crie sua Senha",
               controller: _passwordController,
-              icon: isVisible ?  Icons.visibility_off : Icons.visibility,
-              obscureText: isVisible,
+              icon: isVisible ? Icons.visibility : Icons.visibility_off,
+              obscureText: !isVisible,
               error: "",
               visibility: visibility,
             ),
@@ -123,13 +123,13 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  visibility(){
-    if(isVisible){
+  visibility() {
+    if (isVisible) {
       setState(() {
         isVisible = false;
       });
-    }else{
-       setState(() {
+    } else {
+      setState(() {
         isVisible = true;
       });
     }
