@@ -49,7 +49,7 @@ class GameProvider extends ChangeNotifier {
   /// Função para Listar partidas do usuário
   Future getGames(DateTime date) async {
     try {
-      _games = await _gameController.getGames(date.add(const Duration(hours: -8)));
+      _games = await _gameController.getGames(date.add(const Duration(hours: -12)));
       _isLoading = false;
       _status = "sucess";
       notifyListeners();
@@ -63,6 +63,7 @@ class GameProvider extends ChangeNotifier {
   /// Função que retorna a imagem (Banner ou arte da partida) referente a partida
   Future<void> getImage(String nameCompetition, String date) async {
     try {
+      _clear();
       String urlImage = await _gameController.loadImages(nameCompetition, date);
       _isLoading = false;
       _fileUp = urlImage;
@@ -142,5 +143,13 @@ class GameProvider extends ChangeNotifier {
 
   Future setId(String id) async {
     _id = id;
+  }
+
+  Future<void> _clear() async {
+    _isLoading = true;
+    _status = "";
+    _error = "";
+    _fileUp = "";
+    notifyListeners();
   }
 }

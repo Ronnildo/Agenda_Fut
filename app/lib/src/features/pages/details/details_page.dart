@@ -132,7 +132,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   controller: _dateController,
                   title: "Data",
                   subTitle: DateFormat("dd/MM/yyyy").format(
-                    value.date,
+                    value.date!,
                   ),
                   icon: Icons.event,
                   edit: _editDetails,
