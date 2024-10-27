@@ -81,11 +81,14 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<void> signInWithGoogle(Function login) async {
     try {
       UserCredential user = await _userController.signInWithGoogle();
       _isLoading = false;
       _name = user.user!.displayName!;
+      _pathImage = user.user!.photoURL!;
+      _status = "sucess";
+      login();
       notifyListeners();
     } catch (err) {
       _error = err.toString();
@@ -93,11 +96,14 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> signInWithFacebook() async {
+  Future<void> signInWithFacebook(Function login) async {
     try {
       UserCredential user = await _userController.signInWithGoogle();
       _isLoading = false;
       _name = user.user!.displayName!;
+      _pathImage = user.user!.photoURL!;
+      _status = "sucess";
+      login();
       notifyListeners();
     } catch (err) {
       _error = err.toString();
@@ -110,9 +116,9 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> getUser() async {
-    String userName = await _userController.getNameUser();
+    String? userName = await _userController.getNameUser();
     PositionModel pos = await _userController.getPositionUser();
-    _name = userName;
+    _name = userName!;
     _position = pos.position!;
     notifyListeners();
   }
@@ -149,13 +155,10 @@ class UserProvider extends ChangeNotifier {
   Future<void> getPhoto() async {
     try {
       String? url = await _userController.loadImagePerfil();
-      if(url!.split("/")[7].split(".")[1] == "webp"){
-        
-        notifyListeners();
-      }
       _isLoading = false;
       _status = "sucess";
-      _pathImage = url.toString();
+      print(url);
+      _pathImage = url!;
       notifyListeners();
     } catch (e) {
       _isLoading = false;

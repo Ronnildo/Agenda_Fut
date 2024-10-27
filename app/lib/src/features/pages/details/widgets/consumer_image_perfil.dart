@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as img;
 
 class ConsumerImagePerfil extends StatefulWidget {
   final String pathImage;
@@ -63,4 +64,5 @@ class _ConsumerImagesState extends State<ConsumerImagePerfil> {
       ),
     );
   }
+
 }

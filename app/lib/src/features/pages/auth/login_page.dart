@@ -159,7 +159,7 @@ class _LoginState extends State<Login> {
   }
 
   void loginGoogle() async {
-    await Provider.of<UserProvider>(context, listen: false).signInWithGoogle();
+    await Provider.of<UserProvider>(context, listen: false).signInWithGoogle(home());
     if (Provider.of<UserProvider>(context, listen: false).isLoading) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Home()));
@@ -177,7 +177,7 @@ class _LoginState extends State<Login> {
 
   void loginFacebook() async {
     await Provider.of<UserProvider>(context, listen: false)
-        .signInWithFacebook();
+        .signInWithFacebook(home());
     if (Provider.of<UserProvider>(context, listen: false).isLoading) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Home()));

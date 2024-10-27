@@ -116,12 +116,9 @@ class UserController extends Repository {
   }
 
   Future getNameUser() async {
-    final userCredential = _firebaseAuth.currentUser;
     try {
-      if (userCredential!.displayName == null) {
-        return "";
-      } else {
-        return userCredential.displayName;
+      if(_firebaseAuth.currentUser!.displayName != null){
+        return _firebaseAuth.currentUser!.displayName;
       }
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
