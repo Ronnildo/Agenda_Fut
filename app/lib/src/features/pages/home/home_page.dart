@@ -218,9 +218,9 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      bottomNavigationBar: const BannerAdMob(
-        adUnitId: "ca-app-pub-3101866454473029/1955179764",
-      ),
+      // bottomNavigationBar: const BannerAdMob(
+      //   adUnitId: "ca-app-pub-3101866454473029/1955179764",
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

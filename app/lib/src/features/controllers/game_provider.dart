@@ -150,6 +150,5 @@ class GameProvider extends ChangeNotifier {
     _status = "";
     _error = "";
     _fileUp = "";
-    notifyListeners();
   }
 }
