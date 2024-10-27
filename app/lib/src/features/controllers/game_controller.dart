@@ -5,6 +5,7 @@ import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GameController {
@@ -68,8 +69,8 @@ class GameController {
 
     DateTime nextDay = date.add(const Duration(
       days: 1,
+      hours: -12,
     ));
-
     try {
       Stream<QuerySnapshot> games = _firestore
           .collection("matches")
@@ -77,7 +78,7 @@ class GameController {
           .collection("games")
           .where(
             "date",
-            isGreaterThanOrEqualTo: Timestamp.fromDate(date).toDate(),
+            isGreaterThanOrEqualTo: Timestamp.fromDate(date.add(const Duration(hours: -12))).toDate(),
           )
           .where(
             "date",
