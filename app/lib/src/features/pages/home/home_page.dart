@@ -213,7 +213,6 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
-              // BannerAdMob(),
             ],
           ),
         ),

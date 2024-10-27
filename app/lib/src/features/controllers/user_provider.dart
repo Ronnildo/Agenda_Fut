@@ -113,6 +113,8 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> singOut() async {
     FirebaseAuth.instance.signOut();
+    _clear();
+    notifyListeners();
   }
 
   Future<void> getUser() async {
@@ -157,7 +159,6 @@ class UserProvider extends ChangeNotifier {
       String? url = await _userController.loadImagePerfil();
       _isLoading = false;
       _status = "sucess";
-      print(url);
       _pathImage = url!;
       notifyListeners();
     } catch (e) {

@@ -49,7 +49,7 @@ class GameProvider extends ChangeNotifier {
   /// Função para Listar partidas do usuário
   Future getGames(DateTime date) async {
     try {
-      _games = await _gameController.getGames(date.add(const Duration(hours: -12)));
+      _games = await _gameController.getGames(date);
       _isLoading = false;
       _status = "sucess";
       notifyListeners();

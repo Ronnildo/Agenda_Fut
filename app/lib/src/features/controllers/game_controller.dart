@@ -68,9 +68,10 @@ class GameController {
     String userId = _firebaseAuth.currentUser!.uid;
 
     DateTime nextDay = date.add(const Duration(
-      days: 1,
-      hours: -12,
+      
     ));
+    debugPrint(date.add(Duration(hours: -date.hour)).toString());
+    debugPrint(nextDay.toString());
     try {
       Stream<QuerySnapshot> games = _firestore
           .collection("matches")
@@ -78,7 +79,7 @@ class GameController {
           .collection("games")
           .where(
             "date",
-            isGreaterThanOrEqualTo: Timestamp.fromDate(date.add(const Duration(hours: -12))).toDate(),
+            isGreaterThanOrEqualTo: Timestamp.fromDate(date.add(const Duration(hours: -24))).toDate(),
           )
           .where(
             "date",

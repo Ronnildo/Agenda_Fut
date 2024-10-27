@@ -160,10 +160,7 @@ class _LoginState extends State<Login> {
 
   void loginGoogle() async {
     await Provider.of<UserProvider>(context, listen: false).signInWithGoogle(home());
-    if (Provider.of<UserProvider>(context, listen: false).isLoading) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Home()));
-    } else {
+    if (Provider.of<UserProvider>(context, listen: false).error == "failed") {
       SnackBar(
         content: Text(
           Provider.of<UserProvider>(context, listen: false).error,
@@ -178,10 +175,7 @@ class _LoginState extends State<Login> {
   void loginFacebook() async {
     await Provider.of<UserProvider>(context, listen: false)
         .signInWithFacebook(home());
-    if (Provider.of<UserProvider>(context, listen: false).isLoading) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Home()));
-    } else {
+    if (Provider.of<UserProvider>(context, listen: false).error == "failed") {
       SnackBar(
         content: Text(
           Provider.of<UserProvider>(context, listen: false).error,
