@@ -66,9 +66,14 @@ class GameController {
 
   Future getGames(DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
+    final int startDay = date.hour;
+    int endDay = (24 - date.hour);
 
-    DateTime nextDay = date.add(const Duration(
-      
+    debugPrint(date.hour.toString());
+    debugPrint(startDay.toString());
+    debugPrint(endDay.toString());
+    DateTime nextDay = date.add( Duration(
+      hours: endDay
     ));
     debugPrint(date.add(Duration(hours: -date.hour)).toString());
     debugPrint(nextDay.toString());
@@ -79,7 +84,7 @@ class GameController {
           .collection("games")
           .where(
             "date",
-            isGreaterThanOrEqualTo: Timestamp.fromDate(date.add(const Duration(hours: -24))).toDate(),
+            isGreaterThanOrEqualTo: Timestamp.fromDate(date.add( Duration(hours: -date.hour))).toDate(),
           )
           .where(
             "date",
