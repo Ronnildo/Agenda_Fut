@@ -66,17 +66,12 @@ class GameController {
 
   Future getGames(DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
-    final int startDay = date.hour;
     int endDay = (24 - date.hour);
 
-    debugPrint(date.hour.toString());
-    debugPrint(startDay.toString());
-    debugPrint(endDay.toString());
     DateTime nextDay = date.add( Duration(
       hours: endDay
     ));
-    debugPrint(date.add(Duration(hours: -date.hour)).toString());
-    debugPrint(nextDay.toString());
+
     try {
       Stream<QuerySnapshot> games = _firestore
           .collection("matches")
