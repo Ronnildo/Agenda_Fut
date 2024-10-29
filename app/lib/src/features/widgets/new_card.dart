@@ -154,7 +154,7 @@ class _NewCardState extends State<NewCard> {
                       DateFormat("EEEE", "pt_BR").format(widget.date).length <=
                               7
                           ? 125
-                          : 90,
+                          : 80,
                 ),
                 Text(
                   DateFormat("HH:mm").format(widget.date),

@@ -253,6 +253,8 @@ class _InsertPageState extends State<InsertPage> {
     _faseController.text = "Fase de Grupos";
     _dateController.clear();
     _timeController.clear();
-    _file = XFile("");
+    setState(() {
+      _file = XFile("");
+    });
   }
 }

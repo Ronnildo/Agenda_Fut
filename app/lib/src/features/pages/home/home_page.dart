@@ -6,6 +6,7 @@ import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/pages/details/details_page.dart';
 import 'package:app/src/features/pages/home/insert_page.dart';
 import 'package:app/src/features/pages/details/perfil_page.dart';
+import 'package:app/src/features/pages/home/widgets/banner_ad.dart';
 import 'package:app/src/features/widgets/new_card.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -215,6 +216,9 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: const BannerAdMob(
+        adUnitId: "ca-app-pub-3101866454473029/1955179764",
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

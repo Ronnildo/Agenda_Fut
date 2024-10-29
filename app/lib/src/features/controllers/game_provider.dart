@@ -122,7 +122,14 @@ class GameProvider extends ChangeNotifier {
       String fase,
       DateTime date) async {
     await _gameController.updateMatchGame(
-        docId, nameCompetition, home, away, locale, fase, date);
+      docId,
+      nameCompetition,
+      home,
+      away,
+      locale,
+      fase,
+      date,
+    );
   }
 
   Future<void> getMatcheDetails(String docId) async {

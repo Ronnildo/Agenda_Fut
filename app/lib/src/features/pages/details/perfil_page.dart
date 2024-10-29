@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_perfil.dart';
+import 'package:app/src/features/pages/home/widgets/banner_ad.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/pages/home/widgets/upload_image.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class PerfilPage extends StatefulWidget {
 class _PerfilPageState extends State<PerfilPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _positionController = TextEditingController();
-  
+
   bool editName = false;
   bool editPos = false;
   bool editPhone = false;
@@ -121,6 +122,9 @@ class _PerfilPageState extends State<PerfilPage> {
           ),
         ],
       ),
+      bottomNavigationBar: const BannerAdMob(
+        adUnitId: "ca-app-pub-3101866454473029/1955179764",
+      ),
     );
   }
 
@@ -189,7 +193,7 @@ class _PerfilPageState extends State<PerfilPage> {
       _file = file;
       await Provider.of<UserProvider>(context, listen: false)
           .setPhoto(_file.path);
-    }else{
+    } else {
       return;
     }
     if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
