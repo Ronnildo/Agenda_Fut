@@ -110,33 +110,6 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      InkWell(
-                        onTap: loginGoogle,
-                        child: const Image(
-                          image: AssetImage(
-                            "assets/images/google.png",
-                          ),
-                          fit: BoxFit.contain,
-                          width: 36,
-                          height: 36,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: loginFacebook,
-                        child: const Image(
-                          image: AssetImage(
-                            "assets/images/facebook.png",
-                          ),
-                          fit: BoxFit.contain,
-                          width: 36,
-                          height: 36,
-                        ),
-                      ),
-                    ],
-                  )
                 ],
               ),
             )
@@ -158,34 +131,38 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void loginGoogle() async {
-    await Provider.of<UserProvider>(context, listen: false).signInWithGoogle(home());
-    if (Provider.of<UserProvider>(context, listen: false).error == "failed") {
-      SnackBar(
-        content: Text(
-          Provider.of<UserProvider>(context, listen: false).error,
-          style: Theme.of(context).textTheme.displayMedium,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.error,
-        duration: const Duration(seconds: 2),
-      );
-    }
-  }
+  // void loginGoogle() async {
+  //   await Provider.of<UserProvider>(context, listen: false).signInWithGoogle();
+  //   // if (await Provider.of<UserProvider>(context, listen: false).status == "sucess") {
+  //   //   home();
+  //   // }else{
+  //   //   SnackBar(
+  //   //     content: Text(
+  //   //       Provider.of<UserProvider>(context, listen: false).error,
+  //   //       style: Theme.of(context).textTheme.displayMedium,
+  //   //     ),
+  //   //     backgroundColor: Theme.of(context).colorScheme.error,
+  //   //     duration: const Duration(seconds: 2),
+  //   //   );
+  //   // }
+  // }
 
-  void loginFacebook() async {
-    await Provider.of<UserProvider>(context, listen: false)
-        .signInWithFacebook(home());
-    if (Provider.of<UserProvider>(context, listen: false).error == "failed") {
-      SnackBar(
-        content: Text(
-          Provider.of<UserProvider>(context, listen: false).error,
-          style: Theme.of(context).textTheme.displayMedium,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.error,
-        duration: const Duration(seconds: 2),
-      );
-    }
-  }
+  // void loginFacebook() async {
+  //   await Provider.of<UserProvider>(context, listen: false)
+  //       .signInWithFacebook();
+  //   if (Provider.of<UserProvider>(context, listen: false).status == "failed") {
+  //     SnackBar(
+  //       content: Text(
+  //         Provider.of<UserProvider>(context, listen: false).error,
+  //         style: Theme.of(context).textTheme.displayMedium,
+  //       ),
+  //       backgroundColor: Theme.of(context).colorScheme.error,
+  //       duration: const Duration(seconds: 2),
+  //     );
+  //   }else{
+  //     home();
+  //   }
+  // }
 
   // autenticação
   login(String email, String password) async {

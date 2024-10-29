@@ -1,7 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/details/widgets/consumer_image_perfil.dart';
 import 'package:app/src/features/widgets/list_details.dart';
@@ -9,7 +6,6 @@ import 'package:app/src/features/pages/home/widgets/upload_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:image/image.dart' as img;
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});

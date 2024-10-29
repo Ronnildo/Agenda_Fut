@@ -1,12 +1,9 @@
-import 'dart:io';
-
 import 'package:app/src/features/controllers/user_controller.dart';
 import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../core/functions.dart';
-import 'package:image/image.dart' as img;
 
 class UserProvider extends ChangeNotifier {
   final UserController _userController = UserController();
@@ -74,6 +71,11 @@ class UserProvider extends ChangeNotifier {
       _status = "sucess";
       login();
       notifyListeners();
+      String? userName = await _userController.getNameUser();
+      PositionModel pos = await _userController.getPositionUser();
+      _name = userName!;
+      _position = pos.position!;
+      notifyListeners();
     } catch (e) {
       _status = "failed";
       _error = e.toString();
@@ -81,35 +83,34 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> signInWithGoogle(Function login) async {
-    try {
-      UserCredential user = await _userController.signInWithGoogle();
-      _isLoading = false;
-      _name = user.user!.displayName!;
-      _pathImage = user.user!.photoURL!;
-      _status = "sucess";
-      login();
-      notifyListeners();
-    } catch (err) {
-      _error = err.toString();
-      notifyListeners();
-    }
-  }
+  // Future<void> signInWithGoogle() async {
+  //   try {
+  //     UserCredential user = await _userController.signInWithGoogle();
+  //     _isLoading = false;
+  //     _name = user.user!.displayName!;
+  //     _status = "sucess";
+  //     notifyListeners();
+  //   } catch (err) {
+  //     _status = "failed";
+  //     _error = err.toString();
+  //     notifyListeners();
+  //   }
+  // }
 
-  Future<void> signInWithFacebook(Function login) async {
-    try {
-      UserCredential user = await _userController.signInWithGoogle();
-      _isLoading = false;
-      _name = user.user!.displayName!;
-      _pathImage = user.user!.photoURL!;
-      _status = "sucess";
-      login();
-      notifyListeners();
-    } catch (err) {
-      _error = err.toString();
-      notifyListeners();
-    }
-  }
+  // Future<void> signInWithFacebook() async {
+  //   try {
+  //     UserCredential user = await _userController.signInWithGoogle();
+  //     _isLoading = false;
+  //     _name = user.user!.displayName!;
+  //     _pathImage = user.user!.photoURL!;
+  //     _status = "sucess";
+  //     notifyListeners();
+  //   } catch (err) {
+  //     _status = "failed";
+  //     _error = err.toString();
+  //     notifyListeners();
+  //   }
+  // }
 
   Future<void> singOut() async {
     FirebaseAuth.instance.signOut();
