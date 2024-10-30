@@ -8,6 +8,7 @@ import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/pages/home/widgets/date_or_hour.dart';
 import 'package:app/src/features/pages/home/widgets/dropdown_type.dart';
 import 'package:app/src/features/pages/home/widgets/upload_image.dart';
+import 'package:app/src/features/widgets/snackbar_auth.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -60,20 +61,7 @@ class _InsertPageState extends State<InsertPage> {
               child: UploadImageContainer(
                 filePath: _file!.path,
                 uploadImage: uploadImage,
-              ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 20,
-                  top: 5,
-                ),
-                child: Text(
-                  "Banner do Jogo/Arte",
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  style: Theme.of(context).textTheme.displaySmall,
-                ),
+                text: "Banner do Jogo/Arte",
               ),
             ),
             CustomInsertGame(
@@ -163,15 +151,23 @@ class _InsertPageState extends State<InsertPage> {
                         String hour = selectedTime.toString();
                         _timeController.text = hour;
                       } else {
-                        String hour = TimeOfDay.now().toString();
-                        _timeController.text = hour;
+                        String hour = TimeOfDay.now().hour.toString();
+                        String minute = TimeOfDay.now().minute.toString();
+                        _timeController.text = "$hour:$minute";
                       }
 
                       setState(() {
-                        selectedTime = time;
-
-                        _timeController.text =
-                           time!.hourOfPeriod.toRadixString(2);
+                        selectedTime = time!;
+                        if (time.minute < 10 ) {
+                          _timeController.text =
+                              "${time.hour}:0${time.minute}";
+                        } else if (time.minute == 0 && time.hour != 0) {
+                          _timeController.text = "${time.hour}:${time.minute}0";
+                        }else if(time.hour == 0 && time.minute == 0){
+                          _timeController.text = "0${time.hour}:${time.minute}0";
+                        } else {
+                          _timeController.text = "${time.hour}:${time.minute}";
+                        }
                       });
                     },
                   ),
@@ -220,28 +216,12 @@ class _InsertPageState extends State<InsertPage> {
       );
       await Provider.of<GameProvider>(context, listen: false)
           .addGame(file, date.toString(), data);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            Provider.of<GameProvider>(context, listen: false).status,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      CustomSnackBar().show(context,
+          await Provider.of<GameProvider>(context, listen: false).status);
       clear();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Aconteceu um erro ao adicionar partida. Tente Novamente.",
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.error,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      CustomSnackBar().showError(
+          context, "Aconteceu um erro ao adicionar partida. Tente Novamente.");
     }
   }
 

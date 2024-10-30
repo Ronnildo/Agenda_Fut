@@ -3,6 +3,7 @@ import 'package:app/src/features/controllers/game_controller.dart';
 import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GameProvider extends ChangeNotifier {
   // Controle de Requisições
@@ -69,7 +70,7 @@ class GameProvider extends ChangeNotifier {
       _fileUp = urlImage;
       _status = "sucess";
       notifyListeners();
-    } on FirebaseException catch (e) {
+    } catch (e) {
       _isLoading = false;
       _status = "failed";
       _error = e.toString();

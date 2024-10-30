@@ -1,3 +1,4 @@
+import 'package:app/src/features/widgets/upload_image.dart';
 import 'package:flutter/material.dart';
 
 class ConsumerImageGame extends StatefulWidget {
@@ -30,30 +31,33 @@ class _ConsumerImageGameState extends State<ConsumerImageGame> {
           },
         );
       },
-      child: Stack(
-        alignment: Alignment.bottomRight,
+      child: Column(
         children: [
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              image: DecorationImage(
-                image: NetworkImage(
-                  widget.pathImage,
+          Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      widget.pathImage,
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(100),
                 ),
-                fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.circular(100),
-            ),
+              IconUploadImage(uploadImage: widget.uploadImage),
+            ],
           ),
-          InkWell(
-            onTap: widget.uploadImage,
-            child: const Icon(
-              Icons.add_a_photo,
-              size: 35,
-              color: Colors.black,
-            ),
+          Text(
+            "Banner do Jogo/Arte",
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ],
       ),

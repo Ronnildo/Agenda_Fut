@@ -45,7 +45,8 @@ class UserProvider extends ChangeNotifier {
       _clear();
       notifyListeners();
       _isLoading = false;
-      _error = "E-mail inválido, por favor insire um e-mail válido.";
+      _status = "failed";
+      _error = "Campos vázios, preencha todos os campos.";
       notifyListeners();
     }
   }

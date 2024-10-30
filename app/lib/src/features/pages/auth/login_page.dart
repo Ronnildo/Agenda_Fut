@@ -6,6 +6,7 @@ import 'package:app/src/features/pages/auth/register_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
+import 'package:app/src/features/widgets/snackbar_auth.dart';
 import 'package:app/src/models/user_model.dart';
 
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _LoginState extends State<Login> {
         child: Column(
           children: [
             const CustomTitle(
-              heightdiv: 2.8,
+              heightdiv: 2.5,
             ),
             CustomInput(
               label: "E-mail",
@@ -80,7 +81,7 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
-                vertical: 16,
+                vertical: 20,
               ),
               child: Column(
                 children: [
@@ -91,23 +92,20 @@ class _LoginState extends State<Login> {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 0, bottom: 20.0),
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width,
-                          56,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      fixedSize: Size(
+                        MediaQuery.of(context).size.width,
+                        56,
                       ),
-                      onPressed: register,
-                      child: Text(
-                        "Cadastre-se Agora",
-                        style: Theme.of(context).textTheme.labelLarge,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
                       ),
+                    ),
+                    onPressed: register,
+                    child: Text(
+                      "Cadastre-se Agora",
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ),
                 ],
@@ -130,41 +128,6 @@ class _LoginState extends State<Login> {
       });
     }
   }
-
-  // void loginGoogle() async {
-  //   await Provider.of<UserProvider>(context, listen: false).signInWithGoogle();
-  //   // if (await Provider.of<UserProvider>(context, listen: false).status == "sucess") {
-  //   //   home();
-  //   // }else{
-  //   //   SnackBar(
-  //   //     content: Text(
-  //   //       Provider.of<UserProvider>(context, listen: false).error,
-  //   //       style: Theme.of(context).textTheme.displayMedium,
-  //   //     ),
-  //   //     backgroundColor: Theme.of(context).colorScheme.error,
-  //   //     duration: const Duration(seconds: 2),
-  //   //   );
-  //   // }
-  // }
-
-  // void loginFacebook() async {
-  //   await Provider.of<UserProvider>(context, listen: false)
-  //       .signInWithFacebook();
-  //   if (Provider.of<UserProvider>(context, listen: false).status == "failed") {
-  //     SnackBar(
-  //       content: Text(
-  //         Provider.of<UserProvider>(context, listen: false).error,
-  //         style: Theme.of(context).textTheme.displayMedium,
-  //       ),
-  //       backgroundColor: Theme.of(context).colorScheme.error,
-  //       duration: const Duration(seconds: 2),
-  //     );
-  //   }else{
-  //     home();
-  //   }
-  // }
-
-  // autenticação
   login(String email, String password) async {
     await Provider.of<UserProvider>(context, listen: false).auth(
       UserModel(
@@ -176,16 +139,7 @@ class _LoginState extends State<Login> {
 
     if (await Provider.of<UserProvider>(context, listen: false).status ==
         "failed") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            Provider.of<UserProvider>(context, listen: false).error,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.error,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+          CustomSnackBar().showError(context, await Provider.of<UserProvider>(context, listen: false).error);
     }
   }
 
@@ -222,4 +176,39 @@ class _LoginState extends State<Login> {
       _passController.clear();
     });
   }
+
+  // void loginGoogle() async {
+  //   await Provider.of<UserProvider>(context, listen: false).signInWithGoogle();
+  //   // if (await Provider.of<UserProvider>(context, listen: false).status == "sucess") {
+  //   //   home();
+  //   // }else{
+  //   //   SnackBar(
+  //   //     content: Text(
+  //   //       Provider.of<UserProvider>(context, listen: false).error,
+  //   //       style: Theme.of(context).textTheme.displayMedium,
+  //   //     ),
+  //   //     backgroundColor: Theme.of(context).colorScheme.error,
+  //   //     duration: const Duration(seconds: 2),
+  //   //   );
+  //   // }
+  // }
+
+  // void loginFacebook() async {
+  //   await Provider.of<UserProvider>(context, listen: false)
+  //       .signInWithFacebook();
+  //   if (Provider.of<UserProvider>(context, listen: false).status == "failed") {
+  //     SnackBar(
+  //       content: Text(
+  //         Provider.of<UserProvider>(context, listen: false).error,
+  //         style: Theme.of(context).textTheme.displayMedium,
+  //       ),
+  //       backgroundColor: Theme.of(context).colorScheme.error,
+  //       duration: const Duration(seconds: 2),
+  //     );
+  //   }else{
+  //     home();
+  //   }
+  // }
+
+  // autenticação
 }

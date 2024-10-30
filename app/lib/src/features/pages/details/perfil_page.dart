@@ -68,14 +68,15 @@ class _PerfilPageState extends State<PerfilPage> {
                 return UploadImageContainer(
                   filePath: _file.path,
                   uploadImage: uploadImage,
+                  text: "Foto de Perfil",
                 );
               },
             ),
           ),
-          Text(
-            "Foto do Perfil",
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          // Text(
+          //   "Foto do Perfil",
+          //   style: Theme.of(context).textTheme.bodyMedium,
+          // ),
           Consumer<UserProvider>(
             builder: (context, value, child) {
               if (!value.isLoading) {

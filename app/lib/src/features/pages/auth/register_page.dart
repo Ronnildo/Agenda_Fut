@@ -5,6 +5,7 @@ import 'package:app/src/features/pages/auth/login_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
+import 'package:app/src/features/widgets/snackbar_auth.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -156,33 +157,11 @@ class _RegisterState extends State<Register> {
     );
     if (await Provider.of<UserProvider>(context, listen: false).status ==
         "failed") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            Provider.of<UserProvider>(context, listen: false).error,
-            style: Theme.of(context).textTheme.displayMedium,
-          ),
-          duration: const Duration(
-            seconds: 3,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.error,
-        ),
-      );
+      CustomSnackBar().showError(
+          context, await Provider.of<UserProvider>(context, listen: false).error);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Center(
-            child: Text(
-              Provider.of<UserProvider>(context, listen: false).status,
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-          duration: const Duration(
-            seconds: 3,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-        ),
-      );
+      CustomSnackBar().show(
+          context, await Provider.of<UserProvider>(context, listen: false).status);
     }
   }
 

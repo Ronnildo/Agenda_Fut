@@ -52,13 +52,8 @@ class GameController {
           .getDownloadURL();
       if (res.isNotEmpty) {
         return res;
-      } else {
-        return "";
       }
     } on StorageException catch (e) {
-      if (e.message == "Not Found.") {
-        throw Exception("Imagem não disponível.");
-      }
       throw Exception(e.message);
     }
   }
@@ -67,9 +62,7 @@ class GameController {
     String userId = _firebaseAuth.currentUser!.uid;
     int endDay = (24 - date.hour);
 
-    DateTime nextDay = date.add( Duration(
-      hours: endDay
-    ));
+    DateTime nextDay = date.add(Duration(hours: endDay));
 
     try {
       Stream<QuerySnapshot> games = _firestore
@@ -78,14 +71,16 @@ class GameController {
           .collection("games")
           .where(
             "date",
-            isGreaterThanOrEqualTo: Timestamp.fromDate(date.add( Duration(hours: -date.hour))).toDate(),
+            isGreaterThanOrEqualTo:
+                Timestamp.fromDate(date.add(Duration(hours: -date.hour)))
+                    .toDate(),
           )
           .where(
             "date",
             isLessThan: Timestamp.fromDate(nextDay).toDate(),
           )
           .snapshots();
-        return games;
+      return games;
     } on FirebaseException catch (e) {
       throw Exception(e.code);
     }
@@ -119,7 +114,7 @@ class GameController {
   }
 
   Future getMatcheId(String docId) async {
-      String userId = _firebaseAuth.currentUser!.uid;
+    String userId = _firebaseAuth.currentUser!.uid;
     try {
       DocumentSnapshot game = await _firestore
           .collection("matches")
@@ -127,8 +122,8 @@ class GameController {
           .collection("games")
           .doc(docId)
           .get();
-      
-       return game.data();  
+
+      return game.data();
     } on FirebaseException catch (err) {
       throw Exception(err.code);
     }

@@ -44,195 +44,211 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        // Implementar lógica de troca por foto
-        title: Text(
-          Provider.of<UserProvider>(context).name,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        leadingWidth: 20,
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        actions: [
-          Consumer<UserProvider>(
-            builder: (context, value, child) {
-              if (!value.isLoading && value.pathImage != "") {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if(didPop){
+          return;
+        }
+        singOut();
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        appBar: AppBar(
+          // Implementar lógica de troca por foto
+          title: Text(
+            Provider.of<UserProvider>(context).name,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          leadingWidth: 20,
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+          actions: [
+            Consumer<UserProvider>(
+              builder: (context, value, child) {
+                if (!value.isLoading && value.pathImage != "") {
+                  return InkWell(
+                    onTap: perfilpage,
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        image: DecorationImage(
+                          image: FileImage(
+                            File(Provider.of<UserProvider>(context,
+                                    listen: false)
+                                .pathImage),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                  );
+                }
                 return InkWell(
                   onTap: perfilpage,
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      image: DecorationImage(
-                        image: FileImage(
-                          File(Provider.of<UserProvider>(context, listen: false)
-                              .pathImage),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
+                  child: const Icon(
+                    Icons.account_circle,
+                    size: 50,
                   ),
                 );
-              }
-              return InkWell(
-                onTap: perfilpage,
-                child: const Icon(
-                  Icons.account_circle,
-                  size: 50,
-                ),
-              );
-            },
-          ),
-          IconButton(
-            onPressed: singOut,
-            icon: const Icon(
-              Icons.logout,
-              size: 28,
+              },
             ),
-          ),
-        ],
-        backgroundColor: Theme.of(context).colorScheme.surface,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-        ),
-        child: SingleChildScrollView(
-          // padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              EasyInfiniteDateTimeLine(
-                controller: _easyInfiniteDateTimelineController,
-                firstDate: DateTime.now(),
-                focusDate: _focusDate,
-                lastDate: DateTime(2102),
-                onDateChange: focusChange,
-                locale: 'pt',
-                activeColor: Colors.white,
-                dayProps: EasyDayProps(
-                  width: 60,
-                  height: 80,
-                  dayStructure: DayStructure.dayNumDayStr,
-                  todayHighlightColor:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                  todayHighlightStyle: TodayHighlightStyle.withBackground,
-                  todayStyle: DayStyle(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(39),
-                    ),
-                    dayNumStyle: const TextStyle(
-                      color: Color(0xFF17A909),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    dayStrStyle: const TextStyle(
-                      color: Color(0xFF17A909),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  inactiveDayStyle: DayStyle(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(39),
-                    ),
-                    dayStrStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                    ),
-                    dayNumStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  activeDayStyle: DayStyle(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(39),
-                      border: Border.all(width: 1),
-                    ),
-                    dayStrStyle: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    dayNumStyle: const TextStyle(
-                      color: Color(0xFF17A909),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  borderColor: Colors.black,
-                ),
+            IconButton(
+              onPressed: singOut,
+              icon: const Icon(
+                Icons.logout,
+                size: 28,
               ),
-              const Divider(endIndent: 8, height: 24),
-              StreamBuilder<QuerySnapshot>(
-                stream: Provider.of<GameProvider>(context, listen: false).games,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final List<DocumentSnapshot> gameDocs = snapshot.data!.docs;
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: gameDocs.length,
-                      itemBuilder: (context, index) {
-                        String docId = snapshot.data!.docs[index].id;
-                        Map<String, dynamic> data =
-                            gameDocs[index].data() as Map<String, dynamic>;
-                        GameModel game = GameModel.fromJson(docId, data);
-                        return NewCard(
-                          id: game.id!,
-                          title: game.nameCompetition!,
-                          home: game.home!,
-                          alway: game.away!,
-                          fase: game.fase!,
-                          date: game.date!,
-                          locale: game.locale!,
-                          onTap: () => details(
-                            game.id!,
-                            game.nameCompetition!,
-                            game.fase!,
-                            game.date!,
+            ),
+          ],
+          backgroundColor: Theme.of(context).colorScheme.surface,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+          ),
+          child: Scrollbar(
+            child: Column(
+              children: [
+                EasyInfiniteDateTimeLine(
+                  controller: _easyInfiniteDateTimelineController,
+                  firstDate: DateTime.now(),
+                  focusDate: _focusDate,
+                  lastDate: DateTime(2102),
+                  onDateChange: focusChange,
+                  locale: 'pt',
+                  activeColor: Colors.white,
+                  dayProps: EasyDayProps(
+                    width: 60,
+                    height: 80,
+                    dayStructure: DayStructure.dayNumDayStr,
+                    todayHighlightColor:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                    todayHighlightStyle: TodayHighlightStyle.withBackground,
+                    todayStyle: DayStyle(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(39),
+                      ),
+                      dayNumStyle: const TextStyle(
+                        color: Color(0xFF17A909),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      dayStrStyle: const TextStyle(
+                        color: Color(0xFF17A909),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    inactiveDayStyle: DayStyle(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(39),
+                      ),
+                      dayStrStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      dayNumStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    activeDayStyle: DayStyle(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(39),
+                        border: Border.all(width: 1),
+                      ),
+                      dayStrStyle: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      dayNumStyle: const TextStyle(
+                        color: Color(0xFF17A909),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    borderColor: Colors.black,
+                  ),
+                ),
+                const Divider(endIndent: 8, height: 24),
+                StreamBuilder<QuerySnapshot>(
+                  stream:
+                      Provider.of<GameProvider>(context, listen: false).games,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final List<DocumentSnapshot> gameDocs =
+                          snapshot.data!.docs;
+                      return Scrollbar(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height / 1.6,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: gameDocs.length,
+                            itemBuilder: (context, index) {
+                              String docId = snapshot.data!.docs[index].id;
+                              Map<String, dynamic> data = gameDocs[index].data()
+                                  as Map<String, dynamic>;
+                              GameModel game = GameModel.fromJson(docId, data);
+                              return NewCard(
+                                id: game.id!,
+                                title: game.nameCompetition!,
+                                home: game.home!,
+                                alway: game.away!,
+                                fase: game.fase!,
+                                date: game.date!,
+                                locale: game.locale!,
+                                onTap: () => details(
+                                  game.id!,
+                                  game.nameCompetition!,
+                                  game.fase!,
+                                  game.date!,
+                                ),
+                                delete: delete,
+                              );
+                            },
                           ),
-                          delete: delete,
-                        );
-                      },
+                        ),
+                      );
+                    }
+                    return const Center(
+                      child: Text("Insira uma partida +"),
                     );
-                  }
-                  return const Center(
-                    child: Text("Insira uma partida +"),
-                  );
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: const BannerAdMob(
-        adUnitId: "ca-app-pub-3101866454473029/1955179764",
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const InsertPage(),
-            ),
-          );
-        },
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
+        bottomNavigationBar: const BannerAdMob(
+          adUnitId: "ca-app-pub-3101866454473029/1955179764",
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const InsertPage(),
+              ),
+            );
+          },
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
     );
@@ -255,7 +271,6 @@ class _HomeState extends State<Home> {
     DateTime date,
   ) {
     Provider.of<GameProvider>(context, listen: false).getMatcheDetails(docId);
-    // Provider.of<GameProvider>(context, listen: false).getMatcheDetails(docId);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -381,7 +396,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _focusDate = selectDate;
     });
-    
+
     Provider.of<GameProvider>(context, listen: false).getGames(_focusDate);
   }
 }

@@ -71,28 +71,25 @@ class _DetailsPageState extends State<DetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Consumer<GameProvider>(builder: (context, value, child) {
-                  // print(value.fileUp);
-                  if (!value.isLoading && value.fileUp != "") {
+                Consumer<GameProvider>(
+                  builder: (context, value, child) {
+                    // print(value.fileUp);
+                    if (!value.isLoading && value.fileUp != "") {
+                      return Center(
+                        child: ConsumerImageGame(
+                          pathImage: value.fileUp,
+                          uploadImage: uploadImage,
+                        ),
+                      );
+                    }
                     return Center(
-                      child: ConsumerImageGame(
-                        pathImage: value.fileUp,
+                      child: UploadImageContainer(
+                        filePath: _file.path,
                         uploadImage: uploadImage,
+                        text: "Banner do Jogo/Arte",
                       ),
                     );
-                  }
-                  return Center(
-                    child: UploadImageContainer(
-                      filePath: _file.path,
-                      uploadImage: uploadImage,
-                    ),
-                  );
-                }),
-                Center(
-                  child: Text(
-                    "Escudo da Equipe ou Banner do jogo",
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
