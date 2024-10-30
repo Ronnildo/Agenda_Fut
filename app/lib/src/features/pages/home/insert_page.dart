@@ -171,7 +171,7 @@ class _InsertPageState extends State<InsertPage> {
                         selectedTime = time;
 
                         _timeController.text =
-                            "${time!.hour}:${time.minute > 10 ? time.minute : "0${time.minute}"}";
+                           time!.hourOfPeriod.toRadixString(2);
                       });
                     },
                   ),

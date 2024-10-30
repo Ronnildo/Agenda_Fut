@@ -3,6 +3,7 @@ import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/home/splash_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 class AgendaApp extends StatelessWidget {
@@ -18,8 +19,16 @@ class AgendaApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        localizationsDelegates:  const <LocalizationsDelegate>[
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        title: 'Fut Agenda',
         theme: CustomTheme.lightThemeData(context),
+        supportedLocales: const [
+          Locale("pt", "BR"),
+        ],
         home: const SplashPage(),
       ),
     );
