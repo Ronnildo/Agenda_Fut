@@ -38,7 +38,7 @@ class _InsertPageState extends State<InsertPage> {
   MaterialTapTargetSize tapTargetSize = MaterialTapTargetSize.padded;
   bool use24Hours = false;
   DateTime? _pickedDate;
-  XFile? _file = XFile("");
+  late XFile? _file = XFile("");
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _InsertPageState extends State<InsertPage> {
           children: [
             Center(
               child: UploadImageContainer(
-                filePath: _file!.path,
+                filePath: _file!.path == "" ? "" : _file!.path,
                 uploadImage: uploadImage,
                 text: "Banner do Jogo/Arte",
               ),

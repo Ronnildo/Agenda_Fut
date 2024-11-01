@@ -50,7 +50,7 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
       _isLoading = false;
       _status = "failed";
-      _error = "Campos vázios, preencha todos os campos.";
+      _error = "Campos vazios, preencha todos os campos.";
       notifyListeners();
     }
   }
