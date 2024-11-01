@@ -4,6 +4,7 @@ import 'package:app/src/features/pages/details/widgets/consumer_image_perfil.dar
 import 'package:app/src/features/pages/home/widgets/banner_ad.dart';
 import 'package:app/src/features/widgets/list_details.dart';
 import 'package:app/src/features/pages/home/widgets/upload_image.dart';
+import 'package:app/src/features/widgets/snackbar_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -198,36 +199,11 @@ class _PerfilPageState extends State<PerfilPage> {
       return;
     }
     if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Center(
-            child: Text(
-              "Imagem de perfil carregada.",
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-          duration: const Duration(
-            seconds: 3,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-        ),
-      );
+      CustomSnackBar().show(context, "Imagem de perfil carregada.");
       Provider.of<UserProvider>(context, listen: false).getPhoto();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Center(
-            child: Text(
-              Provider.of<UserProvider>(context, listen: false).error,
-              style: Theme.of(context).textTheme.displayMedium,
-            ),
-          ),
-          duration: const Duration(
-            seconds: 3,
-          ),
-          backgroundColor: Theme.of(context).colorScheme.error,
-        ),
-      );
+      CustomSnackBar().showError(
+          context, Provider.of<UserProvider>(context, listen: false).error);
     }
   }
 }

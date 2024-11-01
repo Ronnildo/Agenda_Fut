@@ -7,7 +7,8 @@ import '../../core/functions.dart';
 
 class UserProvider extends ChangeNotifier {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final UserController _userController = UserController(auth: FirebaseAuth.instance);
+  final UserController _userController =
+      UserController(auth: FirebaseAuth.instance);
   bool _isLoading = true;
   String _error = "";
   String _status = "";
@@ -75,7 +76,7 @@ class UserProvider extends ChangeNotifier {
       _status = "sucess";
       login();
       notifyListeners();
-      String? userName = await _userController.getNameUser();
+      String? userName = _userController.getNameUser();
       PositionModel pos = await _userController.getPositionUser();
       _name = userName!;
       _position = pos.position!;
@@ -123,7 +124,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> getUser() async {
-    String? userName = await _userController.getNameUser();
+    String? userName = _userController.getNameUser();
     PositionModel pos = await _userController.getPositionUser();
     _name = userName!;
     _position = pos.position!;
@@ -161,11 +162,10 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> getPhoto() async {
     try {
-      String? url = await _userController.loadImagePerfil();
+      String? url = _userController.loadImagePerfil();
       _isLoading = false;
       _status = "sucess";
       _pathImage = url!;
-      notifyListeners();
     } catch (e) {
       _isLoading = false;
       _status = "failed";
