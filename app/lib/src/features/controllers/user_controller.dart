@@ -3,82 +3,93 @@ import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 class UserController extends Repository {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth auth;
+
+  UserController({required this.auth});
+
+  Stream<User?> get user => auth.authStateChanges();
 
   @override
   Future<void> adduser(UserModel user) async {}
 
-  Future createUser(UserModel user) async {
+  Future<String> createUser(UserModel user) async {
     try {
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-        email: user.email!,
-        password: user.password!,
+      await auth.createUserWithEmailAndPassword(
+        email: user.email!.trim(),
+        password: user.password!.trim(),
       );
 
-      await userCredential.user!.updateDisplayName(user.name);
+      return "Success";
     } on FirebaseAuthException catch (err) {
       switch (err.code) {
         case "weak-password":
-          throw const AuthException("Senha muito fraca").message;
+          return "Senha muito fraca";
         case "email-already-in-use":
-          throw const AuthException("E-mail já cadastrado").message;
+          return "E-mail já cadastrado";
         case "invalid-email":
-          throw const AuthException("E-mail inválido").message;
+          return "E-mail inválido";
         case "operation-not-allowed":
-          throw const AuthException("Operação não realizada").message;
+          return "Operação não realizada";
         case "channel-error":
-          throw const AuthException("Preencha as informações corretamente.")
-              .message;
+          return "Preencha as informações corretamente.";
+        default:
+          return "Error";
       }
+    } catch (err) {
+      rethrow;
     }
   }
 
-  Future resetPassword(String email) async {
+  Future<String> resetPassword(String email) async {
     try {
-      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      await auth.sendPasswordResetEmail(email: email);
       return "Verifique seu e-mail para redefir sua senha.";
     } on FirebaseException catch (err) {
-      throw Exception(err.code);
+      return err.message!;
+    } catch (err) {
+      rethrow;
     }
   }
 
-  Future uploadImageUser(String pathImage) async {
+  Future<String> uploadImageUser(String pathImage) async {
     try {
-      await _firebaseAuth.currentUser?.updatePhotoURL(pathImage);
-      return "sucess";
+      await auth.currentUser?.updatePhotoURL(pathImage);
+      return "Success";
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      return e.message!;
+    } catch (err) {
+      rethrow;
     }
   }
 
-  Future authUser(UserModel user) async {
+  Future<String> authUser(UserModel user) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: user.email!,
         password: user.password!,
       );
+      return "Success";
     } on FirebaseAuthException catch (err) {
       switch (err.code) {
         case "invalid-credential":
-          throw const AuthException("E-mail não cadastrado ou senha incorreta")
-              .message;
+          return "E-mail não cadastrado ou senha incorreta";
+        case "email-already-in-use":
+          return "E-mail já cadastrado";
         case "invalid-email":
-          throw const AuthException("E-mail Inválido").message;
-        case "channel-error":
-          throw const AuthException("Preencha corretamente as informações.")
-              .message;
+          return "E-mail inválido";
         case "too-many-requests":
-          throw const AuthException("Tente novamente em instantes").message;
-        case "wrong-password":
-          throw const AuthException("Senha muito curta").message;
+          return "Tente novamente em instantes";
+        case "channel-error":
+          return "Preencha as informações corretamente.";
         case "user-not-found":
-          throw const AuthException("E-mail não cadastrado").message;
+          return "E-mail não cadastrado";
         default:
-          throw Exception(err.code);
+          return "Error";
       }
+    } catch (err) {
+      rethrow;
     }
   }
 
@@ -112,18 +123,21 @@ class UserController extends Repository {
   //   return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   // }
 
-  Future getNameUser() async {
+  String? getNameUser() {
     try {
-      if(_firebaseAuth.currentUser!.displayName != null){
-        return _firebaseAuth.currentUser!.displayName;
+      if (auth.currentUser?.displayName != null) {
+        return auth.currentUser?.displayName;
       }
+      return "";
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      return e.message!;
+    } catch (e) {
+      rethrow;
     }
   }
 
   Future getPositionUser() async {
-    final userCredential = _firebaseAuth.currentUser;
+    final userCredential = auth.currentUser;
     try {
       DocumentSnapshot doc = await FirebaseFirestore.instance
           .collection("positions")
@@ -138,20 +152,22 @@ class UserController extends Repository {
     }
   }
 
-  Future loadImagePerfil() async {
+  String? loadImagePerfil() {
     try {
-      String? photo = _firebaseAuth.currentUser?.photoURL;
+      String? photo = auth.currentUser?.photoURL;
       if (photo == null) {
         return "";
       }
       return photo;
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      return e.message!;
+    } catch (e) {
+      rethrow;
     }
   }
 
   Future setPositionUser(String position) async {
-    final userCredential = _firebaseAuth.currentUser;
+    final userCredential = auth.currentUser;
     try {
       await FirebaseFirestore.instance
           .collection("positions")
@@ -163,18 +179,20 @@ class UserController extends Repository {
     }
   }
 
-  Future updateDisplayName(String newName) async {
-    final userCredential = _firebaseAuth.currentUser;
+  Future<String> updateDisplayName(String newName) async {
+    final userCredential = auth.currentUser;
     try {
-      if (userCredential!.displayName == null ||
-          userCredential.displayName != newName) {
-        await userCredential.updateDisplayName(newName);
-        return "sucess";
+      if (userCredential?.displayName == null ||
+          userCredential?.displayName != newName) {
+        await userCredential?.updateDisplayName(newName);
+        return "Success";
       } else {
         return "";
       }
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.code);
+      return e.message!;
+    } catch (e) {
+      rethrow;
     }
   }
 }

@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import '../../core/functions.dart';
 
 class UserProvider extends ChangeNotifier {
-  final UserController _userController = UserController();
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final UserController _userController = UserController(auth: FirebaseAuth.instance);
   bool _isLoading = true;
   String _error = "";
   String _status = "";
@@ -32,7 +33,9 @@ class UserProvider extends ChangeNotifier {
         notifyListeners();
         await _userController.createUser(user);
         _isLoading = false;
+
         _status = "Cadastro realizado com sucesso.";
+
         page();
         notifyListeners();
       } catch (e) {

@@ -5,7 +5,6 @@ import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GameController {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -26,7 +25,7 @@ class GameController {
           .doc(userId)
           .collection("games")
           .add(game.toJson());
-    } on StorageException catch (err) {
+    } on FirebaseException catch (err) {
       throw Exception(err.message);
     }
   }
@@ -55,7 +54,7 @@ class GameController {
       } else {
         return "";
       }
-    } on StorageException catch (e) {
+    } on FirebaseException catch (e) {
       if (e.message == "Not Found.") {
         throw Exception("Imagem não disponível.");
       }
