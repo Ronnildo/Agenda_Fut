@@ -42,7 +42,7 @@ class UserProvider extends ChangeNotifier {
       } catch (e) {
         _isLoading = false;
         _status = "failed";
-        _error = e.toString();
+        _error = e.toString().split(":")[1].trim();
         notifyListeners();
       }
     } else {
@@ -62,28 +62,30 @@ class UserProvider extends ChangeNotifier {
       _status = res;
       notifyListeners();
     } catch (err) {
-      _error = err.toString();
+      _error = err.toString().split(":")[1].trim();
       notifyListeners();
     }
   }
 
-  Future<void> auth(UserModel user, void Function() login) async {
+  Future<void> auth(String email, String password) async {
     try {
       _clear();
       notifyListeners();
-      await _userController.authUser(user);
-      _isLoading = false;
-      _status = "sucess";
-      login();
-      notifyListeners();
-      String? userName = _userController.getNameUser();
-      PositionModel pos = await _userController.getPositionUser();
-      _name = userName!;
-      _position = pos.position!;
-      notifyListeners();
-    } catch (e) {
+      String res = await _userController.authUser(email, password);
+      if (res == "Success") {
+        _isLoading = false;
+        _status = res;
+        notifyListeners();
+        String? userName = _userController.getNameUser();
+        PositionModel pos = await _userController.getPositionUser();
+        _name = userName!;
+        _position = pos.position!;
+        notifyListeners();
+      }
+    } on Exception catch (e) {
       _status = "failed";
-      _error = e.toString();
+      _error = e.toString().split(":")[1].trim();
+      debugPrint(_error[0]);
       notifyListeners();
     }
   }

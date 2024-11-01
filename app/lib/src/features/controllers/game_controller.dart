@@ -11,7 +11,7 @@ class GameController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future addGame(GameModel game, String date, File path) async {
+  Future<String> addGame(GameModel game, String date, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
       String ref =
@@ -25,8 +25,11 @@ class GameController {
           .doc(userId)
           .collection("games")
           .add(game.toJson());
+      return "Success";
     } on FirebaseException catch (err) {
-      throw Exception(err.message);
+      return err.message!;
+    } catch (err) {
+      rethrow;
     }
   }
 

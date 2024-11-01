@@ -183,7 +183,7 @@ class _HomeState extends State<Home> {
                     borderColor: Colors.black,
                   ),
                 ),
-                const Divider(endIndent: 8, height: 24),
+                const SizedBox(height: 16,),
                 StreamBuilder<QuerySnapshot>(
                   stream:
                       Provider.of<GameProvider>(context, listen: false).games,
@@ -201,7 +201,7 @@ class _HomeState extends State<Home> {
                               String docId = snapshot.data!.docs[index].id;
                               Map<String, dynamic> data = gameDocs[index].data()
                                   as Map<String, dynamic>;
-                              GameModel game = GameModel.fromJson(docId, data);
+                              GameModel? game = GameModel.fromJson(docId, data);
                               return NewCard(
                                 id: game.id!,
                                 title: game.nameCompetition!,

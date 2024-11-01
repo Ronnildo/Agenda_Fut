@@ -117,7 +117,8 @@ void main() {
       mockAuth.signInWithEmailAndPassword(
           email: userModel.email!, password: userModel.password!),
     ).thenAnswer((realInvocation) async => mockUserCredential);
-    expect(await user.authUser(userModel), "Success");
+    expect(
+        await user.authUser(userModel.email!, userModel.password!), "Success");
   });
 
   test("Sing In Exception test", () async {
@@ -127,10 +128,10 @@ void main() {
       mockAuth.signInWithEmailAndPassword(
           email: userModel.email!, password: userModel.password!),
     ).thenAnswer(
-      (realInvocation) async =>
-          throw FirebaseAuthException(code: "", message: "Error"),
+      (realInvocation) async => throw FirebaseException(plugin: "FirebaseAuth", message: "Error"),
     );
-    expect(await user.authUser(userModel), "Error");
+    expect(await user.authUser(userModel.email!, userModel.password!),
+        FirebaseException(plugin: "FirebaseAuth", message: "Error"));
   });
 
   test("Reset password test", () async {

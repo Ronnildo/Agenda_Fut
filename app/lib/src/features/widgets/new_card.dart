@@ -54,13 +54,16 @@ class _NewCardState extends State<NewCard> {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
+            border: Border.all(width: 0.1),
             boxShadow: const [
               BoxShadow(
                 blurRadius: 4,
                 color: Colors.black54,
                 spreadRadius: 0,
-                offset: Offset(0, 4),
+                blurStyle: BlurStyle.normal,
+                offset: Offset(1, 5),
               ),
+              
             ]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

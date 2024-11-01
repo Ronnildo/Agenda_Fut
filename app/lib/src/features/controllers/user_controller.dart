@@ -25,17 +25,17 @@ class UserController extends Repository {
     } on FirebaseAuthException catch (err) {
       switch (err.code) {
         case "weak-password":
-          return "Senha muito fraca";
+          return throw Exception("Senha muito fraca");
         case "email-already-in-use":
-          return "E-mail já cadastrado";
+          return throw Exception("E-mail já cadastrado");
         case "invalid-email":
-          return "E-mail inválido";
+          return throw Exception("E-mail inválido");
         case "operation-not-allowed":
-          return "Operação não realizada";
+          return throw Exception("Operação não realizada");
         case "channel-error":
-          return "Preencha as informações corretamente.";
+          return throw Exception("Preencha as informações corretamente.");
         default:
-          return "Error";
+          return throw Exception("Error");
       }
     } catch (err) {
       rethrow;
@@ -64,29 +64,30 @@ class UserController extends Repository {
     }
   }
 
-  Future<String> authUser(UserModel user) async {
+  Future<String> authUser(String email, String password) async {
     try {
       await auth.signInWithEmailAndPassword(
-        email: user.email!,
-        password: user.password!,
+        email: email,
+        password: password,
       );
+
       return "Success";
     } on FirebaseAuthException catch (err) {
       switch (err.code) {
         case "invalid-credential":
-          return "E-mail não cadastrado ou senha incorreta";
+          return throw Exception("E-mail não cadastrado ou senha incorreta");
         case "email-already-in-use":
-          return "E-mail já cadastrado";
+          return throw Exception("E-mail já cadastrado");
         case "invalid-email":
-          return "E-mail inválido";
+          return throw Exception("E-mail inválido");
         case "too-many-requests":
-          return "Tente novamente em instantes";
+          return throw Exception("Tente novamente em instantes");
         case "channel-error":
-          return "Preencha as informações corretamente.";
+          return throw Exception("Preencha as informações corretamente.");
         case "user-not-found":
-          return "E-mail não cadastrado";
+          return throw FirebaseException(plugin: "FirebaseAuth", message: "E-mail não cadastrado");
         default:
-          return "Error";
+          return throw FirebaseException(plugin: "FirebaseAuth", message: "Error");
       }
     } catch (err) {
       rethrow;

@@ -158,13 +158,13 @@ class _InsertPageState extends State<InsertPage> {
 
                       setState(() {
                         selectedTime = time!;
-                        if (time.minute < 10 ) {
-                          _timeController.text =
-                              "${time.hour}:0${time.minute}";
+                        if (time.minute < 10) {
+                          _timeController.text = "${time.hour}:0${time.minute}";
                         } else if (time.minute == 0 && time.hour != 0) {
                           _timeController.text = "${time.hour}:${time.minute}0";
-                        }else if(time.hour == 0 && time.minute == 0){
-                          _timeController.text = "0${time.hour}:${time.minute}0";
+                        } else if (time.hour == 0 && time.minute == 0) {
+                          _timeController.text =
+                              "0${time.hour}:${time.minute}0";
                         } else {
                           _timeController.text = "${time.hour}:${time.minute}";
                         }
@@ -216,8 +216,10 @@ class _InsertPageState extends State<InsertPage> {
       );
       await Provider.of<GameProvider>(context, listen: false)
           .addGame(file, date.toString(), data);
-      CustomSnackBar().show(context,
-          await Provider.of<GameProvider>(context, listen: false).status);
+      CustomSnackBar().show(
+        context,
+        await Provider.of<GameProvider>(context, listen: false).status,
+      );
       clear();
     } else {
       CustomSnackBar().showError(
