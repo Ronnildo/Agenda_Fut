@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../core/functions.dart';
 
 class UserProvider extends ChangeNotifier {
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  late FirebaseAuth firebaseAuth;
   final UserController _userController =
       UserController(auth: FirebaseAuth.instance);
   bool _isLoading = true;

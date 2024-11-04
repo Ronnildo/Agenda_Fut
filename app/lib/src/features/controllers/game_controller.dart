@@ -8,29 +8,29 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class GameController {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore firestore;
+  GameController({
+    required this.firestore,
+  });
 
-  Future<String> addGame(GameModel game, String date, File path) async {
+  Future<DocumentReference<Map<String, dynamic>>> addGame(
+      GameModel game, String date, File path) async {
     String userId = _firebaseAuth.currentUser!.uid;
-    try {
-      String ref =
-          'banners/${userId.toString()}_${game.nameCompetition!}_$date.jpg';
-      if (path.path != "") {
-        await _storage.ref(ref).putFile(path);
-      }
 
-      await _firestore
-          .collection("matches")
-          .doc(userId)
-          .collection("games")
-          .add(game.toJson());
-      return "Success";
-    } on FirebaseException catch (err) {
-      return err.message!;
-    } catch (err) {
-      rethrow;
+    String ref =
+        'banners/${userId.toString()}_${game.nameCompetition!}_$date.jpg';
+    if (path.path != "") {
+      await _storage.ref(ref).putFile(path);
     }
+
+    return await firestore
+        .collection("matches")
+        .doc(userId)
+        .collection("games")
+        .add(
+          game.toJson(),
+        );
   }
 
   Future updateGame(String nameCompetition, String date, File path) async {
@@ -67,7 +67,7 @@ class GameController {
     DateTime nextDay = date.add(Duration(hours: endDay));
 
     try {
-      Stream<QuerySnapshot> games = _firestore
+      Stream<QuerySnapshot> games = firestore
           .collection("matches")
           .doc(userId)
           .collection("games")
@@ -88,6 +88,18 @@ class GameController {
     }
   }
 
+  Future<QuerySnapshot> getListMatches() async {
+    String userId = _firebaseAuth.currentUser!.uid;
+
+    final res = await firestore
+        .collection("matches")
+        .doc(userId)
+        .collection("games")
+        .get();
+
+    return res;
+  }
+
   Future updateMatchGame(String docId, String nameCompetition, String home,
       String away, String locale, String fase, DateTime date) async {
     String userId = _firebaseAuth.currentUser!.uid;
@@ -102,7 +114,7 @@ class GameController {
         fase: fase,
         date: date,
       );
-      await _firestore
+      await firestore
           .collection("matches")
           .doc(userId)
           .collection("games")
@@ -118,7 +130,7 @@ class GameController {
   Future getMatcheId(String docId) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      DocumentSnapshot game = await _firestore
+      DocumentSnapshot game = await firestore
           .collection("matches")
           .doc(userId)
           .collection("games")
@@ -134,7 +146,7 @@ class GameController {
   Future delete(String id) async {
     String userId = _firebaseAuth.currentUser!.uid;
     try {
-      await _firestore.collection(userId).doc(id).delete();
+      await firestore.collection(userId).doc(id).delete();
 
       return "sucess";
     } on FirebaseException catch (err) {

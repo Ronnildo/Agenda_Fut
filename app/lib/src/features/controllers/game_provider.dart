@@ -4,9 +4,13 @@ import 'package:app/src/models/game_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
 class GameProvider extends ChangeNotifier {
   // Controle de Requisições
-  final GameController _gameController = GameController();
+  final GameController _gameController = GameController(
+    firestore: firebaseFirestore,
+  );
   Stream<QuerySnapshot> _games = const Stream.empty();
   // Representações do Estado de Game
   bool _isLoading = true;
