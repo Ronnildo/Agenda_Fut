@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage> {
           ),
         ),
         useImmersiveMode: true,
-        nextScreen: const Login(),
+        nextScreen: const LoginPage(),
       ),
     );
   }

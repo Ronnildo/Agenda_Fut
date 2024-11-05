@@ -13,14 +13,14 @@ import 'package:app/src/features/widgets/snackbar_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   bool isVisible = false;
@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
-        if(didPop){
+        if (didPop) {
           return;
         }
         exit(1);
@@ -39,9 +39,11 @@ class _LoginState extends State<Login> {
           child: Column(
             children: [
               const CustomTitle(
+                key: Key("title"),
                 heightdiv: 2.5,
               ),
               CustomInput(
+                key: const Key("emailInput"),
                 label: "E-mail",
                 hintText: "Digite seu E-mail",
                 controller: _emailController,
@@ -50,6 +52,7 @@ class _LoginState extends State<Login> {
                 error: "",
               ),
               CustomInput(
+                key: const Key("passwordInput"),
                 label: "Senha",
                 hintText: "Digite sua Senha",
                 controller: _passController,
@@ -67,6 +70,7 @@ class _LoginState extends State<Login> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: InkWell(
+                    key: const Key("resetPassword"),
                     onTap: resetPassword,
                     hoverColor: Colors.green,
                     hoverDuration: const Duration(
@@ -81,7 +85,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
               CustomButtom(
-                onTap: () => login(
+                onTap: () => loginPage(
                   _emailController.text,
                   _passController.text,
                 ),
@@ -139,21 +143,21 @@ class _LoginState extends State<Login> {
     }
   }
 
-  login(String email, String password) async {
+  loginPage(String email, String password) async {
     if (email != "" && password != "") {
       await Provider.of<UserProvider>(context, listen: false)
           .auth(email, password);
 
       if (await Provider.of<UserProvider>(context, listen: false).status ==
           "failed") {
-        CustomSnackBar().showError(context,
+        CustomSnackBar(context: context).showError(
             await Provider.of<UserProvider>(context, listen: false).error);
       } else {
         home();
       }
     } else {
-      CustomSnackBar().showError(
-          context, "Campos vazios, preencha corretamente todos os campos.");
+      CustomSnackBar(context: context)
+          .showError("Campos vazios, preencha corretamente todos os campos.");
     }
   }
 
@@ -162,7 +166,14 @@ class _LoginState extends State<Login> {
       await Provider.of<UserProvider>(context, listen: false)
           .resetPassword(_emailController.text);
     }
-    return;
+
+    if (Provider.of<UserProvider>(context, listen: false).status == "Success") {
+      await CustomSnackBar(context: context)
+          .show("E-mail enviado para alterar sua senha.");
+    } else {
+      await CustomSnackBar(context: context)
+          .showError("Preencha o campo de E-mail para alterar sua senha.");
+    }
   }
 
   home() {
@@ -191,7 +202,7 @@ class _LoginState extends State<Login> {
     });
   }
 
-  // void loginGoogle() async {
+  // void loginPageGoogle() async {
   //   await Provider.of<UserProvider>(context, listen: false).signInWithGoogle();
   //   // if (await Provider.of<UserProvider>(context, listen: false).status == "sucess") {
   //   //   home();
@@ -207,7 +218,7 @@ class _LoginState extends State<Login> {
   //   // }
   // }
 
-  // void loginFacebook() async {
+  // void loginPageFacebook() async {
   //   await Provider.of<UserProvider>(context, listen: false)
   //       .signInWithFacebook();
   //   if (Provider.of<UserProvider>(context, listen: false).status == "failed") {

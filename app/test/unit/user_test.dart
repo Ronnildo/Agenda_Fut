@@ -137,7 +137,7 @@ void main() {
     when(mockAuth.sendPasswordResetEmail(email: "ronildosp03@gmail.com"))
         .thenAnswer((_) async => "");
     expect(await user.resetPassword("ronildosp03@gmail.com"),
-        "Verifique seu e-mail para redefir sua senha.");
+        "Success");
   });
 
   test("Upload Image Perfil test", () async {

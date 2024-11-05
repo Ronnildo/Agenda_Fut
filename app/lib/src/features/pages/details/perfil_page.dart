@@ -199,11 +199,10 @@ class _PerfilPageState extends State<PerfilPage> {
       return;
     }
     if (Provider.of<UserProvider>(context, listen: false).status == "sucess") {
-      CustomSnackBar().show(context, "Imagem de perfil carregada.");
+      CustomSnackBar(context: context).show("Imagem de perfil carregada.");
       Provider.of<UserProvider>(context, listen: false).getPhoto();
     } else {
-      CustomSnackBar().showError(
-          context, Provider.of<UserProvider>(context, listen: false).error);
+      CustomSnackBar(context: context).showError(Provider.of<UserProvider>(context, listen: false).error);
     }
   }
 }

@@ -38,9 +38,11 @@ class _RegisterState extends State<Register> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const CustomTitle(
+              key: Key("title"),
               heightdiv: 2.8,
             ),
             ListTile(
+              key: const Key("infosText"),
               title: Text(
                 "Começe Agora",
                 style: Theme.of(context).textTheme.titleMedium,
@@ -53,14 +55,16 @@ class _RegisterState extends State<Register> {
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             ),
             CustomInput(
+              key: const Key("nameInput"),
               hintText: "Nome",
-              label: "Nome Completo",
+              label: "Digite seu Nome",
               controller: _nameController,
               icon: Icons.person,
               obscureText: false,
               error: "",
             ),
             CustomInput(
+              key: const Key("emailInput"),
               hintText: "exemplo@gmail.com",
               label: "E-mail",
               controller: _emailController,
@@ -70,6 +74,7 @@ class _RegisterState extends State<Register> {
             ),
             // const DropDownTypeUser(),
             CustomInput(
+              key: const Key("passwordInput"),
               label: "Senha",
               hintText: "Crie sua Senha",
               controller: _passwordController,
@@ -140,7 +145,7 @@ class _RegisterState extends State<Register> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const Login(),
+        builder: (context) => const LoginPage(),
       ),
     );
     clear();
@@ -157,11 +162,9 @@ class _RegisterState extends State<Register> {
     );
     if (await Provider.of<UserProvider>(context, listen: false).status ==
         "failed") {
-      CustomSnackBar().showError(
-          context, await Provider.of<UserProvider>(context, listen: false).error);
+      CustomSnackBar(context: context).showError( await Provider.of<UserProvider>(context, listen: false).error);
     } else {
-      CustomSnackBar().show(
-          context, await Provider.of<UserProvider>(context, listen: false).status);
+      CustomSnackBar(context: context).show(await Provider.of<UserProvider>(context, listen: false).status);
     }
   }
 

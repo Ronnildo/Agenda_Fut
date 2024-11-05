@@ -45,7 +45,7 @@ class UserController extends Repository {
   Future<String> resetPassword(String email) async {
     try {
       await auth.sendPasswordResetEmail(email: email);
-      return "Verifique seu e-mail para redefir sua senha.";
+      return "Success";
     } on FirebaseException catch (err) {
       return err.message!;
     } catch (err) {

@@ -216,14 +216,13 @@ class _InsertPageState extends State<InsertPage> {
       );
       await Provider.of<GameProvider>(context, listen: false)
           .addGame(file, date.toString(), data);
-      CustomSnackBar().show(
-        context,
+      CustomSnackBar(context: context).show(
         await Provider.of<GameProvider>(context, listen: false).status,
       );
       clear();
     } else {
-      CustomSnackBar().showError(
-          context, "Aconteceu um erro ao adicionar partida. Tente Novamente.");
+      CustomSnackBar(context: context).showError(
+          "Aconteceu um erro ao adicionar partida. Tente Novamente.");
     }
   }
 
