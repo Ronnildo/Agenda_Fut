@@ -19,7 +19,7 @@ class AgendaApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        localizationsDelegates:  const <LocalizationsDelegate>[
+        localizationsDelegates: const <LocalizationsDelegate>[
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,

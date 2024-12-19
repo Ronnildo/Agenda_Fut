@@ -31,7 +31,7 @@ class _ScrollCalendarState extends State<ScrollCalendar> {
         width: 60,
         height: 80,
         dayStructure: DayStructure.dayNumDayStr,
-        todayHighlightColor: const Color(0xFF03045E).withOpacity(0.5),
+        todayHighlightColor: const Color(0xFF03045E).withValues(alpha: 0.5),
         todayHighlightStyle: TodayHighlightStyle.withBackground,
         todayStyle: const DayStyle(
           dayNumStyle: TextStyle(

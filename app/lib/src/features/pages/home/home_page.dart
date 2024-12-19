@@ -126,14 +126,14 @@ class _HomeState extends State<Home> {
                     height: 80,
                     dayStructure: DayStructure.dayNumDayStr,
                     todayHighlightColor:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
                     todayHighlightStyle: TodayHighlightStyle.withBackground,
                     todayStyle: DayStyle(
                       decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
                             .primary
-                            .withOpacity(0.3),
+                            .withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(39),
                       ),
                       dayNumStyle: const TextStyle(
@@ -300,9 +300,8 @@ class _HomeState extends State<Home> {
                   Navigator.pop(context);
                 },
                 style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    Colors.green,
-                  ),
+                  backgroundColor: WidgetStatePropertyAll(Colors.green),
+                  
                   foregroundColor: WidgetStatePropertyAll(Colors.white),
                   textStyle: WidgetStatePropertyAll(
                     TextStyle(

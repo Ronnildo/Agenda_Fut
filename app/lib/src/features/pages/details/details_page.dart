@@ -145,14 +145,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   edit: _editDetails,
                   onTap: updateDetails,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Divider(
-                    thickness: 1,
-                    height: 8,
-                    color: Colors.grey.withOpacity(0.4),
-                  ),
-                ),
+                
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: CustomButtom(onTap: save, title: "Salvar Alterações"),

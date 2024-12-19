@@ -3,8 +3,8 @@
 import 'dart:io';
 
 import 'package:app/src/features/controllers/user_provider.dart';
-import 'package:app/src/features/pages/home/home_page.dart';
 import 'package:app/src/features/pages/auth/register_page.dart';
+import 'package:app/src/features/pages/home/home_page.dart';
 import 'package:app/src/features/widgets/custom_button.dart';
 import 'package:app/src/features/widgets/custom_input.dart';
 import 'package:app/src/features/widgets/custom_title.dart';
@@ -85,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               CustomButtom(
+                key: const Key("enter"),
                 onTap: () => loginPage(
                   _emailController.text,
                   _passController.text,
@@ -151,24 +152,22 @@ class _LoginPageState extends State<LoginPage> {
       if (await Provider.of<UserProvider>(context, listen: false).status ==
           "failed") {
         CustomSnackBar(context: context).showError(
-            await Provider.of<UserProvider>(context, listen: false).error);
+          await Provider.of<UserProvider>(context, listen: false).error,
+        );
       } else {
         home();
       }
     } else {
       CustomSnackBar(context: context)
-          .showError("Campos vazios, preencha corretamente todos os campos.");
+          .showError("Preencha corretamente todos os campos.");
     }
   }
 
   Future resetPassword() async {
-    if (_emailController.text != "") {
+    if (_emailController.text != "" && _emailController.text.contains("@")) {
       await Provider.of<UserProvider>(context, listen: false)
           .resetPassword(_emailController.text);
-    }
-
-    if (Provider.of<UserProvider>(context, listen: false).status == "Success") {
-      await CustomSnackBar(context: context)
+      CustomSnackBar(context: context)
           .show("E-mail enviado para alterar sua senha.");
     } else {
       await CustomSnackBar(context: context)

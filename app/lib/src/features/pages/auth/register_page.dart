@@ -87,6 +87,7 @@ class _RegisterState extends State<Register> {
               height: 16,
             ),
             CustomButtom(
+              key: const Key("btnRegister"),
               onTap: () => registerUser(
                 _nameController.text,
                 _emailController.text,
@@ -109,6 +110,7 @@ class _RegisterState extends State<Register> {
                     width: 5,
                   ),
                   InkWell(
+                    key: const Key("loginText"),
                     onTap: () {
                       Navigator.pop(context);
                     },
@@ -162,9 +164,11 @@ class _RegisterState extends State<Register> {
     );
     if (await Provider.of<UserProvider>(context, listen: false).status ==
         "failed") {
-      CustomSnackBar(context: context).showError( await Provider.of<UserProvider>(context, listen: false).error);
+      CustomSnackBar(context: context)
+          .showError(Provider.of<UserProvider>(context, listen: false).error);
     } else {
-      CustomSnackBar(context: context).show(await Provider.of<UserProvider>(context, listen: false).status);
+      CustomSnackBar(context: context)
+          .showError(Provider.of<UserProvider>(context, listen: false).status);
     }
   }
 

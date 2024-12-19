@@ -1,12 +1,16 @@
-import 'package:app/src/app.dart';
 import 'package:app/src/features/pages/auth/login_page.dart';
-import 'package:app/src/features/widgets/snackbar_auth.dart';
+import 'package:app/src/features/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets("Login Page Fut Agenda test", (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: LoginPage()));
+    await tester.pumpWidget(MaterialApp(
+      home: const LoginPage(),
+      routes: {
+        "register": (context) => const Register(),
+      },
+    ));
     expect(find.byType(LoginPage), findsOneWidget);
 
     // teste de titulo
@@ -38,4 +42,39 @@ void main() {
     expect(find.text("123456"), findsOneWidget);
   });
 
+  testWidgets("errors in Login Page test", (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: const LoginPage(),
+      routes: {
+        "register": (context) => const Register(),
+      },
+    ));
+    expect(find.byType(LoginPage), findsOneWidget);
+
+    final enter = find.byKey(const Key("enter"));
+    await tester.tap(enter);
+    await tester.pumpAndSettle();
+
+    expect(find.text("Preencha corretamente todos os campos."), findsOneWidget);
+  });
+
+  testWidgets("Correct exib in Login Page reset password test", (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: const LoginPage(),
+      routes: {
+        "register": (context) => const Register(),
+      },
+    ));
+
+    expect(find.byType(LoginPage), findsOneWidget);
+
+    // final emailInput = find.byKey(const Key("emailInput"));
+    // await tester.enterText(emailInput, "ronnildo@gmail.com");
+
+    final passReset = find.byKey(const Key("resetPassword"));
+    await tester.tap(passReset);
+    await tester.pump();
+
+    expect(find.text("Preencha o campo de E-mail para alterar sua senha."), findsOne);
+  });
 }

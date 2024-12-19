@@ -1,10 +1,17 @@
 import 'package:app/src/features/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
-void main(){
-  testWidgets("Register Page widgets test", (WidgetTester tester) async{
-    await tester.pumpWidget(const MaterialApp(home: Register()));
+class MockNavigatorObserver extends Mock implements NavigatorObserver {}
+
+void main() {
+  testWidgets("Register Page widgets test", (WidgetTester tester) async {
+    final mockObserver = MockNavigatorObserver();
+    await tester.pumpWidget(MaterialApp(
+      home: const Register(),
+      navigatorObservers: [mockObserver],
+    ));
     expect(find.byType(Register), findsOneWidget);
 
     // teste de titulo
@@ -30,8 +37,7 @@ void main(){
     expect(find.text("Login"), findsOneWidget);
 
     // testes input widget
-    await tester.enterText(
-        find.byKey(const Key("nameInput")), "Teste");
+    await tester.enterText(find.byKey(const Key("nameInput")), "Teste");
     await tester.enterText(
         find.byKey(const Key("emailInput")), "teste@gmail.com");
     await tester.enterText(find.byKey(const Key("passwordInput")), "123456");
@@ -40,5 +46,22 @@ void main(){
     expect(find.text("Teste"), findsOneWidget);
     expect(find.text("teste@gmail.com"), findsOneWidget);
     expect(find.text("123456"), findsOneWidget);
+  });
+
+  testWidgets("errors snackbar Register Page test",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(
+      home: Register(),
+    ));
+    expect(find.byType(Register), findsOneWidget);
+
+    final btnRegister = find.byKey(const Key("btnRegister"));
+    await tester.dragUntilVisible(
+        btnRegister, find.byType(SnackBar), const Offset(100, 60));
+    await tester.tap(btnRegister);
+    await tester.pump();
+
+    expect(
+        find.text("Campos vazios, preencha todos os campos."), findsOneWidget);
   });
 }

@@ -18,7 +18,7 @@ void main() async {
   await NotificationController().initNotifications();
   await FirebaseAppCheck.instance.activate(
     webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-    androidProvider: AndroidProvider.debug,
+    androidProvider: AndroidProvider.playIntegrity,
   );
 
   runApp(
