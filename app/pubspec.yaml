@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+3
 
 environment:
-  sdk: '>=3.3.3 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
   flutter: 3.19.5
 
 dependencies:
@@ -79,4 +79,3 @@ flutter:
           weight: 700
 
   uses-material-design: true
-

@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app/src/core/theme.dart';
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
-import 'package:app/src/features/pages/home/splash_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:app/src/features/pages/splash/splash_page.dart';
 import 'package:provider/provider.dart';
 
 class AgendaApp extends StatelessWidget {

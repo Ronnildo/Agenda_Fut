@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app/src/core/repository.dart';
 import 'package:app/src/models/position_model.dart';
 import 'package:app/src/models/user_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class UserController extends Repository {
   final FirebaseAuth auth;

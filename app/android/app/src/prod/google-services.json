@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "319352335821",
+    "project_id": "fut-agenda-prod",
+    "storage_bucket": "fut-agenda-prod.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319352335821:android:d2e61c402362649ec42884",
+        "android_client_info": {
+          "package_name": "com.example.flavors"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkxjLLKHQhhAdiWi0laJ4G-ZOCYBaPuYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319352335821:android:e3ae34dbc5ecd8a2c42884",
+        "android_client_info": {
+          "package_name": "com.futagenda.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkxjLLKHQhhAdiWi0laJ4G-ZOCYBaPuYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319352335821:android:a7e856bf005eb435c42884",
+        "android_client_info": {
+          "package_name": "com.futagenda.app_"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkxjLLKHQhhAdiWi0laJ4G-ZOCYBaPuYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

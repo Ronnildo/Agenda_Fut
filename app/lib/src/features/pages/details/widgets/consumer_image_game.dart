@@ -1,4 +1,4 @@
-import 'package:app/src/features/widgets/upload_image.dart';
+import 'package:app/src/features/pages/widgets/upload_image.dart';
 import 'package:flutter/material.dart';
 
 class ConsumerImageGame extends StatefulWidget {

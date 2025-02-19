@@ -43,7 +43,9 @@ app.*.map.json
 /android/app/release
 
 # Firebase security
-firebase_options.dart
+firebase_options_dev.dart
+firebase_options_prod.dart
+firebase_config.dart
 database.rules.json
 firebase.json
 firebase.indexes.json
@@ -52,3 +54,4 @@ rules.json
 remoteconfig.template.json
 storage.rules
 firestore.indexes.json
+google_services.json
