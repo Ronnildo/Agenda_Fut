@@ -1,17 +1,13 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 
+import 'package:app/src/features/pages/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/register/presentation/register_page.dart';
 import 'package:app/src/features/pages/home/presentation/home_page.dart';
-import 'package:app/src/features/pages/widgets/custom_button.dart';
 import 'package:app/src/features/pages/widgets/custom_input.dart';
-import 'package:app/src/features/pages/widgets/custom_title.dart';
 import 'package:app/src/features/pages/widgets/snackbar_auth.dart';
 import 'package:provider/provider.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   bool isVisible = false;
+  bool isCheck = false;
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -35,97 +32,221 @@ class _LoginPageState extends State<LoginPage> {
         exit(1);
       },
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const CustomTitle(
-                key: Key("title"),
-                heightdiv: 2.5,
-              ),
-              CustomInput(
-                key: const Key("emailInput"),
-                label: "E-mail",
-                hintText: "Digite seu E-mail",
-                controller: _emailController,
-                icon: Icons.mail,
-                obscureText: false,
-                error: "",
-              ),
-              CustomInput(
-                key: const Key("passwordInput"),
-                label: "Senha",
-                hintText: "Digite sua Senha",
-                controller: _passController,
-                icon: isVisible ? Icons.visibility : Icons.visibility_off,
-                obscureText: !isVisible,
-                error: "",
-                visibility: visibility,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 16.0,
-                  bottom: 30,
-                  top: 0,
+        appBar: AppBarWidget(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  "Bem Vindo de Volta!",
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: InkWell(
-                    key: const Key("resetPassword"),
-                    onTap: resetPassword,
-                    hoverColor: Colors.green,
-                    hoverDuration: const Duration(
-                      seconds: 2,
-                    ),
-                    child: Text(
-                      "Esqueceu a senha?",
-                      style: Theme.of(context).textTheme.bodySmall,
-                      selectionColor: Colors.blue,
-                    ),
-                  ),
+                Text(
+                  "Digite seus dados para fazer login",
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
-              ),
-              CustomButtom(
-                key: const Key("enter"),
-                onTap: () => loginPage(
-                  _emailController.text,
-                  _passController.text,
+                SizedBox(
+                  height: 20,
                 ),
-                title: "Entrar",
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 20,
+                CustomInput(
+                  key: const Key("emailInput"),
+                  label: "E-mail",
+                  hintText: "Digite seu E-mail",
+                  controller: _emailController,
+                  icon: Icons.mail,
+                  obscureText: false,
+                  error: "",
                 ),
-                child: Column(
+                SizedBox(
+                  height: 12,
+                ),
+                CustomInput(
+                  key: const Key("passwordInput"),
+                  label: "Senha",
+                  hintText: "Digite sua Senha",
+                  controller: _passController,
+                  icon: isVisible ? Icons.visibility : Icons.visibility_off,
+                  obscureText: !isVisible,
+                  error: "",
+                  visibility: visibility,
+                ),
+                SizedBox(
+                  height: 2,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Não tem uma Conta?",
-                        style: Theme.of(context).textTheme.bodySmall,
+                    Checkbox(
+                      value: isCheck,
+                      onChanged: (check) {
+                        setState(() {
+                          isCheck = check!;
+                        });
+                      },
+                      visualDensity: VisualDensity.compact,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
                       ),
+                      checkColor: Colors.grey.withOpacity(0.5),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      
                     ),
-                    OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        fixedSize: Size(
-                          MediaQuery.of(context).size.width,
-                          56,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
+                    Text(
+                      "Lembrar Senha",
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: Colors.black54,
+                          ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.2,
+                    ),
+                    InkWell(
+                      key: const Key("resetPassword"),
+                      onTap: resetPassword,
+                      hoverColor: Colors.green,
+                      hoverDuration: const Duration(
+                        seconds: 2,
                       ),
-                      onPressed: register,
                       child: Text(
-                        "Cadastre-se Agora",
-                        style: Theme.of(context).textTheme.labelLarge,
+                        "Esqueceu a senha?",
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Colors.black54,
+                              decoration: TextDecoration.underline,
+                            ),
+                        selectionColor: Colors.blue,
                       ),
                     ),
                   ],
                 ),
-              )
-            ],
+                SizedBox(
+                  height: 24,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Fazer Login",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Divider(
+                        color: Colors.grey,
+                        endIndent: 10,
+                        thickness: 1,
+                      ),
+                    ),
+                    Text(
+                      "ou",
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Divider(
+                        indent: 10,
+                        color: Colors.grey,
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      42,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: register,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage("assets/images/google.png"),
+                        height: 18,
+                        width: 18,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Login com Google",
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width,
+                      42,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: register,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage("assets/images/facebook.png"),
+                        height: 18,
+                        width: 18,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Login com Facebook",
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Ainda não tem cadastro? ",
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: Text(
+                        "Cadastre-se Agora",
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Colors.black,
+                              decoration: TextDecoration.underline,
+                            ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

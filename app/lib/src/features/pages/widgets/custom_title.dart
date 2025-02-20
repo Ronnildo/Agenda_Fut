@@ -13,14 +13,20 @@ class _CustomTitleState extends State<CustomTitle> {
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: _MyPainter(),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height / widget.heightdiv,
-        width: MediaQuery.of(context).size.width, 
-        child: Center(
-          child:  Text(
-            "Fut Agenda",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+      child: Container(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "FA",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            Text(
+              "Fut Agenda",
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ],
         ),
       ),
     );
@@ -30,13 +36,17 @@ class _CustomTitleState extends State<CustomTitle> {
 class _MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final title = Paint()..color = const Color(0xFF17A909);
+    final title = Paint()
+      ..color = const Color(0xFF428851)
+      ..style = PaintingStyle.fill;
 
-    final path = Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width, 0)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height / 1.4);
+    Path path = Path();
+    path.moveTo(0, 0);
+    path.lineTo(0, size.height * 0.8);
+    path.quadraticBezierTo(
+        size.width / 2, size.height * 1.2, size.width, size.height * 0.8);
+    path.lineTo(size.width, 0);
+    path.close();
 
     canvas.drawPath(path, title);
   }
