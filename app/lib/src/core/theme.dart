@@ -5,7 +5,7 @@ class CustomTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      primaryColor: const Color(0xFF17A909),
+      primaryColor: const Color(0xFF428851),
       colorScheme: ColorScheme.fromSeed(
         seedColor: const Color(0xFF17A909),
         surface: const Color(0xFFFFFFFF),
@@ -13,22 +13,14 @@ class CustomTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF17A909),
-          shadowColor: Colors.black,
-          foregroundColor: Colors.white,
-          fixedSize: Size(
-            MediaQuery.of(context).size.width,
-            60,
-          ),
+          backgroundColor: const Color(0xFF428851),
+          maximumSize: Size(MediaQuery.of(context).size.width, 50),
+          fixedSize: Size(MediaQuery.of(context).size.width, 50),
+          textStyle: Theme.of(context).textTheme.bodyMedium,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          textStyle: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
-        ),
+        )
       ),
       fontFamily: "Play",
       textTheme: const TextTheme(
@@ -42,8 +34,8 @@ class CustomTheme {
           fontWeight: FontWeight.w600,
         ),
         titleMedium: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
           color: Colors.black,
           overflow: TextOverflow.ellipsis,
           wordSpacing: 0,
@@ -51,8 +43,8 @@ class CustomTheme {
         ),
         titleSmall: TextStyle(
           fontSize: 18,
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
         ),
         /**
          * Textos pequenos entre 15 e 20 de tamanho
@@ -65,7 +57,7 @@ class CustomTheme {
         bodyMedium: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF000000),
+          color: Colors.white,
         ),
         bodySmall: TextStyle(
           fontSize: 14,
@@ -107,7 +99,7 @@ class CustomTheme {
         ),
         labelSmall: TextStyle(
           fontSize: 14,
-          color: Colors.black,
+          color: Colors.grey,
           fontWeight: FontWeight.w300,
         ),
       ),
