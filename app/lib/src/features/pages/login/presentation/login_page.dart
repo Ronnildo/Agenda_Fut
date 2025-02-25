@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 24,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => loginPage(_emailController.text, _passController.text),
                   child: Text(
                     "Fazer Login",
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -234,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: register,
                       child: Text(
                         "Cadastre-se Agora",
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
