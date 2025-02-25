@@ -2,11 +2,13 @@
 
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/login/presentation/login_page.dart';
+import 'package:app/src/features/pages/register/controllers/register_user_controller.dart';
+import 'package:app/src/features/pages/widgets/app_bar_widget.dart';
 import 'package:app/src/features/pages/widgets/custom_button.dart';
 import 'package:app/src/features/pages/widgets/custom_input.dart';
 import 'package:app/src/features/pages/widgets/custom_title.dart';
 import 'package:app/src/features/pages/widgets/snackbar_auth.dart';
-import 'package:app/src/models/user_model.dart';
+// import 'package:app/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,100 +34,91 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const CustomTitle(
-              key: Key("title"),
-              heightdiv: 2.8,
-            ),
-            ListTile(
-              key: const Key("infosText"),
-              title: Text(
-                "Começe Agora",
+      appBar: AppBarWidget(),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Cadastro",
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-              subtitle: Text(
-                "Crie sua conta super rápido",
-                style: Theme.of(context).textTheme.bodySmall,
+              Text(
+                "Preencha todos os dados para criar sua conta",
+                style: Theme.of(context).textTheme.labelSmall,
               ),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-            ),
-            CustomInput(
-              key: const Key("nameInput"),
-              hintText: "Nome",
-              label: "Digite seu Nome",
-              controller: _nameController,
-              icon: Icons.person,
-              obscureText: false,
-              error: "",
-            ),
-            CustomInput(
-              key: const Key("emailInput"),
-              hintText: "exemplo@gmail.com",
-              label: "E-mail",
-              controller: _emailController,
-              icon: Icons.mail,
-              obscureText: false,
-              error: "",
-            ),
-            // const DropDownTypeUser(),
-            CustomInput(
-              key: const Key("passwordInput"),
-              label: "Senha",
-              hintText: "Crie sua Senha",
-              controller: _passwordController,
-              icon: isVisible ? Icons.visibility : Icons.visibility_off,
-              obscureText: !isVisible,
-              error: "",
-              visibility: visibility,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            CustomButtom(
-              key: const Key("btnRegister"),
-              onTap: () => registerUser(
-                _nameController.text,
-                _emailController.text,
-                _passwordController.text,
+              SizedBox(
+                height: 32,
               ),
-              title: "Cadastrar",
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 24,
+              CustomInput(
+                key: const Key("nameInput"),
+                hintText: "Digite seu nome",
+                label: "Nome Completo",
+                controller: _nameController,
+                icon: Icons.person,
+                obscureText: false,
+                error: "",
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Tem uma conta?",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  InkWell(
-                    key: const Key("loginText"),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
+              SizedBox(
+                height: 12,
               ),
-            ),
-          ],
+              CustomInput(
+                key: const Key("emailInput"),
+                hintText: "exemplo@gmail.com",
+                label: "E-mail",
+                controller: _emailController,
+                icon: Icons.mail,
+                obscureText: false,
+                error: "",
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              CustomInput(
+                key: const Key("passwordInput"),
+                label: "Senha",
+                hintText: "********",
+                controller: _passwordController,
+                icon: isVisible ? Icons.visibility : Icons.visibility_off,
+                obscureText: !isVisible,
+                error: "",
+                visibility: visibility,
+              ),
+               SizedBox(
+                height: 12,
+              ),
+              CustomInput(
+                key: const Key("confirmPasswordInput"),
+                label: "Confirmar Senha",
+                hintText: "********",
+                controller: _passwordController,
+                icon: isVisible ? Icons.visibility : Icons.visibility_off,
+                obscureText: !isVisible,
+                error: "",
+                visibility: visibility,
+              ),
+              SizedBox(
+                height: 24,
+              ),
+              ElevatedButton(
+                onPressed: () => registerUser(
+                  _nameController.text,
+                  _emailController.text,
+                  _passwordController.text,
+                ),
+                child: Text(
+                  "Fazer Login",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+              SizedBox(
+                height: 24,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -158,9 +151,10 @@ class _RegisterState extends State<Register> {
     String email,
     String password,
   ) async {
-    await Provider.of<UserProvider>(context, listen: false).create(
-      UserModel(name: name, email: email, password: password),
-      login,
+    await Provider.of<RegisterUserController>(context, listen: false).saveUser(
+      name,
+      email,
+      password,
     );
     if (await Provider.of<UserProvider>(context, listen: false).status ==
         "failed") {

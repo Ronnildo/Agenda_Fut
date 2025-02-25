@@ -1,6 +1,11 @@
+import 'package:app/src/core/domain/datasources/remote/user_remote_datasource_imp.dart';
+import 'package:app/src/core/domain/repositories/user_repository_imp.dart';
+import 'package:app/src/features/pages/register/controllers/register_user_controller.dart';
+import 'package:app/src/features/pages/register/domain/usecases/register_use_usecase/register_user_usecase_imp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:app/src/core/theme.dart';
+import 'package:app/src/config/theme/theme.dart';
 import 'package:app/src/features/controllers/game_provider.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
 import 'package:app/src/features/pages/splash/splash_page.dart';
@@ -14,6 +19,20 @@ class AgendaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider(create: (context) => FirebaseAuth),
+        Provider(
+            create: (context) =>
+                UserRemoteDataSourceImp(FirebaseAuth.instance)),
+        Provider(
+            create: (context) => UserRepositoryImp(
+                UserRemoteDataSourceImp(FirebaseAuth.instance))),
+        Provider(
+            create: (context) => RegisterUserUseCaseImp(UserRepositoryImp(
+                UserRemoteDataSourceImp(FirebaseAuth.instance)))),
+        ChangeNotifierProvider(
+            create: (context) => RegisterUserController(RegisterUserUseCaseImp(
+                UserRepositoryImp(
+                    UserRemoteDataSourceImp(FirebaseAuth.instance))))),
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => GameProvider()),
       ],
