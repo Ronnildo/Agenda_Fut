@@ -21,6 +21,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordConfirmController = TextEditingController();
   // Implementar lógica de cadastro
   bool isVisible = false;
   @override
@@ -92,7 +93,7 @@ class _RegisterState extends State<Register> {
                 key: const Key("confirmPasswordInput"),
                 label: "Confirmar Senha",
                 hintText: "********",
-                controller: _passwordController,
+                controller: _passwordConfirmController,
                 icon: isVisible ? Icons.visibility : Icons.visibility_off,
                 obscureText: !isVisible,
                 error: "",
@@ -108,7 +109,7 @@ class _RegisterState extends State<Register> {
                   _passwordController.text,
                 ),
                 child: Text(
-                  "Fazer Login",
+                  "Cadastrar",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),

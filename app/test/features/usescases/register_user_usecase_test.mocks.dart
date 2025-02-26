@@ -6,7 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:app/src/core/domain/entities/user_entity.dart' as _i4;
-import 'package:app/src/core/domain/repositories/user_repository_imp.dart'
+import 'package:app/src/core/domain/repositories/register_user_repository_imp.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -23,11 +23,12 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [UserRepositoryImp].
+/// A class which mocks [RegisterUserRepositoryImp].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserRepositoryImp extends _i1.Mock implements _i2.UserRepositoryImp {
-  MockUserRepositoryImp() {
+class MockRegisterUserRepositoryImp extends _i1.Mock
+    implements _i2.RegisterUserRepositoryImp {
+  MockRegisterUserRepositoryImp() {
     _i1.throwOnMissingStub(this);
   }
 

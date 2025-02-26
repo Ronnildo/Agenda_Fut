@@ -1,5 +1,6 @@
+import 'package:app/src/core/auth/register/register_auth_datasource_imp.dart';
 import 'package:app/src/core/domain/datasources/remote/user_remote_datasource_imp.dart';
-import 'package:app/src/core/domain/repositories/user_repository_imp.dart';
+import 'package:app/src/core/domain/repositories/register_user_repository_imp.dart';
 import 'package:app/src/features/pages/register/controllers/register_user_controller.dart';
 import 'package:app/src/features/pages/register/domain/usecases/register_use_usecase/register_user_usecase_imp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,15 +25,15 @@ class AgendaApp extends StatelessWidget {
             create: (context) =>
                 UserRemoteDataSourceImp(FirebaseAuth.instance)),
         Provider(
-            create: (context) => UserRepositoryImp(
-                UserRemoteDataSourceImp(FirebaseAuth.instance))),
+            create: (context) => RegisterUserRepositoryImp(
+                RegisterAuthDataSourceImp(FirebaseAuth.instance))),
         Provider(
-            create: (context) => RegisterUserUseCaseImp(UserRepositoryImp(
-                UserRemoteDataSourceImp(FirebaseAuth.instance)))),
+            create: (context) => RegisterUserUseCaseImp(RegisterUserRepositoryImp(
+                RegisterAuthDataSourceImp(FirebaseAuth.instance)))),
         ChangeNotifierProvider(
             create: (context) => RegisterUserController(RegisterUserUseCaseImp(
-                UserRepositoryImp(
-                    UserRemoteDataSourceImp(FirebaseAuth.instance))))),
+                RegisterUserRepositoryImp(
+                    RegisterAuthDataSourceImp(FirebaseAuth.instance))))),
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => GameProvider()),
       ],
