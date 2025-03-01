@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/src/features/pages/login/controllers/login_user_controller.dart';
 import 'package:app/src/features/pages/widgets/app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/features/controllers/user_provider.dart';
@@ -93,7 +94,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       checkColor: Colors.grey.withOpacity(0.5),
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      
                     ),
                     Text(
                       "Lembrar Senha",
@@ -126,7 +126,8 @@ class _LoginPageState extends State<LoginPage> {
                   height: 24,
                 ),
                 ElevatedButton(
-                  onPressed: () => loginPage(_emailController.text, _passController.text),
+                  onPressed: () =>
+                      loginPage(_emailController.text, _passController.text),
                   child: Text(
                     "Fazer Login",
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -267,20 +268,19 @@ class _LoginPageState extends State<LoginPage> {
 
   loginPage(String email, String password) async {
     if (email != "" && password != "") {
-      await Provider.of<UserProvider>(context, listen: false)
-          .auth(email, password);
-
-      if (await Provider.of<UserProvider>(context, listen: false).status ==
-          "failed") {
-        CustomSnackBar(context: context).showError(
-          await Provider.of<UserProvider>(context, listen: false).error,
-        );
-      } else {
+      CustomSnackBar(context: context).show(
+        "Efetuando login",
+      );
+      await Provider.of<LoginUserController>(context, listen: false)
+          .login(email, password);
+      if (await Provider.of<LoginUserController>(context, listen: false)
+          .success) {
         home();
       }
     } else {
-      CustomSnackBar(context: context)
-          .showError("Preencha corretamente todos os campos.");
+      CustomSnackBar(context: context).showError(
+        "Verifique seu e-mail e senha",
+      );
     }
   }
 

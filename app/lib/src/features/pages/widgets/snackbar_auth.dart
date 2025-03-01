@@ -7,12 +7,13 @@ class CustomSnackBar{
   show(String message){
    ScaffoldMessenger.of(context!).showSnackBar(
         SnackBar(
+          behavior: SnackBarBehavior.floating,
           content: Text(
             message,
-            style: Theme.of(context!).textTheme.displayMedium,
+            style: Theme.of(context!).textTheme.labelMedium,
           ),
           duration: const Duration(
-            seconds: 3,
+            seconds: 2,
           ),
           backgroundColor: Theme.of(context!).colorScheme.primary,
         ),
@@ -23,13 +24,13 @@ class CustomSnackBar{
   showError(String message){
    ScaffoldMessenger.of(context!).showSnackBar(
         SnackBar(
-          behavior: SnackBarBehavior.fixed,
+          behavior: SnackBarBehavior.floating,
           content: Text(
            message,
-            style: Theme.of(context!).textTheme.displayMedium,
+            style: Theme.of(context!).textTheme.labelMedium,
           ),
           duration: const Duration(
-            seconds: 3,
+            seconds: 2,
           ),
           backgroundColor: Theme.of(context!).colorScheme.error,
         ),
