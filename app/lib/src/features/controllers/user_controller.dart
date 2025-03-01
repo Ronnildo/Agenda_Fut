@@ -142,7 +142,7 @@ class UserController extends Repository {
     try {
       DocumentSnapshot doc = await FirebaseFirestore.instance
           .collection("positions")
-          .doc(userCredential!.uid)
+          .doc(userCredential?.uid ?? "")
           .get();
       if (doc.exists) {
         return PositionModel.fromJson(doc.data() as Map<String, dynamic>);

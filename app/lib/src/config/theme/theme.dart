@@ -7,9 +7,10 @@ class CustomTheme {
       brightness: Brightness.light,
       primaryColor: const Color(0xFF428851),
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF17A909),
+        seedColor: const Color(0xFF428851),
         surface: const Color(0xFFFFFFFF),
-        primary: const Color(0xFF17A909),
+        primary: const Color(0xFF428851),
+        error: Colors.black45,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -93,12 +94,12 @@ class CustomTheme {
           height: 0,
         ),
         labelMedium: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w600,
-          fontSize: 18,
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
         ),
         labelSmall: TextStyle(
-          fontSize: 14,
+          fontSize: 12,
           color: Colors.grey,
           fontWeight: FontWeight.w300,
         ),

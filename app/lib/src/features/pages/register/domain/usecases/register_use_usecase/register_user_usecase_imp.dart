@@ -1,5 +1,5 @@
 import 'package:app/src/core/domain/entities/user_entity.dart';
-import 'package:app/src/core/domain/repositories/register_user_repository_imp.dart';
+import 'package:app/src/core/domain/repositories/register/register_user_repository_imp.dart';
 
 import 'register_user_usecase.dart';
 

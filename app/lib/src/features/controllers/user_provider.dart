@@ -128,8 +128,8 @@ class UserProvider extends ChangeNotifier {
   Future<void> getUser() async {
     String? userName = _userController.getNameUser();
     PositionModel pos = await _userController.getPositionUser();
-    _name = userName!;
-    _position = pos.position!;
+    _name = userName ?? "";
+    _position = pos.position ?? "";
     notifyListeners();
   }
 

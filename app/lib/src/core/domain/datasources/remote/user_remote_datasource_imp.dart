@@ -1,6 +1,7 @@
 import 'package:app/src/core/domain/datasources/remote/user_remote_datasource.dart';
 import 'package:app/src/core/domain/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class UserRemoteDataSourceImp implements UserRemoteDataSource {
   final FirebaseAuth _firebaseAuth;
@@ -13,9 +14,21 @@ class UserRemoteDataSourceImp implements UserRemoteDataSource {
             email: userEntity.email, password: userEntity.password)
         .then((v) async {
       await v.user!.updateDisplayName(userEntity.name);
-      print("Success");
+      debugPrint("Success");
     }).onError((e, stackTrace) {
-      print(e);
+      debugPrint(e.toString());
+    });
+  }
+
+  @override
+  Future<void> login(UserEntity userEntity) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+      email: userEntity.email,
+      password: userEntity.password,
+    ).then((v){
+      debugPrint("success");
+    }).onError((e, strackTrace){
+      debugPrint(e.toString());
     });
   }
 }
